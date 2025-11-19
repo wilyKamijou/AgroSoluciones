@@ -10,32 +10,35 @@ class AlmacenController extends Controller
     public function index()
     {
         $almacens = Almacen::all();
-        return response()->json($almacens);
+        return view('almacen.index')->with('almacens',$almacens);
     }
 
-    public function show($id)
+    public function create()
     {
-        $almacen = Almacen::findOrFail($id);
-        return response()->json($almacen);
+        return view('almacen.create');
     }
 
     public function store(Request $request)
     {
         $almacen = Almacen::create($request->all());
-        return response()->json($almacen, 201);
+        return redirect('/almacen');
     }
-
+    public function edit($id)
+    {
+        $almacen=almacen::find($id);
+        return view('almacen.edit')->with('almacen',$almacen);
+    }
     public function update(Request $request, $id)
     {
         $almacen = Almacen::findOrFail($id);
         $almacen->update($request->all());
-        return response()->json($almacen);
+        return redirect('/almacen');
     }
 
     public function destroy($id)
     {
         $almacen = Almacen::findOrFail($id);
         $almacen->delete();
-        return response()->json(null, 204);
+        return redirect('almacen');
     }
 }

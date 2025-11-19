@@ -15,14 +15,12 @@ return new class extends Migration
             $table->id('id_empleado');
             $table->string('nombreEm', 60);
             $table->string('apellidosEm', 60);
-            $table->string('puestoEm', 30);
+            $table->integer('sueldoEm');
             $table->integer('telefonoEm')->nullable();
             $table->string('direccion', 60)->nullable();
 
             $table->unsignedBigInteger('id_tipoE');
-            $table->string('usuario');
             $table->foreign('id_tipoE')->references('id_tipoE')->on('tipo_empleados');
-            $table->foreign('usuario')->references('usuario')->on('logins');
             $table->timestamps();
         });
     }

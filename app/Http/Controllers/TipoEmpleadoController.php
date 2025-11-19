@@ -9,33 +9,36 @@ class TipoEmpleadoController extends Controller
 {
     public function index()
     {
-        $tipoEmpleados = TipoEmpleado::all();
-        return response()->json($tipoEmpleados);
+        $tipos = TipoEmpleado::all();
+        return view('tipoE.index')->with('tipos',$tipos);
     }
 
-    public function show($id)
+    public function create()
     {
-        $tipoEmpleado = TipoEmpleado::findOrFail($id);
-        return response()->json($tipoEmpleado);
+        return view('tipoE.create');
     }
-
+    
     public function store(Request $request)
     {
         $tipoEmpleado = TipoEmpleado::create($request->all());
-        return response()->json($tipoEmpleado, 201);
+        return redirect('/tipo');
     }
-
+    public function edit($id)
+    {
+        $tipo=tipoEmpleado::find($id);
+        return view('tipoE.edit')->with('tipo',$tipo);
+    }
     public function update(Request $request, $id)
     {
         $tipoEmpleado = TipoEmpleado::findOrFail($id);
         $tipoEmpleado->update($request->all());
-        return response()->json($tipoEmpleado);
+        return redirect('/tipo');
     }
 
     public function destroy($id)
     {
         $tipoEmpleado = TipoEmpleado::findOrFail($id);
         $tipoEmpleado->delete();
-        return response()->json(null, 204);
+        return redirect('/tipo');
     }
 }

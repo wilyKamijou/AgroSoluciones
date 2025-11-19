@@ -10,32 +10,38 @@ class ClienteController extends Controller
     public function index()
     {
         $clientes = Cliente::all();
-        return response()->json($clientes);
+        return view('cliente.index')->with('clientes',$clientes);
     }
 
-    public function show($id)
+    public function create()
     {
-        $cliente = Cliente::findOrFail($id);
-        return response()->json($cliente);
+        return view('cliente.create');
+    }
+
+    public function edit($id)
+    {
+        $cliente=cliente::find($id);
+        return view('cliente.edit')->with('cliente',$cliente);
     }
 
     public function store(Request $request)
     {
         $cliente = Cliente::create($request->all());
-        return response()->json($cliente, 201);
+        $cliente->save();
+        return redirect('/cliente');
     }
 
     public function update(Request $request, $id)
     {
         $cliente = Cliente::findOrFail($id);
         $cliente->update($request->all());
-        return response()->json($cliente);
+        return redirect('/cliente');
     }
 
     public function destroy($id)
     {
         $cliente = Cliente::findOrFail($id);
         $cliente->delete();
-        return response()->json(null, 204);
+        return redirect('/cliente');
     }
 }

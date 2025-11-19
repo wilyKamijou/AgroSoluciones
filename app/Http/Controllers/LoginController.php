@@ -2,40 +2,45 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\login;
 use Illuminate\Http\Request;
+use App\Models\Login;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    public function index()
+    public function showLoginForm()
     {
-        $logins = Login::all();
-        return response()->json($logins);
+        return view('login');
     }
-
-    public function show($id)
+    
+    public function login(Request $request)
     {
-        $login = Login::findOrFail($id);
-        return response()->json($login);
+        // Validar los datos del formulario
+        $request->validate([
+            'usuario' => 'required|string',
+            'contraseña' => 'required|string',
+        ]);
+    
+        // Obtener las credenciales del formulario
+        $credentials = [
+            'usuario' => $request->usuario,
+            'contraseña' => $request->contraseña
+        ];
+    
+        // Intentar autenticar al usuario
+        if (Auth::attempt($credentials)) {
+            // Si las credenciales son correctas, redirige a la vista home
+            return redirect()->intended('home')->with('success', 'Inicio de sesión exitoso.');
+        }
+    
+        // Si no existe el usuario o la contraseña no es correcta
+        return back()->withErrors(['mensaje' => 'Usuario o contraseña incorrectos'])->withInput();
     }
+    
 
-    public function store(Request $request)
+    public function logout()
     {
-        $login = Login::create($request->all());
-        return response()->json($login, 201);
-    }
-
-    public function update(Request $request, $id)
-    {
-        $login = Login::findOrFail($id);
-        $login->update($request->all());
-        return response()->json($login);
-    }
-
-    public function destroy($id)
-    {
-        $login = Login::findOrFail($id);
-        $login->delete();
-        return response()->json(null, 204);
+        Auth::logout();
+        return redirect('/');
     }
 }

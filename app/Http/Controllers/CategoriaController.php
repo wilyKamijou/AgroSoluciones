@@ -10,32 +10,37 @@ class CategoriaController extends Controller
     public function index()
     {
         $categorias = Categoria::all();
-        return response()->json($categorias);
+        return view('categoria.index')->with('categorias',$categorias);
     }
 
-    public function show($id)
+    public function create()
     {
-        $categoria = Categoria::findOrFail($id);
-        return response()->json($categoria);
+        return view('categoria.create');
     }
 
     public function store(Request $request)
     {
         $categoria = Categoria::create($request->all());
-        return response()->json($categoria, 201);
+        return redirect('/categoria');
+    }
+
+    public function edit($id)
+    {
+        $categoria=categoria::find($id);
+        return view('categoria.edit')->with('categoria',$categoria);
     }
 
     public function update(Request $request, $id)
     {
         $categoria = Categoria::findOrFail($id);
         $categoria->update($request->all());
-        return response()->json($categoria);
+        return redirect('/categoria');
     }
 
     public function destroy($id)
     {
         $categoria = Categoria::findOrFail($id);
         $categoria->delete();
-        return response()->json(null, 204);
+        return redirect('/categoria');
     }
 }

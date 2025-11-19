@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class proveedor extends Model
 {
     use HasFactory;
-
+    protected $primaryKey= 'id_proveedor';
     protected $fillable = [
         'nombrePr',
         'telefonoPr',

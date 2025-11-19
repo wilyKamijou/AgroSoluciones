@@ -13,4 +13,9 @@ class login extends Model
         'usuario',
         'contraseña'
     ];
+
+    public function empleados()
+    {
+        return $this->hasOne(Producto::class, 'id_categoria');
+    }
 }

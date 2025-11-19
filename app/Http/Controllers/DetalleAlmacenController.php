@@ -3,39 +3,59 @@
 namespace App\Http\Controllers;
 
 use App\Models\detalleAlmacen;
+use App\Models\almacen;
+use App\Models\producto;
 use Illuminate\Http\Request;
 
 class DetalleAlmacenController extends Controller
 {
     public function index()
     {
-        $detallesAlmacens = DetalleAlmacen::all();
-        return response()->json($detallesAlmacens);
+        $detalles = DetalleAlmacen::all();
+        $almacens =almacen::all();
+        $productos=producto::all();
+
+        return view('detalleAl.index',compact('detalles','almacens','productos'));
     }
 
-    public function show($id)
+    public function create()
     {
-        $detalleAlmacen = DetalleAlmacen::findOrFail($id);
-        return response()->json($detalleAlmacen);
+        $almacens =almacen::all();
+        $productos=producto::all();
+        return view('detalleAl.create',compact('almacens','productos'));
+    }
+    public function edit($id1,$id2)
+    {   
+        $almacenes =almacen::all();
+        $productos=producto::all();
+        $detalle = DetalleAlmacen::where('id_producto',$id1)->where('id_almacen',$id2)->first();
+        return view('detalleAl.edit',compact('detalle','productos','almacenes'));
     }
 
     public function store(Request $request)
     {
-        $detalleAlmacen = DetalleAlmacen::create($request->all());
-        return response()->json($detalleAlmacen, 201);
+        $detalle =new  detalleAlmacen();
+        $detalle->stock=$request->input('stock');
+        $detalle->id_producto=$request->input('id_producto');
+        $detalle->id_almacen=$request->input('id_almacen');
+        $detalle->save();
+        return redirect('/detalleAl');
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id1,$id2)
     {
-        $detalleAlmacen = DetalleAlmacen::findOrFail($id);
-        $detalleAlmacen->update($request->all());
-        return response()->json($detalleAlmacen);
+        
+        $detalle = DetalleAlmacen::where('id_producto',$id1)->where('id_almacen',$id2)->first();
+        $detalle->update($request->all());
+        return redirect('/detalleAl');
+     
+       
     }
 
-    public function destroy($id)
+    public function destroy($id1,$id2)
     {
-        $detalleAlmacen = DetalleAlmacen::findOrFail($id);
+        $detalleAlmacen = DetalleAlmacen::where('id_producto',$id1)->where('id_almacen',$id2)->first();
         $detalleAlmacen->delete();
-        return response()->json(null, 204);
+        return redirect('/detalleAl');
     }
 }

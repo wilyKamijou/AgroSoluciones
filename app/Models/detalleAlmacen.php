@@ -5,14 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class detalleAlmacen extends Model
 {
     use HasFactory;
 
+    protected $primaryKey='idDal';
+
     protected $fillable = [
-        'stock',
         'id_producto',
-        'id_almacen'
+        'id_almacen',
+        'stock'
+
     ];
 
     public function producto()
@@ -27,11 +31,11 @@ class detalleAlmacen extends Model
 
     public function detalleCompra()
     {
-        return $this->hasMayny(detalleCompra::Class, ['id_producto', 'id_almacen']);
+        return $this->hasMany(detalleCompra::class, 'idDc');
     }
 
     public function detalleVenta()
     {
-        return $this->hasMany(detalleVenta::class, ['id_producto', 'id_almacen']);
+        return $this->hasMany(detalleVenta::class, 'idDv');
     }
 }

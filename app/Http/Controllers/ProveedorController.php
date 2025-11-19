@@ -10,32 +10,37 @@ class ProveedorController extends Controller
     public function index()
     {
         $proveedors = Proveedor::all();
-        return response()->json($proveedors);
+        return view('proveedor.index')->with('proveedors',$proveedors);
     }
 
-    public function show($id)
+    public function create()
     {
-        $proveedor = Proveedor::findOrFail($id);
-        return response()->json($proveedor);
+        return view('proveedor.create');
     }
 
     public function store(Request $request)
     {
         $proveedor = Proveedor::create($request->all());
-        return response()->json($proveedor, 201);
+        return redirect('/proveedor');
+    }
+
+    public function edit($id)
+    {
+        $proveedor=proveedor::find($id);
+        return view('proveedor.edit')->with('proveedor',$proveedor);
     }
 
     public function update(Request $request, $id)
     {
         $proveedor = Proveedor::findOrFail($id);
         $proveedor->update($request->all());
-        return response()->json($proveedor);
+        return redirect('/proveedor');
     }
 
     public function destroy($id)
     {
         $proveedor = Proveedor::findOrFail($id);
         $proveedor->delete();
-        return response()->json(null, 204);
+        return redirect('/proveedor');
     }
 }

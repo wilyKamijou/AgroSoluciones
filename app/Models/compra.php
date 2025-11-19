@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class compra extends Model
 {
     use HasFactory;
-
+    protected $primaryKey='id_compra';
     protected $fillable = [
         'fechaCo',
         'montoTotalCo',
