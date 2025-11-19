@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class detalleVenta extends Model
 {
-    use HasFactory;
+    public $incrementing = false;
+    protected $primaryKey = ['id_venta', 'id_producto', 'id_almacen'];
+    public $timestamps = false;
 
     protected $fillable = [
         'cantidadDv',
@@ -21,12 +23,12 @@ class detalleVenta extends Model
     {
         return $this->belongsTo(Venta::class, 'id_venta');
     }
-    
+
     public function detalleAlmacen()
     {
         return $this->belongsTo(DetalleAlmacen::class, ['id_producto', 'id_almacen']);
     }
-/*
+    /*
     public function producto()
     {
         return $this->belongsTo(Producto::class, 'id_producto');

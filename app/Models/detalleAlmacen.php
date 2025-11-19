@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class detalleAlmacen extends Model
 {
-    use HasFactory;
-
-    protected $primaryKey='idDal';
+    public $incrementing = false;
+    protected $primaryKey = ['id_producto', 'id_almacen'];
+    public $timestamps = false;
 
     protected $fillable = [
         'id_producto',
@@ -28,14 +28,14 @@ class detalleAlmacen extends Model
     {
         return $this->belongsTo(Almacen::class, 'id_almacen');
     }
-
+    /*
     public function detalleCompra()
     {
         return $this->hasMany(detalleCompra::class, 'idDc');
     }
-
+*/
     public function detalleVenta()
     {
-        return $this->hasMany(detalleVenta::class, 'idDv');
+        return $this->belongsTo(detalleVenta::class, ['id_producto', 'id_almacen']);
     }
 }

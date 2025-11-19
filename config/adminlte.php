@@ -324,84 +324,63 @@ return [
             'text' => 'Empleados',
             'url' => '/empleado',
             'icon' => 'far fa-fw fa-file',
-            
+
             'label_color' => 'success',
         ],
         [
             'text' => 'Clientes',
             'url' => '/cliente',
             'icon' => 'far fa-fw fa-file',
-          
+
             'label_color' => 'success',
         ],
         [
             'text' => 'Ventas',
             'url' => '/venta',
             'icon' => 'far fa-fw fa-file',
-         
-            'label_color' => 'success',
-        ],
-        [
-            'text' => 'Compras',
-            'url' => '/compra',
-            'icon' => 'far fa-fw fa-file',
-          
-            'label_color' => 'success',
-        ],
-        [
-            'text' => 'Proveedores',
-            'url' => '/proveedor',
-            'icon' => 'far fa-fw fa-file',
-         
+
             'label_color' => 'success',
         ],
         [
             'text' => 'Categorias de productos',
             'url' => '/categoria',
             'icon' => 'far fa-fw fa-file',
-         
+
             'label_color' => 'success',
         ],
         [
             'text' => 'Tipos de empleados',
             'url' => '/tipo',
             'icon' => 'far fa-fw fa-file',
-      
+
             'label_color' => 'success',
         ],
         [
             'text' => 'Almacenes',
             'url' => '/almacen',
             'icon' => 'far fa-fw fa-file',
-          
+
             'label_color' => 'success',
         ],
         [
             'text' => 'Productos',
             'url' => '/producto',
             'icon' => 'far fa-fw fa-file',
-          
+
             'label_color' => 'success',
         ],
         [
             'text' => 'Detalle de los almacenes',
             'url' => '/detalleAl',
             'icon' => 'far fa-fw fa-file',
-        
+
             'label_color' => 'success',
         ],
         [
             'text' => 'Detalle de las ventas',
             'url' => '/detalleVe',
             'icon' => 'far fa-fw fa-file',
-          
-            'label_color' => 'success',
-        ],
-        [
-            'text' => 'Detalle de las compras',
-            'url' => '/detalleCo',
-            'icon' => 'far fa-fw fa-file',
-          
+
             'label_color' => 'success',
         ],
         ['header' => 'account_settings'],

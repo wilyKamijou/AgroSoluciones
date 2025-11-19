@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class producto extends Model
 {
     use HasFactory;
-    protected $primaryKey='id_producto';
+    protected $primaryKey = 'id_producto';
     protected $fillable = [
         'nombrePr',
         'nombreTecnico',
@@ -28,9 +28,9 @@ class producto extends Model
 
     public function detalleAlmacenes()
     {
-        return $this->hasMany(DetalleAlmacen::class, 'id_producto');
+        return $this->belongsToMany(DetalleAlmacen::class, 'id_producto');
     }
-/*
+    /*
     public function detalleCompras()
     {
         return $this->hasMany(DetalleCompra::class, 'id_producto');

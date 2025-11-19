@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class almacen extends Model
 {
     use HasFactory;
-    protected $primaryKey='id_almacen';
+    protected $primaryKey = 'id_almacen';
     protected $fillable = [
         'nombreAl',
         'descripcionAl',
@@ -17,6 +17,6 @@ class almacen extends Model
 
     public function detalleAlmacenes()
     {
-        return $this->hasMany(DetalleAlmacen::class, 'id_almacen');
+        return $this->belongsToMany(DetalleAlmacen::class, 'id_almacen');
     }
 }
