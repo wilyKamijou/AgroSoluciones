@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\venta;
 use App\Models\cliente;
 use App\Models\empleado;
+use App\Models\Producto;
 use Illuminate\Http\Request;
 
 class VentaController extends Controller
@@ -14,7 +15,8 @@ class VentaController extends Controller
         $ventas = Venta::all();
         $clientes = cliente::all();
         $empleados = empleado::all();
-        return view('venta.index',compact('ventas','clientes','empleados'));
+        $productos = Producto::all();
+        return view('venta.index',compact('ventas','clientes','empleados', 'productos'));
     }
 
     public function create()

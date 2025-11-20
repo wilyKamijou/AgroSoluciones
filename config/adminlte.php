@@ -329,9 +329,18 @@ return [
         ],
         [
             'text' => 'Empleados',
-            'url' => '/empleado',
-            'icon' => 'far fa-fw fa-file',
-
+            
+            'icon' => 'far fa-user',
+            'submenu' => [
+                [
+                    'text' => 'Empleados',
+                    'url' => '/empleado',
+                ],
+                [
+                    'text' => 'Tipos de empleados',
+                    'url' => '/tipo',
+                ]
+            ],
             'label_color' => 'success',
         ],
         [
@@ -343,53 +352,51 @@ return [
         ],
         [
             'text' => 'Ventas',
-            'url' => '/venta',
-            'icon' => 'far fa-fw fa-file',
-
+            'icon' => 'far fa-money-bill-alt',
+            'submenu' => [
+                [
+                    'text' => 'Ventas',
+                    'url' => '/venta',
+                ],
+                [
+                    'text' => 'Detalle de las ventas',
+                    'url' => '/detalleVe',
+                ]
+            ],
             'label_color' => 'success',
         ],
-        [
-            'text' => 'Categorias de productos',
-            'url' => '/categoria',
-            'icon' => 'far fa-fw fa-file',
-
-            'label_color' => 'success',
-        ],
-        [
-            'text' => 'Tipos de empleados',
-            'url' => '/tipo',
-            'icon' => 'far fa-fw fa-file',
-
-            'label_color' => 'success',
-        ],
+    
         [
             'text' => 'Almacenes',
-            'url' => '/almacen',
-            'icon' => 'far fa-fw fa-file',
-
+            'icon' => 'far fa-building',
+            'submenu' => [
+                [
+                    'text' => 'Almacenes',
+                    'url' => '/almacen',
+                ],
+                [
+                    'text' => 'Detalle de los almacenes',
+                    'url' => '/detalleAl',
+                ]
+            ],
             'label_color' => 'success',
         ],
         [
             'text' => 'Productos',
-            'url' => '/producto',
-            'icon' => 'far fa-fw fa-file',
-
+            'icon' => 'fas fa-flask',
+            'submenu' => [
+                [
+                    'text' => 'Productos',
+                    'url' => '/producto',
+                ],
+                [
+                    'text' => 'Categorias de productos',
+                    'url' => '/categoria',
+                ]
+            ],
             'label_color' => 'success',
         ],
-        [
-            'text' => 'Detalle de los almacenes',
-            'url' => '/detalleAl',
-            'icon' => 'far fa-fw fa-file',
 
-            'label_color' => 'success',
-        ],
-        [
-            'text' => 'Detalle de las ventas',
-            'url' => '/detalleVe',
-            'icon' => 'far fa-fw fa-file',
-
-            'label_color' => 'success',
-        ],
         ['header' => 'account_settings'],
         [
             'text' => 'profile',

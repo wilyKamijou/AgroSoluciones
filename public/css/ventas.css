@@ -1,0 +1,66 @@
+/* ---- TITULO ---- */
+.content-header h1 {
+    font-size: 2.2rem;
+    font-weight: bold;
+}
+
+
+
+.card {
+    border-radius: 12px;
+    background: white;
+    border: 1px solid #ddd;
+    
+    margin: auto;
+    display: block;
+    
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+            padding: 20px;
+    min-height: 200px;
+}
+
+.card-body {
+    font-size: 1.1rem;
+}
+
+
+/* ---- INPUTS ---- */
+.form-control {
+    border-radius: 8px;
+    padding: 6px 12px;
+}
+
+/* ---- BOTONES ---- */
+.btn-primary {
+    border-radius: 8px;
+}
+
+/* ---- TABLA ---- */
+.table thead {
+    background-color: #f3f4f6;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+td {
+    vertical-align: middle;
+}
+
+.d-flex .btn {
+    margin-right: 5px;
+}
+
+html, body {
+    height: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.full-wrapper {
+    height: 100vh;
+    display: grid;
+    place-items: center;
+}

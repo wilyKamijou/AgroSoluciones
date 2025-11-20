@@ -1,0 +1,82 @@
+
+/* Si usas un container en tu vista, quítale padding */
+.content-wrapper .container,
+.content-wrapper .container-fluid {
+    padding: 0 !important;
+}
+/* Fondo del sidebar */
+.main-sidebar {
+    background: #1f2d3d !important;
+    border-right: none;
+}
+
+/* Apagar bordes internos */
+.sidebar {
+    padding: 0 !important;
+}
+
+/* Links normales */
+.nav-sidebar .nav-link {
+    background: transparent;
+    color: #cfd8dc !important;
+    font-size: 15px;
+    border-radius: 8px;
+    margin: 4px 8px;
+    padding: 10px 15px;
+}
+
+/* Hover */
+.nav-sidebar .nav-link:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: #fff !important;
+}
+
+/* Activo */
+.nav-sidebar .nav-link.active {
+    background: #2b609d !important;
+    color: white !important;
+    font-weight: 600;
+}
+
+/* Iconos */
+.nav-sidebar .nav-link i {
+    margin-right: 10px;
+}
+
+/* Títulos de sección */
+.sidebar .nav-header {
+    color: #90a4ae !important;
+    font-weight: 700;
+    padding-left: 14px;
+    margin-top: 12px;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+/* Quitar padding y márgenes que generan espacio muerto */
+.content-wrapper {
+    padding: 0 !important;
+    min-height: auto !important; 
+}
+
+.content-header {
+    margin-bottom: 0 !important;
+    padding: 10px 20px !important;
+}
+
+.content {
+    padding: 0 !important;
+}
+
+/* Centrar tarjetas */
+.center-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.center-wrapper .card {
+    width: 100%;
+    max-width: 10   00px;
+}
