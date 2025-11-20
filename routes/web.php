@@ -82,6 +82,13 @@ Route::middleware('auth')->group(function () {
     route::get('/producto/{id}/editar', [ProductoController::class, 'edit'])->name('home');
     route::Put('/producto/{id}/actualizar', [ProductoController::class, 'update'])->name('home');
     route::delete('/producto/{id}/eliminar', [ProductoController::class, 'destroy'])->name('home');
+    //rutas categrias
+    route::get('/categoria', [CategoriaController::class, 'index'])->name('home');
+    route::get('/categoria/crear', [CategoriaController::class, 'create'])->name('home');
+    route::post('/categoria/guardar', [CategoriaController::class, 'store'])->name('home');
+    route::get('/categoria/{id}/editar', [CategoriaController::class, 'edit'])->name('home');
+    route::Put('/categoria/{id}/actualizar', [CategoriaController::class, 'update'])->name('home');
+    route::delete('/categoria/{id}/eliminar', [CategoriaController::class, 'destroy'])->name('home');
     //rutas para detalle almacen
     route::get('/detalleAl', [DetalleAlmacenController::class, 'index'])->name('home');
     route::get('/detalleAl/crear', [DetalleAlmacenController::class, 'create'])->name('home');
