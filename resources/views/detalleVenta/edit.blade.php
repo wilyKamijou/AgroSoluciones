@@ -1,50 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
+@extends('home')
 
+@section ("contenido")
 
-    <div class="container">
-        <h1>Editar Detalle de Venta</h1>
-        <form action="{{ route('detalle-ventas.update', $detalleVenta->id) }}" method="POST">
-            @csrf
-            @method('PUT')
-            <div class="mb-3">
-                <label for="id_producto" class="form-label">Producto</label>
-                <select name="id_producto" id="id_producto" class="form-control">
-                    @foreach($productos as $producto)
-                        <option value="{{ $producto->id }}" {{ $detalleVenta->id_producto == $producto->id ? 'selected' : '' }}>
-                            {{ $producto->nombre }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="id_venta" class="form-label">Venta</label>
-                <select name="id_venta" id="id_venta" class="form-control">
-                    @foreach($ventas as $venta)
-                        <option value="{{ $venta->id }}" {{ $detalleVenta->id_venta == $venta->id ? 'selected' : '' }}>
-                            {{ $venta->id }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="cantidadDv" class="form-label">Cantidad</label>
-                <input type="number" name="cantidadDv" id="cantidadDv" class="form-control" value="{{ $detalleVenta->cantidadDv }}" required>
-            </div>
-            <div class="mb-3">
-                <label for="precioDv" class="form-label">Precio</label>
-                <input type="number" step="0.01" name="precioDv" id="precioDv" class="form-control" value="{{ $detalleVenta->precioDv }}" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-        </form>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="ruta-a-tu-archivo.css">
+
+<h2 style="font-size: 5rem; font-family:'Times New Roman', Times, serif" class="text-center">Editar Datos De Detalle Del Almacen</h2>
+<form action="{{route('detalleVe.update', $detalleVe->id)}}" method="POST">
+    @method('PUT')
+    <!-- CSRF Token (Laravel) -->
+    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+    <!-- fecha -->
+    <div class="mb-3">
+        <label for="id_tipoE" class="form-label">Elija la fecha de la venta:</label>
+        <select id="id_tipoE" name="id_venta" class="form-select" required>
+            <option value="" disabled selected>Seleccione la fecha</option>
+            @foreach ($ventas as $venta)
+            <option value={{$venta->id_venta}}> {{$venta->fechaVe}} </option>
+            @endforeach
+            <!-- Agrega más opciones según los tipos disponibles -->
+        </select>
     </div>
 
-</body>
-</html>
+    <div class="mb-3">
+        <select id="id_tipoE" name="idDal" class="form-select" required>
+            <option value="" disabled selected>Seleccione detalle del almacen</option>
+            @foreach($detalleAs as $detalleA)
+            @foreach($productos as $producto)
+            @foreach($almacenes as $almacen)
+            @if (($detalleA->id_almacen==$almacen->id_almacen) and ($detalleA->id_producto==$producto->id_producto))
+            <option value={{$detalleA->idDal}}> {{$producto->nombrePr}}-{{$almacen->nombreAl}} </option>
+            @endif
+            @endforeach
+            @endforeach
+            @endforeach
+        </select>
+    </div>
+
+    <!-- precio -->
+    <div class="mb-3">
+        <label for="ubicacion" class="form-label">Precio del prodcuto:</label>
+        <input type="float" id="ubicacion" name="precioDv" class="form-control" placeholder="Ingrese el precio" required>
+    </div>
+
+
+    <!-- cantidad -->
+    <div class="mb-3">
+        <label for="ubicacion" class="form-label">Cantidad del producto:</label>
+        <input type="integer" id="ubicacion" name="cantidadDv" class="form-control" placeholder="Ingrese la cantidad" required>
+    </div>
+
+
+    <!-- Botones -->
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a href="{{route('detalleVe.index')}}" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>
+@endsection

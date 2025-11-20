@@ -14,8 +14,8 @@ class EmpleadoController extends Controller
 
     public function index()
     {
-        $empleados= empleado::all();
-        return view('empleado.index')->with('empleados',$empleados);
+        $empleados = empleado::all();
+        return view('empleado.index')->with('empleados', $empleados);
     }
     /**
      * Show the form for creating a new resource.
@@ -24,8 +24,9 @@ class EmpleadoController extends Controller
      */
     public function create()
     {
-        $tipos=TipoEmpleado::all();
-        return view('empleado.create',compact('tipos'));
+        $tipos = TipoEmpleado::all();
+        $cuentas = User::all();
+        return view('empleado.create', compact('tipos', 'cuentas'));
     }
 
     /**
@@ -36,24 +37,16 @@ class EmpleadoController extends Controller
      */
     public function store(Request $request)
     {
-        $empleados = new Empleado();
-            $empleados->nombreEm = $request->get('nombreEm');
-            $empleados->apellidosEm = $request->get('apellidosEm');
-            $empleados->sueldoEm = $request->get('sueldoEm');
-            $empleados->telefonoEm = $request->get('telefonoEm');
-            $empleados->direccion = $request->get('direccion');
-            $empleados->id_tipoE = $request->get('id_tipoE');
-            
-            $empleados->save();
 
-        return redirect('/empleado');    
+        $empleados = Empleado::create($request->all());
+        return redirect('/empleado');
     }
-    
+
     public function edit($id)
     {
-            $empleado= empleado::find($id);
-            $tipos=TipoEmpleado::all();
-            return view('empleado.edit',compact('empleado','tipos'));
+        $empleado = empleado::find($id);
+        $tipos = TipoEmpleado::all();
+        return view('empleado.edit', compact('empleado', 'tipos'));
     }
 
     public function update(request $request, $id)
@@ -66,17 +59,16 @@ class EmpleadoController extends Controller
         $empleado->telefonoEm = $request->get('telefonoEm');
         $empleado->direccion = $request->get('direccion');
         $empleado->id_tipoE = $request->get('id_tipoE');
-            
+
         $empleado->save();
 
-        return redirect('/empleado'); 
+        return redirect('/empleado');
     }
 
     public function destroy($id)
     {
-        $empleado= empleado::find($id);
+        $empleado = empleado::find($id);
         $empleado->delete();
         return redirect('/empleado');
     }
-   
 }

@@ -321,6 +321,13 @@ return [
             'can' => 'manage-blog',
         ],
         [
+            'text' => 'Usuarios',
+            'url' => '/user',
+            'icon' => 'far fa-fw fa-file',
+
+            'label_color' => 'success',
+        ],
+        [
             'text' => 'Empleados',
             'url' => '/empleado',
             'icon' => 'far fa-fw fa-file',

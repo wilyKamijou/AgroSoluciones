@@ -2,28 +2,46 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\almacen;
+use App\Models\cliente;
+use App\Models\detalleAlmacen;
 use App\Models\detalleVenta;
+use App\Models\producto;
+use App\Models\venta;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DetalleVentaController extends Controller
 {
     public function index()
     {
-        $detallesVentas = detalleVenta::all();
+        $detalleVs = detalleVenta::all();
         //return response()->json($detallesVentas);
-        return view('detalleVenta.index',compact('detalleVenta'));
+        return view('detalleVenta.index', compact('detalleVs'));
     }
 
-    public function show($id)
+    public function create()
     {
-        $detalleVenta = DetalleVenta::findOrFail($id);
-        return response()->json($detalleVenta);
+        $ventas = venta::all();
+        $detalleAs = detalleAlmacen::all();
+        $productos = producto::all();
+        $almacenes = almacen::all();
+        $clientes = cliente::all();
+        return view('detalleVenta.create', compact('ventas', 'detalleAs', 'productos', 'almacenes', 'clientes'));
     }
 
     public function store(Request $request)
     {
-        $detalleVenta = DetalleVenta::create($request->all());
-        return response()->json($detalleVenta, 201);
+
+        list($id_producto, $id_almacen) = explode('|', $request->idDal);
+        $dt = DetalleVenta::create();
+        $dt->cantidadDV = $request->cantidadDv;
+        $dt->precioDv = $request->precioDv;
+        $dt->id_venta = $request->id_venta;
+        $dt->id_producto = $id_producto;
+        $dt->id_almacen = $id_almacen;
+        $dt->save();
+        return redirect('/detalleVe');
     }
 
     public function update(Request $request, $id)
@@ -33,10 +51,13 @@ class DetalleVentaController extends Controller
         return response()->json($detalleVenta);
     }
 
-    public function destroy($id)
+    public function destroy($id1, $id2, $id3)
     {
-        $detalleVenta = DetalleVenta::findOrFail($id);
-        $detalleVenta->delete();
-        return response()->json(null, 204);
+        DB::table('detalle_ventas')
+            ->where('id_venta', $id1)
+            ->where('id_producto', $id2)
+            ->where('id_almacen', $id3)
+            ->delete();
+        return redirect('/detalleVe')->with('success', 'Registro eliminado correctamente.');
     }
 }
