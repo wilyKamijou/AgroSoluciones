@@ -15,7 +15,13 @@ class EmpleadoController extends Controller
     public function index()
     {
         $empleados = empleado::all();
-        return view('empleado.index')->with('empleados', $empleados);
+        $tipos = TipoEmpleado::all();
+        $cuentas = User::all();
+     return view('empleado.index', [
+            'empleados' => $empleados,
+            'tipos' => $tipos,
+            'cuentas' => $cuentas
+        ]);
     }
     /**
      * Show the form for creating a new resource.

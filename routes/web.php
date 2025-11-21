@@ -96,4 +96,11 @@ Route::middleware('auth')->group(function () {
     route::get('/detalleVe/{id1}/{id2}/editar', [DetalleVentaController::class, 'edit'])->name('home');
     route::Put('/detalleVe/{id1}/{id2}/actualizar', [DetalleVentaController::class, 'update'])->name('home');
     route::delete('/detalleVe/{id1}/{id2}/{id3}/eliminar', [DetalleVentaController::class, 'destroy'])->name('home');
+    //rutas para categoria de productos
+    route::get('/categoria', [CategoriaController::class, 'index'])->name('home');
+    route::get('/categoria/crear', [CategoriaController::class, 'create'])->name('home');
+    route::post('/categoria/guardar', [CategoriaController::class, 'store'])->name('home');
+    route::get('/categoria/{id}/editar', [CategoriaController::class, 'edit'])->name('home');
+    route::Put('/categoria/{id}/actualizar', [CategoriaController::class, 'update'])->name('home');
+    route::delete('/categoria/{id}/eliminar', [CategoriaController::class, 'destroy'])->name('home');
 });

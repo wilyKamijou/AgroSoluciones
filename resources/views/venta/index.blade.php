@@ -4,6 +4,7 @@
 
 <!-- Cargar CSS personalizado -->
 <link rel="stylesheet" href="{{ asset('css/ventas.css') }}">
+<link rel="stylesheet" href="{{ asset('css/custom.css') }}">
 <link rel="stylesheet" href="/css/custom.css">
     <section class="content-header">
         <h1 class="text-center mb-4">Gestión de Ventas</h1>

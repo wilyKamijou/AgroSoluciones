@@ -16,8 +16,13 @@ class DetalleVentaController extends Controller
     public function index()
     {
         $detalleVs = detalleVenta::all();
+        $ventas = venta::all();
+        $productos = producto::all();
+        $almacenes = almacen::all();
+        $clientes = cliente::all();
+        $detalleAs = detalleAlmacen::all();
         //return response()->json($detallesVentas);
-        return view('detalleVenta.index', compact('detalleVs'));
+        return view('detalleVenta.index', compact('detalleVs', 'ventas', 'productos', 'almacenes', 'clientes', 'detalleAs'));
     }
 
     public function create()

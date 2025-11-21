@@ -78,5 +78,100 @@
 
 .center-wrapper .card {
     width: 100%;
-    max-width: 10   00px;
+    max-width: 1000px;
+}
+
+/* ===== ESTILOS PARA TABLAS PEQUEÑAS ===== */
+
+/* Contenedor especial para tablas pequeñas */
+.table-container-small {
+    max-width: 1000px; /* Más estrecho que el general */
+    margin: 0 auto;
+}
+
+/* Tablas con 2-3 columnas se expanden mejor */
+.table-small {
+    min-width: 100%;
+    table-layout: fixed;
+}
+
+/* Para tablas de 2 columnas */
+.table-small.cols-2 th:nth-child(1),
+.table-small.cols-2 td:nth-child(1) {
+    width: 20%;
+}
+
+.table-small.cols-2 th:nth-child(2),
+.table-small.cols-2 td:nth-child(2) {
+    width: 60%;
+}
+
+.table-small.cols-2 th:nth-child(3),
+.table-small.cols-2 td:nth-child(3) {
+    width: 20%;
+}
+
+/* Para tablas de 3 columnas */
+.table-small.cols-3 th:nth-child(1),
+.table-small.cols-3 td:nth-child(1) {
+    width: 15%;
+}
+
+.table-small.cols-3 th:nth-child(2),
+.table-small.cols-3 td:nth-child(2) {
+    width: 50%;
+}
+
+.table-small.cols-3 th:nth-child(3),
+.table-small.cols-3 td:nth-child(3) {
+    width: 35%;
+}
+
+/* Asegurar que el contenido de celdas largas se maneje bien */
+.table-small td {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+/* Mejorar el espaciado en tablas pequeñas */
+.table-small th,
+.table-small td {
+    padding: 0.75rem 1rem;
+    vertical-align: middle;
+}
+
+/* Hacer los botones de acción más proporcionales */
+.table-small .btn-sm {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.8rem;
+}
+
+/* Card específica para contenido compacto */
+.card-compact {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* Ajustar el center-wrapper para contenido más compacto */
+.compact-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    padding: 0 20px;
+}
+
+.compact-wrapper .card {
+    width: 100%;
+    max-width: 1000px; /* Más compacto que el general */
+}
+
+/* Estilos para formularios compactos */
+.compact-form .col-md-12 {
+    margin-bottom: 1rem;
+}
+
+.compact-form .form-label {
+    font-weight: 700;
+    margin-bottom: 0.5rem;
 }
