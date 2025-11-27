@@ -396,7 +396,11 @@ return [
             ],
             'label_color' => 'success',
         ],
-
+        [
+            'text' => 'Poblacion de datos',
+            'url'  => '/poblacion',
+            'icon' => 'fas fa-database',
+        ],
         ['header' => 'account_settings'],
         [
             'text' => 'profile',

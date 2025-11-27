@@ -58,14 +58,23 @@
         </div>
 
         <!-- Card Tabla -->
-        <div class="card p-4 shadow-sm">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h4 class="mb-0">Lista de Detalles de Almacenes</h4>
-                 <div class="col-md-6">
-                    <input type="text" id="searchInput" class="form-control" placeholder="Buscar por producto, almacén o categoría...">
-                </div>
-            </div>
 
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="mb-0">Lista de Detalles de Almacenes</h4>
+        <div class="d-flex gap-2 align-items-center">
+            <!-- Barra de búsqueda -->
+            <div class="flex-grow-1" style="max-width: 300px;">
+                <input type="text" id="searchInput" class="form-control" placeholder="Buscar por producto, almacén...">
+            </div>
+            
+            <!-- Botón de PDF con texto corto -->
+            <a href="{{ url('/detalleAl/pdf') }}" class="btn btn-danger btn-sm">
+                <i class=""></i> PDF
+            </a>
+        </div>
+    </div>
+
+ 
     
             <div class="table-container-small">
                 <table class="table table-hover table-small cols-6" id="detallesTable">

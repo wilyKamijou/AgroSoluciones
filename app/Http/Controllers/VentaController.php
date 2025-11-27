@@ -7,9 +7,23 @@ use App\Models\cliente;
 use App\Models\empleado;
 use App\Models\Producto;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf; // Agregar esta línea
+
 
 class VentaController extends Controller
 {
+
+       // ✅ NUEVO MÉTODO PARA GENERAR PDF
+    public function downloadPDF()
+    {
+        $ventas = Venta::all();
+        $clientes = Cliente::all();
+        $empleados = Empleado::all();
+        
+        $pdf = Pdf::loadView('venta.pdf', compact('ventas', 'clientes', 'empleados'));
+        
+        return $pdf->download('reporte-ventas-' . date('Y-m-d') . '.pdf');
+    }
     public function index()
     {
         $ventas = Venta::all();

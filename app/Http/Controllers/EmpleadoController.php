@@ -8,9 +8,21 @@ use App\Models\TipoEmpleado;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Barryvdh\DomPDF\Facade\PDF; // Agregar esta línea
 
 class EmpleadoController extends Controller
 {
+        // ✅ NUEVO MÉTODO PARA GENERAR PDF
+    public function downloadPDF()
+    {
+        $empleados = Empleado::all();
+        $tipos = TipoEmpleado::all();
+        $cuentas = User::all();
+        
+        $pdf = PDF::loadView('empleado.pdf', compact('empleados', 'tipos', 'cuentas'));
+        
+        return $pdf->download('reporte-empleados-' . date('Y-m-d') . '.pdf');
+    }
 
     public function index()
     {

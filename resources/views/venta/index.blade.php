@@ -72,10 +72,17 @@
 
         <!-- Card Tabla -->
         <div class="card p-4 shadow-sm">
-            <div class="d-flex justify-content-between mb-3">
-                <h4>Lista de Ventas</h4>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="mb-0">Lista de Ventas</h4>
 
-                <input type="text" class="form-control w-25" placeholder="Buscar por nombre o cliente">
+                <div class="d-flex gap-2">
+
+                    <input type="text" class="form-control" placeholder="Buscar por nombre o cliente" style="width: 260px;">
+
+                    <a href="{{ url('/venta/pdf') }}" class="btn btn-danger d-flex align-items-center gap-1 px-3">
+                        <i class="bi bi-file-earmark-pdf"></i> PDF
+                    </a>
+                </div>
             </div>
 
             <table class="table table-hover">

@@ -5,11 +5,23 @@ namespace App\Http\Controllers;
 use App\Models\producto;
 use App\Models\categoria;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\PDF; // Agregar esta línea
 
 use function PHPUnit\Framework\returnSelf;
 
 class ProductoController extends Controller
 {
+      // ✅ NUEVO MÉTODO PARA GENERAR PDF
+    public function downloadPDF()
+    {
+        $productos = Producto::all();
+        $categorias = categoria::all();
+        
+        $pdf = PDF::loadView('producto.pdf', compact('productos', 'categorias'));
+        
+        return $pdf->download('reporte-productos-' . date('Y-m-d') . '.pdf');
+    }
+
     public function index()
     {
         $productos = Producto::all();

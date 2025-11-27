@@ -4,9 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Models\almacen;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\PDF; // Agregar esta línea
 
 class AlmacenController extends Controller
 {
+       // ✅ NUEVO MÉTODO PARA GENERAR PDF
+    public function downloadPDF(Request $request)
+    {
+        $almacens = Almacen::all();
+        
+        $pdf = PDF::loadView('almacen.pdf', compact('almacens'));
+        
+        // Si se solicita ver en el navegador
+        if ($request->has('action') && $request->action == 'view') {
+            return $pdf->stream('reporte-almacenes-' . date('Y-m-d') . '.pdf');
+        }
+        
+        // Por defecto descarga
+        return $pdf->download('reporte-almacenes-' . date('Y-m-d') . '.pdf');
+    }
     public function index()
     {
         $almacens = Almacen::all();

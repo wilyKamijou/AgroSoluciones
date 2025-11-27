@@ -90,13 +90,20 @@
 
         <!-- Card Tabla -->
         <div class="card p-4 shadow-sm">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h4 class="mb-0">Lista de Productos</h4>
-                        <div class="col-md-6">
-                    <input type="text" id="searchInput" class="form-control" placeholder="Buscar por nombre, categoría o descripción...">
-                </div>
-            </div>
-
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h4 class="mb-0">Lista de Empleados</h4>
+    <div class="d-flex gap-2 align-items-center">
+        <!-- Barra de búsqueda -->
+        <div class="flex-grow-1" style="max-width: 300px;">
+            <input type="text" id="searchInput" class="form-control" placeholder="Buscar por nombre, apellido o tipo...">
+        </div>
+        
+        <!-- Botón simple de PDF -->
+        <a href="{{ url('/empleado/pdf') }}" class="btn btn-danger btn-sm">
+            Descargar PDF
+        </a>
+    </div>
+</div>
             <div class="table-responsive">
                 <table class="table table-hover" id="productosTable">
                     <thead class="table-light">

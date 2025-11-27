@@ -10,9 +10,31 @@ use App\Models\producto;
 use App\Models\venta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf; // Agregar esta línea
 
 class DetalleVentaController extends Controller
 {
+
+        // ✅ NUEVO MÉTODO PARA GENERAR PDF
+    public function downloadPDF(Request $request)
+    {
+        $detalleVs = detalleVenta::all();
+        $ventas = venta::all();
+        $productos = producto::all();
+        $almacenes = almacen::all();
+        $clientes = cliente::all();
+        
+        $pdf = Pdf::loadView('detalleVenta.pdf', compact('detalleVs', 'ventas', 'productos', 'almacenes', 'clientes'));
+        
+        // Si se solicita ver en el navegador
+        if ($request->has('action') && $request->action == 'view') {
+            return $pdf->stream('reporte-detalles-venta-' . date('Y-m-d') . '.pdf');
+        }
+        
+        // Por defecto descarga
+        return $pdf->download('reporte-detalles-venta-' . date('Y-m-d') . '.pdf');
+    }
+
     public function index()
     {
         $detalleVs = detalleVenta::all();

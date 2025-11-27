@@ -175,3 +175,20 @@
     font-weight: 700;
     margin-bottom: 0.5rem;
 }
+
+.btn-pdf {
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    transition: .25s;
+}
+
+.btn-pdf:hover {
+    background: #dc3545;
+    color: white;
+    border-color: #dc3545;
+}
