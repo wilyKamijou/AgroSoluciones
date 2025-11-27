@@ -1,22 +1,24 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'AgroSoluciones')
 
 @section('content_header')
-  
-@stop
+
+@endsection
 
 @section('content')
-    
+@include('componentes.alerta')
 <div class="container">
-    @yield('contenido') 
-  </div>
+  @yield('contenido')
+</div>
 @stop
 
 @section('css')
-    
+
 @stop
 
 @section('js')
-    <script> console.log("Hi, I'm using the Laravel-AdminLTE package!"); </script>
+<script>
+  console.log("Hi, I'm using the Laravel-AdminLTE package!");
+</script>
 @stop

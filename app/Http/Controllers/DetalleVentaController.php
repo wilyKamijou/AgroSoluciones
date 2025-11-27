@@ -15,7 +15,7 @@ use Barryvdh\DomPDF\Facade\Pdf; // Agregar esta línea
 class DetalleVentaController extends Controller
 {
 
-        // ✅ NUEVO MÉTODO PARA GENERAR PDF
+    // ✅ NUEVO MÉTODO PARA GENERAR PDF
     public function downloadPDF(Request $request)
     {
         $detalleVs = detalleVenta::all();
@@ -23,14 +23,14 @@ class DetalleVentaController extends Controller
         $productos = producto::all();
         $almacenes = almacen::all();
         $clientes = cliente::all();
-        
+
         $pdf = Pdf::loadView('detalleVenta.pdf', compact('detalleVs', 'ventas', 'productos', 'almacenes', 'clientes'));
-        
+
         // Si se solicita ver en el navegador
         if ($request->has('action') && $request->action == 'view') {
             return $pdf->stream('reporte-detalles-venta-' . date('Y-m-d') . '.pdf');
         }
-        
+
         // Por defecto descarga
         return $pdf->download('reporte-detalles-venta-' . date('Y-m-d') . '.pdf');
     }
@@ -85,6 +85,6 @@ class DetalleVentaController extends Controller
             ->where('id_producto', $id2)
             ->where('id_almacen', $id3)
             ->delete();
-        return redirect('/detalleVe')->with('success', 'Registro eliminado correctamente.');
+        return redirect('/detalleAl')->with('success', 'Registro eliminado correctamente.');
     }
 }

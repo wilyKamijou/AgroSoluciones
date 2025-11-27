@@ -16,70 +16,70 @@
         <!-- Card de Registrar Producto -->
         <div class="card shadow-sm p-4 mb-4 card-compact">
             <h4 class="mb-3">Registrar Nuevo Producto</h4>
-            
+
             <form action="/producto/guardar" method="POST" class="compact-form">
                 @csrf
-                
+
                 <div class="row g-3">
                     <!-- Nombre -->
                     <div class="col-md-6">
                         <label class="form-label">Nombre del Producto</label>
                         <input type="text" name="nombrePr" class="form-control" placeholder="Ingrese el nombre del producto" required>
                     </div>
-                    
+
                     <!-- Nombre Técnico -->
                     <div class="col-md-6">
                         <label class="form-label">Nombre Técnico</label>
                         <input type="text" name="nombreTecnico" class="form-control" placeholder="Ingrese el nombre técnico del producto" required>
                     </div>
-                    
+
                     <!-- Descripción -->
                     <div class="col-md-12">
                         <label class="form-label">Descripción</label>
                         <input type="text" name="descripcionPr" class="form-control" placeholder="Ingrese la descripción del producto" required>
                     </div>
-                    
+
                     <!-- Composición Química -->
                     <div class="col-md-6">
                         <label class="form-label">Composición Química</label>
                         <input type="text" name="compocicionQuimica" class="form-control" placeholder="Ingrese la composición química" required>
                     </div>
-                    
+
                     <!-- Concentración Química -->
                     <div class="col-md-6">
                         <label class="form-label">Concentración Química</label>
                         <input type="text" name="consentracionQuimica" class="form-control" placeholder="Ingrese la concentración química" required>
                     </div>
-                    
+
                     <!-- Fecha Fabricación -->
                     <div class="col-md-4">
                         <label class="form-label">Fecha de Fabricación</label>
                         <input type="date" name="fechaFabricacion" class="form-control" required>
                     </div>
-                    
+
                     <!-- Fecha Vencimiento -->
                     <div class="col-md-4">
                         <label class="form-label">Fecha de Vencimiento</label>
                         <input type="date" name="fechaVencimiento" class="form-control" required>
                     </div>
-                    
+
                     <!-- Unidad de Medida -->
                     <div class="col-md-4">
                         <label class="form-label">Unidad de Medida</label>
                         <input type="text" name="unidadMedida" class="form-control" placeholder="Ej: kg, litros, unidades" required>
                     </div>
-                    
+
                     <!-- Categoría -->
                     <div class="col-md-6">
                         <label class="form-label">Categoría</label>
                         <select name="id_categoria" class="form-control" required>
                             <option value="" disabled selected>Seleccione la categoría</option>
                             @foreach ($categorias as $categoria)
-                                <option value="{{$categoria->id_categoria}}">{{$categoria->nombreCat}}</option>
+                            <option value="{{$categoria->id_categoria}}">{{$categoria->nombreCat}}</option>
                             @endforeach
                         </select>
                     </div>
-                    
+
                     <!-- Botones -->
                     <div class="col-md-12 mt-3">
                         <button type="submit" class="btn btn-primary">Guardar</button>
@@ -90,20 +90,20 @@
 
         <!-- Card Tabla -->
         <div class="card p-4 shadow-sm">
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h4 class="mb-0">Lista de Empleados</h4>
-    <div class="d-flex gap-2 align-items-center">
-        <!-- Barra de búsqueda -->
-        <div class="flex-grow-1" style="max-width: 300px;">
-            <input type="text" id="searchInput" class="form-control" placeholder="Buscar por nombre, apellido o tipo...">
-        </div>
-        
-        <!-- Botón simple de PDF -->
-        <a href="{{ url('/empleado/pdf') }}" class="btn btn-danger btn-sm">
-            Descargar PDF
-        </a>
-    </div>
-</div>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="mb-0">Lista de Productos</h4>
+                <div class="d-flex gap-2 align-items-center">
+                    <!-- Barra de búsqueda -->
+                    <div class="flex-grow-1" style="max-width: 300px;">
+                        <input type="text" id="searchInput" class="form-control" placeholder="Buscar por nombre, apellido o tipo...">
+                    </div>
+
+                    <!-- Botón simple de PDF -->
+                    <a href="{{ url('/empleado/pdf') }}" class="btn btn-danger btn-sm">
+                        Descargar PDF
+                    </a>
+                </div>
+            </div>
             <div class="table-responsive">
                 <table class="table table-hover" id="productosTable">
                     <thead class="table-light">
@@ -120,10 +120,10 @@
                     <tbody>
                         @foreach($productos as $producto)
                         @php
-                            $categoria = $categorias->firstWhere('id_categoria', $producto->id_categoria);
-                            $hoy = now();
-                            $vencimiento = \Carbon\Carbon::parse($producto->fechaVencimiento);
-                            $diasParaVencer = $hoy->diffInDays($vencimiento, false);
+                        $categoria = $categorias->firstWhere('id_categoria', $producto->id_categoria);
+                        $hoy = now();
+                        $vencimiento = \Carbon\Carbon::parse($producto->fechaVencimiento);
+                        $diasParaVencer = $hoy->diffInDays($vencimiento, false);
                         @endphp
                         <tr class="producto-row">
                             <td><strong>{{$producto->id_producto}}</strong></td>
@@ -138,30 +138,27 @@
                             </td>
                             <td>
                                 @if($categoria)
-                                    <span class="badge bg-info">{{$categoria->nombreCat}}</span>
+                                <span class="badge bg-info">{{$categoria->nombreCat}}</span>
                                 @else
-                                    <span class="badge bg-secondary">Sin categoría</span>
+                                <span class="badge bg-secondary">Sin categoría</span>
                                 @endif
                             </td>
                             <td>
-                                @if($diasParaVencer < 0)
-                                    <span class="badge bg-danger" title="Vencido">
-                                        <i class="bi bi-exclamation-triangle"></i> {{$producto->fechaVencimiento}}
+                                @if($diasParaVencer < 0) <span class="badge bg-danger" title="Vencido">
+                                    <i class="bi bi-exclamation-triangle"></i> {{$producto->fechaVencimiento}}
                                     </span>
-                                @elseif($diasParaVencer <= 30)
-                                    <span class="badge bg-warning" title="Por vencer ({{$diasParaVencer}} días)">
+                                    @elseif($diasParaVencer <= 30) <span class="badge bg-warning" title="Por vencer ({{$diasParaVencer}} días)">
                                         {{$producto->fechaVencimiento}}
-                                    </span>
-                                @else
-                                    <span class="badge bg-success">{{$producto->fechaVencimiento}}</span>
-                                @endif
+                                        </span>
+                                        @else
+                                        <span class="badge bg-success">{{$producto->fechaVencimiento}}</span>
+                                        @endif
                             </td>
                             <td class="d-flex gap-2">
-                                <a href="/producto/{{$producto->id_producto}}/editar" 
-                                   class="btn btn-primary btn-sm">
+                                <a href="/producto/{{$producto->id_producto}}/editar" class="btn btn-primary btn-sm">
                                     <i class="bi bi-pencil"></i>
                                 </a>
-                                
+
                                 <form action="/producto/{{$producto->id_producto}}/eliminar" method="POST">
                                     @csrf
                                     @method('delete')
@@ -181,22 +178,22 @@
 
 <!-- JavaScript para el buscador -->
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.getElementById('searchInput');
-    const tableRows = document.querySelectorAll('#productosTable .producto-row');
-    
-    searchInput.addEventListener('input', function() {
-        const searchTerm = this.value.toLowerCase().trim();
-        
-        tableRows.forEach(row => {
-            const rowText = row.textContent.toLowerCase();
-            if (rowText.includes(searchTerm)) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
-            }
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('searchInput');
+        const tableRows = document.querySelectorAll('#productosTable .producto-row');
+
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase().trim();
+
+            tableRows.forEach(row => {
+                const rowText = row.textContent.toLowerCase();
+                if (rowText.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
         });
     });
-});
 </script>
 @endsection

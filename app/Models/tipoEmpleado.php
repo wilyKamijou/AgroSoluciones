@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class tipoEmpleado extends Model
 {
     use HasFactory;
-    protected $primaryKey='id_tipoE';
+    protected $primaryKey = 'id_tipoE';
     protected $fillable = [
         'descripcionTip'
     ];

@@ -6,19 +6,20 @@ use App\Models\producto;
 use App\Models\categoria;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\PDF; // Agregar esta línea
+use Illuminate\Support\Facades\DB;
 
 use function PHPUnit\Framework\returnSelf;
 
 class ProductoController extends Controller
 {
-      // ✅ NUEVO MÉTODO PARA GENERAR PDF
+    // ✅ NUEVO MÉTODO PARA GENERAR PDF
     public function downloadPDF()
     {
         $productos = Producto::all();
         $categorias = categoria::all();
-        
+
         $pdf = PDF::loadView('producto.pdf', compact('productos', 'categorias'));
-        
+
         return $pdf->download('reporte-productos-' . date('Y-m-d') . '.pdf');
     }
 
@@ -26,13 +27,13 @@ class ProductoController extends Controller
     {
         $productos = Producto::all();
         $categorias = categoria::all();
-        return view('producto.index' , compact('productos','categorias'));
+        return view('producto.index', compact('productos', 'categorias'));
     }
 
     public function create()
     {
-        $categorias=categoria::all();
-        return view('producto.create')->with('categorias',$categorias);
+        $categorias = categoria::all();
+        return view('producto.create')->with('categorias', $categorias);
     }
 
     public function store(Request $request)
@@ -45,10 +46,10 @@ class ProductoController extends Controller
     {
         $producto = Producto::findOrFail($id);
         $categorias = categoria::all();
-        return view('producto.edit', compact('producto','categorias'));
+        return view('producto.edit', compact('producto', 'categorias'));
     }
 
-    
+
     public function update(Request $request, $id)
     {
         $producto = Producto::findOrFail($id);
@@ -58,8 +59,14 @@ class ProductoController extends Controller
 
     public function destroy($id)
     {
+        $ex = DB::table('detalle_almacens')
+            ->where('id_producto', $id)
+            ->exists();
+        if ($ex) {
+            return redirect()->back()->with('error', 'No se puede eliminar porque esta asociado a los detalles de los almacenes.');
+        }
         $producto = Producto::findOrFail($id);
         $producto->delete();
-        return redirect('/producto');
+        return redirect()->back()->with('success', 'Producto eliminado correctamente.');
     }
 }
