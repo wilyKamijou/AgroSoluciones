@@ -112,8 +112,12 @@
                             <th>Nombre</th>
                             <th>Nombre Técnico</th>
                             <th>Descripción</th>
+                            <th>Composición Química</th>
+                            <th>Concentración Química</th>
+                            <th>Fecha fabricación</th>
+                            <th>Fecha Vencimiento</th>
+                            <th>Unidad medida</th>
                             <th>Categoría</th>
-                            <th>F. Vencimiento</th>
                             <th>Opciones</th>
                         </tr>
                     </thead>
@@ -128,21 +132,15 @@
                         <tr class="producto-row">
                             <td><strong>{{$producto->id_producto}}</strong></td>
                             <td>{{$producto->nombrePr}}</td>
-                            <td>
-                                <small class="text-muted">{{$producto->nombreTecnico}}</small>
-                            </td>
+                            <td>{{$producto->nombreTecnico}}</td>
                             <td>
                                 <span class="texto-largo" title="{{$producto->descripcionPr}}">
                                     {{ Str::limit($producto->descripcionPr, 50) }}
                                 </span>
                             </td>
-                            <td>
-                                @if($categoria)
-                                <span class="badge bg-info">{{$categoria->nombreCat}}</span>
-                                @else
-                                <span class="badge bg-secondary">Sin categoría</span>
-                                @endif
-                            </td>
+                            <td>{{$producto->compocicionQuimica}}</td>
+                            <td>{{$producto->consentracionQuimica}}</td>
+                            <td>{{$producto->fechaFabricacion}}</td>
                             <td>
                                 @if($diasParaVencer < 0) <span class="badge bg-danger" title="Vencido">
                                     <i class="bi bi-exclamation-triangle"></i> {{$producto->fechaVencimiento}}
@@ -153,6 +151,14 @@
                                         @else
                                         <span class="badge bg-success">{{$producto->fechaVencimiento}}</span>
                                         @endif
+                            </td>
+                            <td>{{$producto->unidadMedida}}</td>
+                            <td>
+                                @if($categoria)
+                                <span class="badge bg-info">{{$categoria->nombreCat}}</span>
+                                @else
+                                <span class="badge bg-secondary">Sin categoría</span>
+                                @endif
                             </td>
                             <td class="d-flex gap-2">
                                 <a href="/producto/{{$producto->id_producto}}/editar" class="btn btn-primary btn-sm">
