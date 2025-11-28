@@ -53,15 +53,20 @@ class EmpleadoController extends Controller
     public function store(Request $request)
     {
         $ex = DB::table('empleados')
-            ->where('user_id', $request->user_id)
             ->where('nombreEm', $request->nombreEm)
             ->where('apellidosEm', $request->apellidosEm)
             ->exists();
         if ($ex) {
-            return redirect()->back()->with('error', 'No se puede guardar porque ya existe el empleado o la cuenta ya usada.');
+            return redirect()->back()->with('error', 'No se puede guardar porque el empleado ya existe.');
+        } else {
+            $ex = Empleado::where('user_id', $request->user_id)->exists();
+            if ($ex) {
+                return redirect()->back()->with('error', 'No se puede guardar porque la cuenta ya esta usada.');
+            } else {
+                $empleado = Empleado::create($request->all());
+                return redirect()->back()->with('success', 'Empleado guardado correctamente.');
+            }
         }
-        $empleados = Empleado::create($request->all());
-        return redirect()->back()->with('success', 'Empleado guardado correctamente.');
     }
 
     public function edit($id)
@@ -81,7 +86,38 @@ class EmpleadoController extends Controller
                 'empleados.id_empleado',
                 'empleados.user_id'
             )->first();
-        //FALTA SI SE CAMBUA DE NOMBRE O APELLDIO Y ESA COMBINACION NO EXISTE
+
+        //nuevo
+        if ($ex == null) {
+            $ve = Empleado::where('user_id', $request->user_id)->exists();
+            $empleado = Empleado::find($id);
+            if ($ve and $request->user_id != $empleado->user_id) {
+                return redirect()->back()->with('error', 'No se puede actulizar la cuenta ya se esta usando.');
+            } else {
+                $empleado->update($request->all());
+                return redirect('/empleado')->with('success', 'Empleado actulizado correctamente.');
+            }
+        } else {
+            if ($ex->id_empleado == $id and $ex->user_id == $request->user_id) {
+                $empleado = Empleado::find($id);
+                $empleado->update($request->all());
+                return redirect('/empleado')->with('success', 'Empleado actulizado correctamente.');
+            } else {
+                if ($ex->id_empleado == $id and $ex->user_id != $request->user_id) {
+                    $ve = Empleado::where('user_id', $request->user_id)->exists();
+                    if ($ve) {
+                        return redirect()->back()->with('error', 'No se puede actulizar la cuenta ya se esta usando.');
+                    } else {
+                        $empleado = Empleado::find($id);
+                        $empleado->update($request->all());
+                        return redirect('/empleado')->with('success', 'Empleado actulizado correctamente.');
+                    }
+                } else {
+                    return redirect()->back()->with('error', 'No se puede actulizar la cuenta ya se esta usando.');
+                }
+            }
+        }
+        /*FALTA SI SE CAMBUA DE NOMBRE O APELLDIO Y ESA COMBINACION NO EXISTE
         if ($ex == null) {
             $ve = Empleado::where('user_id', $request->user_id)->exists();
             if ($ve) {
@@ -124,7 +160,7 @@ class EmpleadoController extends Controller
                     }
                 }
             }
-        }
+        }*/
     }
 
     public function destroy($id)
