@@ -323,14 +323,21 @@ return [
         [
             'text' => 'Usuarios',
             'url' => '/user',
-            'icon' => 'far fa-fw fa-file',
+            'icon' => 'far fa-fw fa-user',
+
+            'label_color' => 'success',
+        ],
+                [
+            'text' => 'Clientes',
+            'url' => '/cliente',
+            'icon' => 'fas fa-users',
 
             'label_color' => 'success',
         ],
         [
             'text' => 'Empleados',
             
-            'icon' => 'far fa-user',
+            'icon' => 'far fa-address-book',
             'submenu' => [
                 [
                     'text' => 'Empleados',
@@ -343,13 +350,7 @@ return [
             ],
             'label_color' => 'success',
         ],
-        [
-            'text' => 'Clientes',
-            'url' => '/cliente',
-            'icon' => 'far fa-fw fa-file',
 
-            'label_color' => 'success',
-        ],
         [
             'text' => 'Ventas',
             'icon' => 'far fa-money-bill-alt',
@@ -401,70 +402,16 @@ return [
             'url'  => '/poblacion',
             'icon' => 'fas fa-database',
         ],
-        ['header' => 'account_settings'],
+        ['header' => 'Ajustes de la cuenta'],
         [
             'text' => 'profile',
-            'url' => 'admin/settings',
+            'url' => '/mi-cuenta/perfil',
             'icon' => 'fas fa-fw fa-user',
         ],
         [
             'text' => 'change_password',
-            'url' => 'admin/settings',
+            'url' => '/mi-cuenta/cambiar-password',
             'icon' => 'fas fa-fw fa-lock',
-        ],
-        [
-            'text' => 'multilevel',
-            'icon' => 'fas fa-fw fa-share',
-            'submenu' => [
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                ],
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                        ],
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                ],
-            ],
-        ],
-        ['header' => 'labels'],
-        [
-            'text' => 'important',
-            'icon_color' => 'red',
-            'url' => '#',
-        ],
-        [
-            'text' => 'warning',
-            'icon_color' => 'yellow',
-            'url' => '#',
-        ],
-        [
-            'text' => 'information',
-            'icon_color' => 'cyan',
-            'url' => '#',
         ],
     ],
 

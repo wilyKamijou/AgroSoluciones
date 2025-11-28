@@ -47,63 +47,132 @@
             </form>
         </div>
 
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h4 class="mb-0">Lista de Ventas</h4>
+            <div class="card p-4 shadow-sm">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="mb-0">Lista de Almacenes</h4>
 
-    <div class="d-flex gap-2">
+        <div class="d-flex gap-2 align-items-center">
+            <!-- Buscador -->
+            <div class="input-group" style="width: 300px;">
+                <input type="text" id="searchInput" class="form-control" placeholder="Buscar por nombre, descripción o dirección...">
+                <button class="btn btn-outline-secondary" type="button">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
 
-        <input type="text" class="form-control" placeholder="Buscar por nombre o cliente" style="width: 260px;">
+            <!-- Botones de acción -->
+            <a href="{{ url('/almacen/pdf') }}" class="btn btn-danger">
+                <i class="bi bi-file-earmark-pdf"></i> PDF
+            </a>
+        </div>
+    </div>
 
-        <a href="{{ url('/almacen/pdf') }}" class="btn btn-danger d-flex align-items-center gap-1 px-3">
-            <i class=""></i> PDF
-        </a>
+    <!-- Contador de resultados -->
+    <div class="mb-3">
+        <small class="text-muted" id="resultCount">
+            Mostrando {{ count($almacens) }} almacenes
+        </small>
+    </div>
+
+    <div class="table-container-small">
+        <table class="table table-hover table-small cols-5" id="almacenesTable">
+            <thead class="table-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Dirección</th>
+                    <th style="width: 140px;">Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($almacens as $almacen)
+                <tr class="almacen-row">
+                    <td><strong>{{$almacen->id_almacen}}</strong></td>
+                    <td>{{$almacen->nombreAl}}</td>
+                    <td>
+                        <span class="text-muted small">{{$almacen->descripcionAl}}</span>
+                    </td>
+                    <td>
+                        <small class="text-muted">{{$almacen->direccionAl}}</small>
+                    </td>
+                    <td>
+                        <div class="d-flex gap-2">
+                            <a href="/almacen/{{$almacen->id_almacen}}/editar" 
+                               class="btn btn-primary btn-sm">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            
+                            <form action="/almacen/{{$almacen->id_almacen}}/eliminar" method="POST">
+                                @csrf
+                                @method('delete')
+                                <button type="submit" class="btn btn-danger btn-sm"
+                                        onclick="return confirm('¿Estás seguro de eliminar este almacén?')">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
 </div>
-           
-
-
-            <div class="table-container-small">
-                <table class="table table-hover table-small cols-5">
-                    <thead class="table-light">
-                        <tr>
-                            <th>ID</th>
-                            <th>Nombre</th>
-                            <th>Descripción</th>
-                            <th>Dirección</th>
-                            <th>Opciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($almacens as $almacen)
-                        <tr>
-                            <td><strong>{{$almacen->id_almacen}}</strong></td>
-                            <td>{{$almacen->nombreAl}}</td>
-                            <td>
-                                <span class="text-muted small">{{$almacen->descripcionAl}}</span>
-                            </td>
-                            <td>
-                                <small class="text-muted">{{$almacen->direccionAl}}</small>
-                            </td>
-                            <td class="d-flex gap-2">
-                                <a href="/almacen/{{$almacen->id_almacen}}/editar" 
-                                   class="btn btn-primary btn-sm">
-                                    <i class="bi bi-pencil"></i> Editar
-                                </a>
-                                
-                                <form action="/almacen/{{$almacen->id_almacen}}/eliminar" method="POST">
-                                    @csrf
-                                    @method('delete')
-                                    <button type="submit" class="btn btn-danger btn-sm">
-                                        <i class="bi bi-trash"></i> Eliminar
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
         </div>
     </section>
 </div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('searchInput');
+    const resultCount = document.getElementById('resultCount');
+    const tableRows = document.querySelectorAll('#almacenesTable .almacen-row');
+    const totalAlmacenes = tableRows.length;
+    
+    function updateSearch() {
+        const searchTerm = searchInput.value.toLowerCase().trim();
+        let visibleCount = 0;
+        
+        tableRows.forEach(row => {
+            const id = row.cells[0].textContent.toLowerCase();
+            const nombre = row.cells[1].textContent.toLowerCase();
+            const descripcion = row.cells[2].textContent.toLowerCase();
+            const direccion = row.cells[3].textContent.toLowerCase();
+            
+            // Búsqueda en todos los campos relevantes
+            const match = id.includes(searchTerm) || 
+                         nombre.includes(searchTerm) || 
+                         descripcion.includes(searchTerm) || 
+                         direccion.includes(searchTerm);
+            
+            if (match || searchTerm === '') {
+                row.style.display = '';
+                visibleCount++;
+            } else {
+                row.style.display = 'none';
+            }
+        });
+        
+        // Actualizar contador
+        if (searchTerm === '') {
+            resultCount.textContent = `Mostrando ${totalAlmacenes} almacenes`;
+        } else {
+            resultCount.textContent = `Encontrados ${visibleCount} de ${totalAlmacenes} almacenes`;
+        }
+    }
+    
+    searchInput.addEventListener('input', updateSearch);
+    
+    // Buscar con Enter
+    searchInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            updateSearch();
+        }
+    });
+    
+    // Focus al buscador al cargar la página
+    searchInput.focus();
+});
+</script>
 @endsection

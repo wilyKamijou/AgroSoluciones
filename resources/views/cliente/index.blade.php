@@ -1,49 +1,134 @@
 @extends('home')
 
 @section('contenido')
-<title>Botón con Ícono - Bootstrap</title>
-<!-- Bootstrap CSS -->
+
+<!-- Cargar CSS personalizado -->
+<link rel="stylesheet" href="{{ asset('css/custom.css') }}">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-<!-- Bootstrap Icons -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 
+<section class="content-header">
+    <h1 class="text-center mb-4">Gestión de Clientes</h1>
+</section>
 
-<h2 style="font-size: 5rem; font-family:'Times New Roman', Times, serif" class="text-center">Lista De Clientes</h2>
-<a href="/home" class="btn btn-primary"><i class="bi bi-arrow-left"></i> Volver</a>
-<a href="/cliente/crear" class="btn btn-primary"> Crear +</a>
+<div class="center-wrapper">
+    <section class="content">
+        <!-- Card de Registrar Cliente -->
+        <div class="card shadow-sm p-4 mb-4">
+            <h4 class="mb-3">Registrar Nuevo Cliente</h4>
+            
+            <form action="/cliente/guardar" method="POST" class="row g-3">
+                @csrf
+                
+                <!-- Nombre -->
+                <div class="col-md-4">
+                    <label class="form-label">Nombre</label>
+                    <input type="text" name="nombreCl" class="form-control" placeholder="Ingrese el nombre del cliente" required>
+                </div>
+                
+                <!-- Apellidos -->
+                <div class="col-md-4">
+                    <label class="form-label">Apellidos</label>
+                    <input type="text" name="apellidosCl" class="form-control" placeholder="Ingrese los apellidos del cliente" required>
+                </div>
+                
+                <!-- Teléfono -->
+                <div class="col-md-4">
+                    <label class="form-label">Teléfono</label>
+                    <input type="number" name="telefonoCl" class="form-control" placeholder="Ingrese el teléfono del cliente" required>
+                </div>
+                
+                <!-- Botones -->
+                <div class="col-md-12 mt-3">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <a href="/cliente" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
 
+        <!-- Card Tabla -->
+        <div class="card p-4 shadow-sm">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="mb-0">Lista de Clientes</h4>
+        
+        <div class="d-flex gap-2 align-items-center">
+            <!-- Buscador -->
+            <div class="input-group" style="width: 300px;">
+                <input type="text" id="searchInput" class="form-control" placeholder="Buscar por nombre o apellido...">
+                <button class="btn btn-outline-secondary" type="button">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+            
+            
+        </div>
+    </div>
 
-<table class="table table-dark table-striped mt-4">
-    <thead>
-        <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Apellidos</th>
-            <th scope="col">Telefono</th>
-            <th scope="col">Opciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach($clientes as $cliente)
-        <tr>
-            <td>{{$cliente->id_cliente}}</td>
-            <td>{{$cliente->nombreCl}}</td>
-            <td>{{$cliente->apellidosCl}}</td>
-            <td>{{$cliente->telefonoCl}}</td>
-            <td>
+    <div class="table-responsive">
+        <table class="table table-hover" id="clientesTable">
+            <thead class="table-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Apellidos</th>
+                    <th>Teléfono</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($clientes as $cliente)
+                <tr class="cliente-row">
+                    <td><strong>{{$cliente->id_cliente}}</strong></td>
+                    <td>{{$cliente->nombreCl}}</td>
+                    <td>{{$cliente->apellidosCl}}</td>
+                    <td>{{$cliente->telefonoCl}}</td>
+                    <td class="d-flex gap-2">
+                        <a href="/cliente/{{$cliente->id_cliente}}/editar" 
+                           class="btn btn-primary btn-sm">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        
+                        <form action="/cliente/{{$cliente->id_cliente}}/eliminar" method="POST">
+                            @csrf
+                            @method('delete')
+                            <button type="submit" class="btn btn-danger btn-sm">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
+    </section>
+</div>
 
-                <form action="/cliente/{{$cliente->id_cliente}}/eliminar" method="POST">
-                    @CSRF
-                    @method('delete')
-                    <a href="/cliente/{{$cliente->id_cliente}}/editar" class="btn btn-info">Editar</a>
-                    <button type="submit" class="btn btn-danger">Eliminar</button>
-                </form>
-
-            </td>
-        </tr>
-        @endforeach
-    </tbody>
-</table>
-
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('searchInput');
+    const tableRows = document.querySelectorAll('#clientesTable .cliente-row');
+    
+    searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase().trim();
+        
+        tableRows.forEach(row => {
+            const nombre = row.cells[1].textContent.toLowerCase();
+            const apellidos = row.cells[2].textContent.toLowerCase();
+            const telefono = row.cells[3].textContent.toLowerCase();
+            
+            // Buscar en nombre, apellidos y teléfono
+            if (nombre.includes(searchTerm) || 
+                apellidos.includes(searchTerm) || 
+                telefono.includes(searchTerm)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+});
+</script>   
 
 @endsection
