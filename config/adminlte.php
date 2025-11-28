@@ -64,7 +64,7 @@ return [
     */
 
     'logo' => '<b>Agro</b>Soluciones',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo_img' => 'https://i.ibb.co/6cc0HDTt/Copilot-20251128-140723.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -404,12 +404,12 @@ return [
         ],
         ['header' => 'Ajustes de la cuenta'],
         [
-            'text' => 'profile',
+            'text' => 'Mi Perfil',
             'url' => '/mi-cuenta/perfil',
             'icon' => 'fas fa-fw fa-user',
         ],
         [
-            'text' => 'change_password',
+            'text' => 'Cambiar Contraseña',
             'url' => '/mi-cuenta/cambiar-password',
             'icon' => 'fas fa-fw fa-lock',
         ],

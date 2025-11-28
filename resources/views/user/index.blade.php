@@ -28,6 +28,7 @@
     .user-row:hover {
         background-color: rgba(0, 0, 0, 0.02);
     }
+
 </style>
 
 <section class="content-header">

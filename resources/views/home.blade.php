@@ -1,9 +1,15 @@
 @extends('adminlte::page')
 
 @section('title', 'AgroSoluciones')
-
+<link rel="icon" type="image/png" href="https://i.ibb.co/6cc0HDTt/Copilot-20251128-140723.png"> 
 @section('content_header')
-
+    <!-- Favicon -->
+    
+    
+    
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 @endsection
 
 @section('content')
@@ -15,7 +21,7 @@
 
 @section('css')
 
-@stop
+@stop 
 
 @section('js')
 <script>

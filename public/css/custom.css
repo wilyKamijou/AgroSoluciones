@@ -253,3 +253,13 @@ body {
 .alert {
     margin: 10px 20px;
 }
+.main-sidebar {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    overflow-y: auto;
+}
+.content-wrapper {
+    margin-left: 250px; /* ajusta según el tamaño real de tu sidebar */
+}
