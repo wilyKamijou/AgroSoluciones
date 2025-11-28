@@ -65,8 +65,11 @@
             <!-- Barra de búsqueda -->
             <div class="flex-grow-1" style="max-width: 300px;">
                 <input type="text" id="searchInput" class="form-control" placeholder="Buscar por producto, almacén...">
+                
             </div>
-            
+                            <button class="btn btn-outline-secondary" type="button">
+                    <i class="bi bi-search"></i>
+                </button>
             <!-- Botón de PDF con texto corto -->
             <a href="{{ url('/detalleAl/pdf') }}" class="btn btn-danger btn-sm">
                 <i class=""></i> PDF

@@ -192,3 +192,64 @@
     color: white;
     border-color: #dc3545;
 }
+
+/* ===== CORRECCIONES PARA ADMINLTE ===== */
+
+/* Eliminar el footer/padding blanco inferior */
+.wrapper {
+    min-height: 100vh !important;
+}
+
+.content-wrapper {
+    min-height: calc(100vh - (tu-altura-del-header)) !important;
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+/* Eliminar márgenes y paddings globales no deseados */
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.main-footer {
+    display: none !important; /* Oculta el footer de AdminLTE si existe */
+}
+
+/* Asegurar que el contenido ocupe toda la altura */
+.hold-transition .content-wrapper {
+    min-height: 100vh !important;
+}
+
+/* Corregir el layout principal */
+.layout-fixed .wrapper {
+    height: 100vh;
+}
+
+/* Asegurar que el contenido no tenga espacios no deseados */
+.content {
+    min-height: auto !important;
+    padding: 20px !important;
+    margin: 0 !important;
+}
+
+/* Corrección específica para el center-wrapper */
+.center-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    min-height: auto;
+    padding: 20px;
+    margin: 0;
+}
+
+/* Eliminar cualquier espacio adicional en cards */
+.card {
+    margin-bottom: 0;
+}
+
+/* Asegurar que las alertas no creen espacio extra */
+.alert {
+    margin: 10px 20px;
+}

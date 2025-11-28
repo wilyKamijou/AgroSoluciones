@@ -78,63 +78,133 @@
         </div>
 
         <div class="card p-4 shadow-sm">
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h4 class="mb-0">Lista de Ventas</h4>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="mb-0">Lista de Detalles de Venta</h4>
 
-    <div class="d-flex gap-2">
+        <div class="d-flex gap-2 align-items-center">
+            <!-- Buscador -->
+            <div class="input-group" style="width: 300px;">
+                <input type="text" id="searchInput" class="form-control" placeholder="Buscar por precio, cantidad o ID...">
+                <button class="btn btn-outline-secondary" type="button">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
 
-        <input type="text" class="form-control" placeholder="Buscar por nombre o cliente" style="width: 260px;">
+            <!-- Botones de acción -->
+            <a href="{{ url('/detalleVe/pdf') }}" class="btn btn-danger">
+                <i class="bi bi-file-earmark-pdf"></i> PDF
+            </a>
+        </div>
+    </div>
 
-        <a href="{{ url('/detalleVe/pdf') }}" class="btn btn-danger d-flex align-items-center gap-1 px-3">
-            <i class=""></i> PDF
-        </a>
+    <!-- Contador de resultados -->
+    <div class="mb-3">
+        <small class="text-muted" id="resultCount">
+            Mostrando {{ count($detalleVs) }} detalles de venta
+        </small>
+    </div>
+
+    <div class="table-container-small">
+        <table class="table table-hover table-small cols-4" id="detallesTable">
+            <thead class="table-light">
+                <tr>
+                    <th>ID Detalle</th>
+                    <th>Precio Unitario</th>
+                    <th>Cantidad</th>
+                    <th style="width: 140px;">Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($detalleVs as $detalleV)
+                <tr class="detalle-row">
+                    <td>
+                        <small class="text-muted">Venta: {{$detalleV->id_venta}}</small><br>
+                        <small class="text-muted">Producto: {{$detalleV->id_producto}}</small><br>
+                        <small class="text-muted">Almacén: {{$detalleV->id_almacen}}</small>
+                    </td>
+                    <td>
+                        <strong>${{number_format($detalleV->precioDv, 2)}}</strong>
+                    </td>
+                    <td>
+                        <span class="badge bg-primary">{{$detalleV->cantidadDv}}</span>
+                    </td>
+                    <td>
+                        <div class="d-flex gap-2">
+                            <a href="#" class="btn btn-primary btn-sm">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            
+                            <form action="/detalleVe/{{$detalleV->id_venta}}/{{$detalleV->id_producto}}/{{$detalleV->id_almacen}}/eliminar" method="POST">
+                                @csrf
+                                @method('delete')
+                                <button type="submit" class="btn btn-danger btn-sm"
+                                        onclick="return confirm('¿Estás seguro de eliminar este detalle de venta?')">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
 </div>
-            </div>
-
-            <div class="table-container-small">
-                <table class="table table-hover table-small cols-4">
-                    <thead class="table-light">
-                        <tr>
-                            <th>ID Detalle</th>
-                            <th>Precio Unitario</th>
-                            <th>Cantidad</th>
-                            <th>Opciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($detalleVs as $detalleV)
-                        <tr>
-                            <td>
-                                <small class="text-muted">Venta: {{$detalleV->id_venta}}</small><br>
-                                <small class="text-muted">Producto: {{$detalleV->id_producto}}</small><br>
-                                <small class="text-muted">Almacén: {{$detalleV->id_almacen}}</small>
-                            </td>
-                            <td>
-                                <strong>${{number_format($detalleV->precioDv, 2)}}</strong>
-                            </td>
-                            <td>
-                                <span class="badge bg-primary">{{$detalleV->cantidadDv}}</span>
-                            </td>
-                            <td class="d-flex gap-2">
-                                <a href="#" class="btn btn-primary btn-sm">
-                                    <i class="bi bi-pencil"></i> Editar
-                                </a>
-                                
-                                <form action="/detalleVe/{{$detalleV->id_venta}}/{{$detalleV->id_producto}}/{{$detalleV->id_almacen}}/eliminar" method="POST">
-                                    @csrf
-                                    @method('delete')
-                                    <button type="submit" class="btn btn-danger btn-sm">
-                                        <i class="bi bi-trash"></i> Eliminar
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
     </section>
 </div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('searchInput');
+    const resultCount = document.getElementById('resultCount');
+    const tableRows = document.querySelectorAll('#detallesTable .detalle-row');
+    const totalDetalles = tableRows.length;
+    
+    function updateSearch() {
+        const searchTerm = searchInput.value.toLowerCase().trim();
+        let visibleCount = 0;
+        
+        tableRows.forEach(row => {
+            const idVenta = row.cells[0].textContent.toLowerCase();
+            const idProducto = row.cells[0].textContent.toLowerCase();
+            const idAlmacen = row.cells[0].textContent.toLowerCase();
+            const precio = row.cells[1].textContent.toLowerCase();
+            const cantidad = row.cells[2].textContent.toLowerCase();
+            
+            // Búsqueda en todos los campos relevantes
+            const match = idVenta.includes(searchTerm) || 
+                         idProducto.includes(searchTerm) || 
+                         idAlmacen.includes(searchTerm) || 
+                         precio.includes(searchTerm) || 
+                         cantidad.includes(searchTerm);
+            
+            if (match || searchTerm === '') {
+                row.style.display = '';
+                visibleCount++;
+            } else {
+                row.style.display = 'none';
+            }
+        });
+        
+        // Actualizar contador
+        if (searchTerm === '') {
+            resultCount.textContent = `Mostrando ${totalDetalles} detalles de venta`;
+        } else {
+            resultCount.textContent = `Encontrados ${visibleCount} de ${totalDetalles} detalles de venta`;
+        }
+    }
+    
+    searchInput.addEventListener('input', updateSearch);
+    
+    // Buscar con Enter
+    searchInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            updateSearch();
+        }
+    });
+    
+    // Focus al buscador al cargar la página
+    searchInput.focus();
+});
+</script>
 @endsection

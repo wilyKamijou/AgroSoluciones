@@ -1,48 +1,123 @@
 @extends('home')
 
 @section('contenido')
-<div class="container-fluid py-4">
-    <div class="card border-0 shadow-sm">
-        <div class="card-header bg-white">
-            <div class="d-flex justify-content-between align-items-center">
-                <h3 class="mb-0">
-                    <i class="fas fa-users-cog text-primary me-2"></i>Administración de Usuarios
-                </h3>
 
-                <div>
+<!-- Cargar CSS personalizado -->
+<link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 
-                    <a href="/home" class="btn btn-sm btn-outline-secondary me-2">
-                        <i class="fas fa-chevron-left me-1"></i> Volver
-                    </a>
-                    <a href="/user/crear" class="btn btn-sm btn-primary">
-                        <i class="fas fa-plus me-1"></i> Nuevo Usuario
-                    </a>
+<style>
+    .avatar-circle {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #e1f0ff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #3b7ddd;
+        font-weight: bold;
+        font-size: 14px;
+    }
+    
+    .bg-light-primary {
+        background-color: rgba(59, 125, 221, 0.1) !important;
+    }
+    
+    .user-row:hover {
+        background-color: rgba(0, 0, 0, 0.02);
+    }
+</style>
+
+<section class="content-header">
+    <h1 class="text-center mb-4">Gestión de Usuarios</h1>
+</section>
+
+<div class="center-wrapper">
+    <section class="content">
+        <!-- Card de Registrar Usuario -->
+        <div class="card shadow-sm p-4 mb-4">
+            <h4 class="mb-3">Registrar Nuevo Usuario</h4>
+            
+            <form action="/user/guardar" method="POST" class="row g-3">
+                @csrf
+                
+                <!-- Nombre -->
+                <div class="col-md-4">
+                    <label class="form-label">Nombre</label>
+                    <input type="text" name="name" class="form-control" placeholder="Ingrese el nombre del usuario" required>
                 </div>
-
-            </div>
+                
+                <!-- Correo -->
+                <div class="col-md-4">
+                    <label class="form-label">Correo Electrónico</label>
+                    <input type="email" name="email" class="form-control" placeholder="usuario@dominio.com" required>
+                </div>
+                
+                <!-- Contraseña -->
+                <div class="col-md-4">
+                    <label class="form-label">Contraseña</label>
+                    <input type="password" name="password" class="form-control" placeholder="Mínimo 8 caracteres" required minlength="8">
+                </div>
+                
+                <!-- Rol -->
+                <div class="col-md-6">
+                    <label class="form-label">Rol</label>
+                    <select name="role" class="form-control" required>
+                        <option value="" disabled selected>Seleccione el rol</option>
+                        <option value="admin">Administrador</option>
+                        <option value="cliente">Cliente</option>
+                    </select>
+                </div>
+                
+                <!-- Botones -->
+                <div class="col-md-12 mt-3">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <a href="/user" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
         </div>
 
-        <div class="card-body">
+        <!-- Card Tabla -->
+        <div class="card p-4 shadow-sm">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="mb-0">Lista de Usuarios</h4>
+                
+                <div class="d-flex gap-2 align-items-center">
+                    <!-- Buscador -->
+                    <div class="input-group" style="width: 300px;">
+                        <input type="text" id="searchInput" class="form-control" placeholder="Buscar por nombre o correo...">
+                        <button class="btn btn-outline-secondary" type="button">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                    
+                    
+   
+                </div>
+            </div>
+
             <div class="table-responsive">
-                <table class="table table-hover align-middle">
+                <table class="table table-hover" id="usersTable">
                     <thead class="table-light">
                         <tr>
-                            <th style="width: 5%">ID</th>
-                            <th style="width: 25%">Usuario</th>
-                            <th style="width: 25%">Correo</th>
-                            <th style="width: 15%">Rol</th>
-                            <th style="width: 10%">Estado</th>
-                            <th style="width: 20%" class="text-end">Acciones</th>
+                            <th>ID</th>
+                            <th>Usuario</th>
+                            <th>Correo</th>
+                            <th>Rol</th>
+                            <th>Estado</th>
+                            <th>Opciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($users as $user)
-                        <tr class="{{ $user->id === Auth::id() ? 'bg-light-primary' : '' }}">
-                            <td class="fw-bold text-muted">#{{ $user->id }}</td>
+                        <tr class="user-row {{ $user->id === Auth::id() ? 'bg-light-primary' : '' }}">
+                            <td><strong>#{{ $user->id }}</strong></td>
                             <td>
                                 <div class="d-flex align-items-center">
                                     <div class="avatar-circle me-3">
-                                        <span class="initials">{{ substr($user->name, 0, 1) }}</span>
+                                        <span>{{ substr($user->name, 0, 1) }}</span>
                                     </div>
                                     <div>
                                         <div class="fw-semibold">{{ $user->name }}</div>
@@ -52,197 +127,70 @@
                             </td>
                             <td>
                                 <div>{{ $user->email }}</div>
-                                <small class="text-muted">Último acceso: {{ $user->last_login_at ? $user->last_login_at->diffForHumans() : 'Nunca' }}</small>
+                                <small class="text-muted">
+                                    Último acceso: {{ $user->last_login_at ? $user->last_login_at->diffForHumans() : 'Nunca' }}
+                                </small>
                             </td>
                             <td>
-                                <span class="badge {{ $user->role === 'admin' ? 'bg-danger-light text-danger' : 'bg-primary-light text-primary' }}">
-                                    <i class="fas {{ $user->role === 'admin' ? 'fa-user-shield' : 'fa-user' }} me-1"></i>
+                                <span class="badge {{ $user->role === 'admin' ? 'bg-danger' : 'bg-primary' }}">
+                                    <i class="bi {{ $user->role === 'admin' ? 'bi-shield-check' : 'bi-person' }} me-1"></i>
                                     {{ ucfirst($user->role) }}
                                 </span>
                             </td>
                             <td>
-                                <span class="badge bg-success-light text-success">
-                                    <i class="fas fa-check-circle me-1"></i> Activo
+                                <span class="badge bg-success">
+                                    <i class="bi bi-check-circle me-1"></i> Activo
                                 </span>
                             </td>
-                            <td class="text-end">
-                                <div class="btn-group btn-group-sm" role="group">
-                                    <a href="/user/{{ $user->id }}/editar" class="btn btn-outline-primary rounded-start" data-bs-toggle="tooltip" title="Editar usuario">
-                                        <i class="fas fa-pen"></i>
-                                    </a>
-
-
-                                </div>
+                            <td class="d-flex gap-2">
+                                <a href="/user/{{ $user->id }}/editar" 
+                                   class="btn btn-primary btn-sm">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                
+                                @if($user->id !== Auth::id())
+                                <form action="/user/{{ $user->id }}/eliminar" method="POST">
+                                    @csrf
+                                    @method('delete')
+                                    <button type="submit" class="btn btn-danger btn-sm" 
+                                            onclick="return confirm('¿Estás seguro de eliminar este usuario?')">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                                @else
+                                <button class="btn btn-secondary btn-sm" disabled>
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                                @endif
                             </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
-
-            <div class="card-footer bg-white text-center py-3">
-                <div class="text-muted">
-                    Total de usuarios registrados: {{ count($users) }}
-                </div>
-            </div>
         </div>
-    </div>
+    </section>
 </div>
 
-<!-- Modal de confirmación -->
-<div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalTitle">Confirmar acción</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" id="modalBody">
-                ¿Estás seguro de realizar esta acción?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" id="confirmAction">Confirmar</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Formularios ocultos -->
-<form id="actionForm" method="POST" style="display: none;">
-    @csrf
-</form>
-@endsection
-
-@push('css')
-<style>
-    .card {
-        border-radius: 0.5rem;
-        overflow: hidden;
-    }
-
-    .avatar-circle {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        background-color: #e1f0ff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #3b7ddd;
-        font-weight: bold;
-    }
-
-    .bg-light-primary {
-        background-color: rgba(59, 125, 221, 0.1);
-    }
-
-    .bg-primary-light {
-        background-color: rgba(59, 125, 221, 0.1);
-    }
-
-    .bg-danger-light {
-        background-color: rgba(220, 53, 69, 0.1);
-    }
-
-    .bg-success-light {
-        background-color: rgba(25, 135, 84, 0.1);
-    }
-
-    .bg-secondary-light {
-        background-color: rgba(108, 117, 125, 0.1);
-    }
-
-    .badge {
-        padding: 0.35em 0.65em;
-        font-weight: 500;
-    }
-
-    .btn-group-sm .btn {
-        padding: 0.25rem 0.5rem;
-    }
-
-    .table-hover tbody tr:hover {
-        background-color: rgba(0, 0, 0, 0.02);
-    }
-</style>
-@endpush
-
-@push('js')@push('js')
+<!-- JavaScript para el buscador -->
 <script>
-    // Inicializar tooltips
-    document.addEventListener('DOMContentLoaded', function() {
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-        var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl);
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('searchInput');
+    const tableRows = document.querySelectorAll('#usersTable .user-row');
+    
+    searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase().trim();
+        
+        tableRows.forEach(row => {
+            const rowText = row.textContent.toLowerCase();
+            if (rowText.includes(searchTerm)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
         });
     });
-
-    // Función para cambiar rol (manteniendo la existente)
-    function changeRole(userId, currentRole) {
-        const modal = new bootstrap.Modal(document.getElementById('confirmModal'));
-        document.getElementById('modalTitle').textContent = 'Cambiar rol de usuario';
-        document.getElementById('modalBody').textContent = `¿Estás seguro de ${currentRole === 'admin' ? 'quitar privilegios de administrador' : 'convertir en administrador'} a este usuario?`;
-
-        document.getElementById('confirmAction').onclick = function() {
-            const form = document.getElementById('actionForm');
-            form.action = `/user/${userId}/cambiar-rol`;
-            form.submit();
-        };
-
-        modal.show();
-    }
-
-    // Función corregida para eliminar usuario
-    function confirmDelete(userId) {
-        const modalElement = document.getElementById('confirmModal');
-        const modal = new bootstrap.Modal(modalElement);
-
-        // Configurar el contenido del modal
-        document.getElementById('modalTitle').textContent = 'Eliminar usuario';
-        document.getElementById('modalBody').textContent = '¿Estás seguro de eliminar este usuario? Esta acción no se puede deshacer.';
-
-        // Limpiar eventos previos
-        const confirmBtn = document.getElementById('confirmAction');
-        const cancelBtn = modalElement.querySelector('.btn-secondary');
-
-        // Limpiar eventos anteriores
-        confirmBtn.onclick = null;
-        cancelBtn.onclick = null;
-
-        // Configurar nuevo evento para Confirmar
-        confirmBtn.onclick = function() {
-            const form = document.createElement('form');
-            form.method = 'POST';
-            form.action = `/user/${userId}/eliminar`;
-
-            // Añadir CSRF token y método DELETE
-            const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
-            const csrfInput = document.createElement('input');
-            csrfInput.type = 'hidden';
-            csrfInput.name = '_token';
-            csrfInput.value = csrfToken;
-            form.appendChild(csrfInput);
-
-            const methodInput = document.createElement('input');
-            methodInput.type = 'hidden';
-            methodInput.name = '_method';
-            methodInput.value = 'DELETE';
-            form.appendChild(methodInput);
-
-            document.body.appendChild(form);
-            form.submit();
-
-            modal.hide();
-        };
-
-        // Configurar evento para Cancelar
-        cancelBtn.onclick = function() {
-            modal.hide();
-        };
-
-        // Mostrar el modal
-        modal.show();
-    }
+});
 </script>
-@endpush
+
+@endsection

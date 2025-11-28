@@ -50,6 +50,11 @@ Route::middleware('auth')->group(function () {
     route::Put('/empleado/{id}/actualizar', [EmpleadoController::class, 'update'])->name('home');
     route::delete('/empleado/{id}/eliminar', [EmpleadoController::class, 'destroy'])->name('home');
     Route::get('/empleado/pdf', [EmpleadoController::class, 'downloadPDF'])->name('empleado.pdf');
+    
+    // Rutas para gestión de cuenta
+    Route::get('/mi-cuenta/perfil', [App\Http\Controllers\CuentaController::class, 'perfil'])->name('cuenta.perfil');
+    Route::get('/mi-cuenta/cambiar-password', [App\Http\Controllers\CuentaController::class, 'cambiarPassword'])->name('cuenta.password');
+    Route::post('/mi-cuenta/actualizar-password', [App\Http\Controllers\CuentaController::class, 'actualizarPassword'])->name('cuenta.actualizar-password');
     //rutas de venta
     route::get('/venta', [VentaController::class, 'index'])->name('home');
     route::get('/venta/crear', [VentaController::class, 'create'])->name('home');

@@ -72,57 +72,71 @@
 
         <!-- Card Tabla -->
         <div class="card p-4 shadow-sm">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h4 class="mb-0">Lista de Ventas</h4>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="mb-0">Lista de Ventas</h4>
 
-                <div class="d-flex gap-2">
-
-                    <input type="text" class="form-control" placeholder="Buscar por nombre o cliente" style="width: 260px;">
-
-                    <a href="{{ url('/venta/pdf') }}" class="btn btn-danger d-flex align-items-center gap-1 px-3">
-                        <i class="bi bi-file-earmark-pdf"></i> PDF
-                    </a>
-                </div>
+        <div class="d-flex gap-2 align-items-center">
+            <!-- Buscador -->
+            <div class="input-group" style="width: 300px;">
+                <input type="text" id="searchInput" class="form-control" placeholder="Buscar por empleado, cliente, monto o fecha...">
+                               <button class="btn btn-outline-secondary" type="button">
+                    <i class="bi bi-search"></i>
+                </button>
             </div>
 
-            <table class="table table-hover">
-                <thead class="table-light">
-                    <tr>
-                        <th>ID</th>
-                        <th>Fecha</th>
-                        <th>Monto Total</th>
-                        <th>Empleado</th>
-                        <th>Cliente</th>
-                        <th>Opciones</th>
-                    </tr>
-                </thead>
+            <!-- Botones de acción -->
+            <a href="{{ url('/venta/pdf') }}" class="btn btn-danger">
+                <i class="bi bi-file-earmark-pdf"></i> PDF
+            </a>
+        </div>
+    </div>
 
-                <tbody>
-                    @foreach($ventas as $venta)
-                    <tr>
-                        <td>{{ $venta->id_venta }}</td>
-                        <td>{{ $venta->fechaVe }}</td>
-                        <td>{{ $venta->montoTotalVe }}</td>
+    <!-- Contador de resultados -->
+    <div class="mb-3">
+        <small class="text-muted" id="resultCount">
+            Mostrando {{ count($ventas) }} ventas
+        </small>
+    </div>
 
-                        <td>
-                            @foreach($empleados as $empleado)
-                                @if($empleado->id_empleado == $venta->id_empleado)
-                                    {{ $empleado->nombreEm }} {{ $empleado->apellidosEm }}
-                                @endif
-                            @endforeach
-                        </td>
-
-                        <td>
-                            @foreach($clientes as $cliente)
-                                @if($cliente->id_cliente == $venta->id_cliente)
-                                    {{ $cliente->nombreCl }} {{ $cliente->apellidosCl }}
-                                @endif
-                            @endforeach
-                        </td>
-
-                        <td class="d-flex gap-2">
-
-                            <a href="/venta/{{ $venta->id_venta }}/editar"
+    <div class="table-responsive">
+        <table class="table table-hover" id="ventasTable">
+            <thead class="table-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Fecha</th>
+                    <th>Monto Total</th>
+                    <th>Empleado</th>
+                    <th>Cliente</th>
+                    <th style="width: 120px;">Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($ventas as $venta)
+                @php
+                    $empleadoVenta = $empleados->firstWhere('id_empleado', $venta->id_empleado);
+                    $clienteVenta = $clientes->firstWhere('id_cliente', $venta->id_cliente);
+                @endphp
+                <tr class="venta-row">
+                    <td><strong>{{ $venta->id_venta }}</strong></td>
+                    <td>{{ date('d/m/Y', strtotime($venta->fechaVe)) }}</td>
+                    <td>${{ number_format($venta->montoTotalVe, 2) }}</td>
+                    <td>
+                        @if($empleadoVenta)
+                            {{ $empleadoVenta->nombreEm }} {{ $empleadoVenta->apellidosEm }}
+                        @else
+                            <span class="text-danger">Empleado no encontrado</span>
+                        @endif
+                    </td>
+                    <td>
+                        @if($clienteVenta)
+                            {{ $clienteVenta->nombreCl }} {{ $clienteVenta->apellidosCl }}
+                        @else
+                            <span class="text-danger">Cliente no encontrado</span>
+                        @endif
+                    </td>
+                    <td>
+                        <div class="d-flex gap-2">
+                                                       <a href="/venta/{{ $venta->id_venta }}/editar"
                                class="btn btn-primary btn-sm">
                                 <i class="fas fa-edit"></i>
                             </a>
@@ -135,18 +149,72 @@
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </form>
-
-                        </td>
-
-                    </tr>
-                    @endforeach
-                </tbody>
-
-            </table>
-        </div>
+                        </div>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
 
     </section>
 
 </div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('searchInput');
+    const resultCount = document.getElementById('resultCount');
+    const tableRows = document.querySelectorAll('#ventasTable .venta-row');
+    const totalVentas = tableRows.length;
+    
+    function updateSearch() {
+        const searchTerm = searchInput.value.toLowerCase().trim();
+        let visibleCount = 0;
+        
+        tableRows.forEach(row => {
+            const id = row.cells[0].textContent.toLowerCase();
+            const fecha = row.cells[1].textContent.toLowerCase();
+            const monto = row.cells[2].textContent.toLowerCase();
+            const empleado = row.cells[3].textContent.toLowerCase();
+            const cliente = row.cells[4].textContent.toLowerCase();
+            
+            // Búsqueda inteligente en todos los campos
+            const match = id.includes(searchTerm) || 
+                         fecha.includes(searchTerm) || 
+                         monto.includes(searchTerm) || 
+                         empleado.includes(searchTerm) || 
+                         cliente.includes(searchTerm);
+            
+            if (match || searchTerm === '') {
+                row.style.display = '';
+                visibleCount++;
+            } else {
+                row.style.display = 'none';
+            }
+        });
+        
+        // Actualizar contador
+        if (searchTerm === '') {
+            resultCount.textContent = `Mostrando ${totalVentas} ventas`;
+        } else {
+            resultCount.textContent = `Encontradas ${visibleCount} de ${totalVentas} ventas`;
+        }
+    }
+    
+    searchInput.addEventListener('input', updateSearch);
+    
+    // Buscar con Enter
+    searchInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            updateSearch();
+        }
+    });
+    
+    // Focus al buscador al cargar la página
+    searchInput.focus();
+});
+</script>
 
 @endsection

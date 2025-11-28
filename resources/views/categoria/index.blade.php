@@ -48,6 +48,9 @@
                 <div class="col-md-6">
                     <input type="text" id="searchInput" class="form-control" placeholder="Buscar por nombre o descripción...">
                 </div>
+                                <button class="btn btn-outline-secondary" type="button">
+                    <i class="bi bi-search"></i>
+                </button>
             </div>
             
             <div class="table-container-small">
