@@ -104,31 +104,4 @@
 </div>
     </section>
 </div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.getElementById('searchInput');
-    const tableRows = document.querySelectorAll('#clientesTable .cliente-row');
-    
-    searchInput.addEventListener('input', function() {
-        const searchTerm = this.value.toLowerCase().trim();
-        
-        tableRows.forEach(row => {
-            const nombre = row.cells[1].textContent.toLowerCase();
-            const apellidos = row.cells[2].textContent.toLowerCase();
-            const telefono = row.cells[3].textContent.toLowerCase();
-            
-            // Buscar en nombre, apellidos y teléfono
-            if (nombre.includes(searchTerm) || 
-                apellidos.includes(searchTerm) || 
-                telefono.includes(searchTerm)) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
-            }
-        });
-    });
-});
-</script>   
-
 @endsection
