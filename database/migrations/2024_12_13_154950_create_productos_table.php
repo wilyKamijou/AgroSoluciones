@@ -21,6 +21,7 @@ return new class extends Migration
             $table->date('fechaFabricacion');
             $table->date('fechaVencimiento');
             $table->string('unidadMedida', 30);
+            $table->float('precioPr');
 
             $table->unsignedBigInteger('id_categoria');
             $table->foreign('id_categoria')->references('id_categoria')->on('categorias');

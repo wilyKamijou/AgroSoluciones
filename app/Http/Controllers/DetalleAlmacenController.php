@@ -53,28 +53,63 @@ class DetalleAlmacenController extends Controller
 
     public function store(Request $request)
     {
+        $ex = DB::table('detalle_almacens')
+            ->where('id_producto', $request->id_producto)
+            ->where('id_almacen', $request->id_almacen)
+            ->exists();
+        if ($ex) {
+            return redirect()->back()->with('error', 'No se puede guardar porque este detalle almacen ya existe.');
+        }
         $detalle = new  detalleAlmacen();
         $detalle->stock = $request->input('stock');
         $detalle->id_producto = $request->input('id_producto');
         $detalle->id_almacen = $request->input('id_almacen');
         $detalle->save();
-        return redirect('/detalleAl');
+        return redirect()->back()->with('success', 'Detalle de almacen guardado correctamente.');
     }
 
     public function update(Request $request, $id1, $id2)
     {
-
-        $detalle = DetalleAlmacen::where('id_producto', $id1)->where('id_almacen', $id2)->first();
-        $detalle->update($request->all());
-        return redirect('/detalleAl');
+        $ex = DB::table('detalle_almacens')
+            ->where('id_producto', $request->id_producto)
+            ->where('id_almacen', $request->id_almacen)
+            ->exists();
+        if ($ex) {
+            if ($id1 == $request->id_producto and $id2 == $request->id_almacen) {
+                $dt = DB::table('detalle_almacens')
+                    ->where('id_producto', $id1)
+                    ->where('id_almacen', $id2)
+                    ->update([
+                        'stock' => $request->stock
+                    ]);
+                return redirect('/detalleAl')->with('success', 'Detalle de almacen actulizado correctamente.');
+            }
+            return redirect()->back()->with('error', 'No se puede actulizar porque este detalle almacen ya existe.');
+        }
+        $dt = DB::table('detalle_almacens')
+            ->where('id_producto', $id1)
+            ->where('id_almacen', $id2)
+            ->update([
+                'id_producto' => $request->id_producto,
+                'id_almacen' => $request->id_almacen,
+                'stock' => $request->stock
+            ]);
+        return redirect('/detalleAl')->with('success', 'Detalle de almacen actulizado correctamente.');
     }
 
     public function destroy($id1, $id2)
     {
+        $ex = DB::table('detalle_ventas')
+            ->where('id_producto', $id1)
+            ->where('id_almacen', $id2)
+            ->exists();
+        if ($ex) {
+            return redirect()->back()->with('error', 'No se puede eliminar porque esta asociados a detalles de venta.');
+        }
         DB::table('detalle_almacens')
             ->where('id_producto', $id1)
             ->where('id_almacen', $id2)
             ->delete();
-        return redirect('/detalleVe')->with('success', 'Registro eliminado correctamente.');
+        return redirect()->back()->with('success', 'Detalle de almacen eliminado correctamente.');
     }
 }

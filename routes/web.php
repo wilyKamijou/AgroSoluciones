@@ -50,7 +50,7 @@ Route::middleware('auth')->group(function () {
     route::Put('/empleado/{id}/actualizar', [EmpleadoController::class, 'update'])->name('home');
     route::delete('/empleado/{id}/eliminar', [EmpleadoController::class, 'destroy'])->name('home');
     Route::get('/empleado/pdf', [EmpleadoController::class, 'downloadPDF'])->name('empleado.pdf');
-    
+
     // Rutas para gestión de cuenta
     Route::get('/mi-cuenta/perfil', [App\Http\Controllers\CuentaController::class, 'perfil'])->name('cuenta.perfil');
     Route::get('/mi-cuenta/cambiar-password', [App\Http\Controllers\CuentaController::class, 'cambiarPassword'])->name('cuenta.password');
@@ -108,13 +108,13 @@ Route::middleware('auth')->group(function () {
     route::Put('/detalleAl/{id1}/{id2}/actualizar', [DetalleAlmacenController::class, 'update'])->name('home');
     route::delete('/detalleAl/{id1}/{id2}/eliminar', [DetalleAlmacenController::class, 'destroy'])->name('home');
     Route::get('/detalleAl/pdf', [DetalleAlmacenController::class, 'downloadPDF'])->name('detalleAlmacen.pdf');
-    
+
     //rutas para detalle venta
     route::get('/detalleVe', [DetalleVentaController::class, 'index'])->name('home');
     route::get('/detalleVe/crear', [DetalleVentaController::class, 'create'])->name('home');
     route::post('/detalleVe/guardar', [DetalleVentaController::class, 'store'])->name('home');
-    route::get('/detalleVe/{id1}/{id2}/editar', [DetalleVentaController::class, 'edit'])->name('home');
-    route::Put('/detalleVe/{id1}/{id2}/actualizar', [DetalleVentaController::class, 'update'])->name('home');
+    route::get('/detalleVe/{id1}/{id2}/{id3}/editar', [DetalleVentaController::class, 'edit'])->name('home');
+    route::Put('/detalleVe/{id1}/{id2}/{id3}/actualizar', [DetalleVentaController::class, 'update'])->name('home');
     route::delete('/detalleVe/{id1}/{id2}/{id3}/eliminar', [DetalleVentaController::class, 'destroy'])->name('home');
     Route::get('/detalleVe/pdf', [DetalleVentaController::class, 'downloadPDF'])->name('detalleVenta.pdf');
     //rutas para categoria de productos
@@ -125,19 +125,19 @@ Route::middleware('auth')->group(function () {
     route::Put('/categoria/{id}/actualizar', [CategoriaController::class, 'update'])->name('home');
     route::delete('/categoria/{id}/eliminar', [CategoriaController::class, 'destroy'])->name('home');
     // Rutas para poblar datos
-Route::prefix('poblacion')->group(function () {
-    Route::get('/', [DataPoblacionController::class, 'index'])->name('poblacion.index');
-    Route::post('/tipo-empleado', [DataPoblacionController::class, 'poblarTipoEmpleado'])->name('poblacion.tipo-empleado');
-    Route::post('/usuarios', [DataPoblacionController::class, 'poblarUsuarios'])->name('poblacion.usuarios');
-    Route::post('/empleado', [DataPoblacionController::class, 'poblarEmpleado'])->name('poblacion.empleado');
-    Route::post('/cliente', [DataPoblacionController::class, 'poblarCliente'])->name('poblacion.cliente');
-    Route::post('/todo', [DataPoblacionController::class, 'poblarTodo'])->name('poblacion.todo');
-    Route::post('/limpiar', [DataPoblacionController::class, 'limpiarDatos'])->name('poblacion.limpiar');
+    Route::prefix('poblacion')->group(function () {
+        Route::get('/', [DataPoblacionController::class, 'index'])->name('poblacion.index');
+        Route::post('/tipo-empleado', [DataPoblacionController::class, 'poblarTipoEmpleado'])->name('poblacion.tipo-empleado');
+        Route::post('/usuarios', [DataPoblacionController::class, 'poblarUsuarios'])->name('poblacion.usuarios');
+        Route::post('/empleado', [DataPoblacionController::class, 'poblarEmpleado'])->name('poblacion.empleado');
+        Route::post('/cliente', [DataPoblacionController::class, 'poblarCliente'])->name('poblacion.cliente');
+        Route::post('/todo', [DataPoblacionController::class, 'poblarTodo'])->name('poblacion.todo');
+        Route::post('/limpiar', [DataPoblacionController::class, 'limpiarDatos'])->name('poblacion.limpiar');
         Route::post('/categorias', [DataPoblacionController::class, 'poblarCategorias'])->name('poblacion.categorias');
-    Route::post('/productos', [DataPoblacionController::class, 'poblarProductos'])->name('poblacion.productos');
-    Route::post('/almacenes', [DataPoblacionController::class, 'poblarAlmacenes'])->name('poblacion.almacenes');
-       Route::post('/detalle-almacen', [DataPoblacionController::class, 'poblarDetalleAlmacen'])->name('poblacion.detalle-almacen');
-    Route::post('/ventas', [DataPoblacionController::class, 'poblarVentas'])->name('poblacion.ventas');
-    Route::post('/detalle-venta', [DataPoblacionController::class, 'poblarDetalleVenta'])->name('poblacion.detalle-venta');
-});
+        Route::post('/productos', [DataPoblacionController::class, 'poblarProductos'])->name('poblacion.productos');
+        Route::post('/almacenes', [DataPoblacionController::class, 'poblarAlmacenes'])->name('poblacion.almacenes');
+        Route::post('/detalle-almacen', [DataPoblacionController::class, 'poblarDetalleAlmacen'])->name('poblacion.detalle-almacen');
+        Route::post('/ventas', [DataPoblacionController::class, 'poblarVentas'])->name('poblacion.ventas');
+        Route::post('/detalle-venta', [DataPoblacionController::class, 'poblarDetalleVenta'])->name('poblacion.detalle-venta');
+    });
 });

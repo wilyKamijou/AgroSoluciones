@@ -16,10 +16,10 @@
         <!-- Card de Registrar Detalle Venta -->
         <div class="card shadow-sm p-4 mb-4 card-compact">
             <h4 class="mb-3">Registrar Nuevo Detalle de Venta</h4>
-            
+
             <form action="/detalleVe/guardar" method="POST" class="compact-form">
                 @csrf
-                
+
                 <div class="row g-3">
                     <!-- Venta -->
                     <div class="col-md-6">
@@ -27,48 +27,48 @@
                         <select name="id_venta" class="form-control" required>
                             <option value="" disabled selected>Seleccione la venta</option>
                             @foreach ($ventas as $venta)
-                                @foreach ($clientes as $cliente)
-                                    @if($venta->id_cliente == $cliente->id_cliente)
-                                        <option value="{{$venta->id_venta}}">
-                                            {{$venta->id_venta}} - {{$cliente->nombreCl}} - {{$venta->fechaVe}}
-                                        </option>
-                                    @endif
-                                @endforeach
+                            @foreach ($clientes as $cliente)
+                            @if($venta->id_cliente == $cliente->id_cliente)
+                            <option value="{{$venta->id_venta}}">
+                                {{$venta->id_venta}} - {{$cliente->nombreCl}} - {{$venta->fechaVe}}
+                            </option>
+                            @endif
+                            @endforeach
                             @endforeach
                         </select>
                     </div>
-                    
+
                     <!-- Almacén y Producto -->
                     <div class="col-md-6">
                         <label class="form-label">Producto en Almacén</label>
                         <select name="idDal" class="form-control" required>
                             <option value="" disabled selected>Seleccione producto y almacén</option>
                             @foreach($detalleAs as $detalleA)
-                                @foreach($productos as $producto)
-                                    @foreach($almacenes as $almacen)
-                                        @if (($detalleA->id_almacen == $almacen->id_almacen) and ($detalleA->id_producto == $producto->id_producto))
-                                            <option value="{{$detalleA->id_producto}}|{{$detalleA->id_almacen}}">
-                                                {{$producto->nombrePr}} - {{$almacen->nombreAl}}
-                                            </option>
-                                        @endif
-                                    @endforeach
-                                @endforeach
+                            @foreach($productos as $producto)
+                            @foreach($almacenes as $almacen)
+                            @if (($detalleA->id_almacen == $almacen->id_almacen) and ($detalleA->id_producto == $producto->id_producto))
+                            <option value="{{$detalleA->id_producto}}|{{$detalleA->id_almacen}}">
+                                {{$producto->nombrePr}} - {{$almacen->nombreAl}}
+                            </option>
+                            @endif
+                            @endforeach
+                            @endforeach
                             @endforeach
                         </select>
                     </div>
-                    
+
                     <!-- Precio -->
                     <div class="col-md-4">
                         <label class="form-label">Precio Unitario</label>
-                        <input type="number" step="0.01" name="precioDv" class="form-control" placeholder="Ingrese el precio" required>
+                        <input type="text" step="0.01" name="precioDv" class="form-control" placeholder="Ingrese el precio" required>
                     </div>
-                    
+
                     <!-- Cantidad -->
                     <div class="col-md-4">
                         <label class="form-label">Cantidad</label>
-                        <input type="number" name="cantidadDv" class="form-control" placeholder="Ingrese la cantidad" required>
+                        <input type="text" name="cantidadDv" class="form-control" placeholder="Ingrese la cantidad" required>
                     </div>
-                    
+
                     <!-- Botones -->
                     <div class="col-md-4 d-flex align-items-end">
                         <button type="submit" class="btn btn-primary me-2">Guardar</button>
@@ -78,133 +78,132 @@
         </div>
 
         <div class="card p-4 shadow-sm">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h4 class="mb-0">Lista de Detalles de Venta</h4>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="mb-0">Lista de Detalles de Venta</h4>
 
-        <div class="d-flex gap-2 align-items-center">
-            <!-- Buscador -->
-            <div class="input-group" style="width: 300px;">
-                <input type="text" id="searchInput" class="form-control" placeholder="Buscar por precio, cantidad o ID...">
-                <button class="btn btn-outline-secondary" type="button">
-                    <i class="bi bi-search"></i>
-                </button>
+                <div class="d-flex gap-2 align-items-center">
+                    <!-- Buscador -->
+                    <div class="input-group" style="width: 300px;">
+                        <input type="text" id="searchInput" class="form-control" placeholder="Buscar por precio, cantidad o ID...">
+                        <button class="btn btn-outline-secondary" type="button">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+
+                    <!-- Botones de acción -->
+                    <a href="{{ url('/detalleVe/pdf') }}" class="btn btn-danger">
+                        <i class="bi bi-file-earmark-pdf"></i> PDF
+                    </a>
+                </div>
             </div>
 
-            <!-- Botones de acción -->
-            <a href="{{ url('/detalleVe/pdf') }}" class="btn btn-danger">
-                <i class="bi bi-file-earmark-pdf"></i> PDF
-            </a>
+            <!-- Contador de resultados -->
+            <div class="mb-3">
+                <small class="text-muted" id="resultCount">
+                    Mostrando {{ count($detalleVs) }} detalles de venta
+                </small>
+            </div>
+
+            <div class="table-container-small">
+                <table class="table table-hover table-small cols-4" id="detallesTable">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID Detalle</th>
+                            <th>Precio Unitario</th>
+                            <th>Cantidad</th>
+                            <th style="width: 140px;">Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($detalleVs as $detalleV)
+                        <tr class="detalle-row">
+                            <td>
+                                <small class="text-muted">Venta: {{$detalleV->id_venta}}</small><br>
+                                <small class="text-muted">Producto: {{$detalleV->id_producto}}</small><br>
+                                <small class="text-muted">Almacén: {{$detalleV->id_almacen}}</small>
+                            </td>
+                            <td>
+                                <strong>{{number_format($detalleV->precioDv, 2)}} Bs.</strong>
+                            </td>
+                            <td>
+                                <span class="badge bg-primary">{{$detalleV->cantidadDv}}</span>
+                            </td>
+                            <td>
+                                <div class="d-flex gap-2">
+                                    <a href="/detalleVe/{{$detalleV->id_venta}}/{{$detalleV->id_producto}}/{{$detalleV->id_almacen}}/editar" class="btn btn-primary btn-sm">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+
+                                    <form action="/detalleVe/{{$detalleV->id_venta}}/{{$detalleV->id_producto}}/{{$detalleV->id_almacen}}/eliminar" method="POST">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este detalle de venta?')">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
-
-    <!-- Contador de resultados -->
-    <div class="mb-3">
-        <small class="text-muted" id="resultCount">
-            Mostrando {{ count($detalleVs) }} detalles de venta
-        </small>
-    </div>
-
-    <div class="table-container-small">
-        <table class="table table-hover table-small cols-4" id="detallesTable">
-            <thead class="table-light">
-                <tr>
-                    <th>ID Detalle</th>
-                    <th>Precio Unitario</th>
-                    <th>Cantidad</th>
-                    <th style="width: 140px;">Opciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($detalleVs as $detalleV)
-                <tr class="detalle-row">
-                    <td>
-                        <small class="text-muted">Venta: {{$detalleV->id_venta}}</small><br>
-                        <small class="text-muted">Producto: {{$detalleV->id_producto}}</small><br>
-                        <small class="text-muted">Almacén: {{$detalleV->id_almacen}}</small>
-                    </td>
-                    <td>
-                        <strong>${{number_format($detalleV->precioDv, 2)}}</strong>
-                    </td>
-                    <td>
-                        <span class="badge bg-primary">{{$detalleV->cantidadDv}}</span>
-                    </td>
-                    <td>
-                        <div class="d-flex gap-2">
-                            <a href="#" class="btn btn-primary btn-sm">
-                                <i class="bi bi-pencil"></i>
-                            </a>
-                            
-                            <form action="/detalleVe/{{$detalleV->id_venta}}/{{$detalleV->id_producto}}/{{$detalleV->id_almacen}}/eliminar" method="POST">
-                                @csrf
-                                @method('delete')
-                                <button type="submit" class="btn btn-danger btn-sm"
-                                        onclick="return confirm('¿Estás seguro de eliminar este detalle de venta?')">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-</div>
     </section>
 </div>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.getElementById('searchInput');
-    const resultCount = document.getElementById('resultCount');
-    const tableRows = document.querySelectorAll('#detallesTable .detalle-row');
-    const totalDetalles = tableRows.length;
-    
-    function updateSearch() {
-        const searchTerm = searchInput.value.toLowerCase().trim();
-        let visibleCount = 0;
-        
-        tableRows.forEach(row => {
-            const idVenta = row.cells[0].textContent.toLowerCase();
-            const idProducto = row.cells[0].textContent.toLowerCase();
-            const idAlmacen = row.cells[0].textContent.toLowerCase();
-            const precio = row.cells[1].textContent.toLowerCase();
-            const cantidad = row.cells[2].textContent.toLowerCase();
-            
-            // Búsqueda en todos los campos relevantes
-            const match = idVenta.includes(searchTerm) || 
-                         idProducto.includes(searchTerm) || 
-                         idAlmacen.includes(searchTerm) || 
-                         precio.includes(searchTerm) || 
-                         cantidad.includes(searchTerm);
-            
-            if (match || searchTerm === '') {
-                row.style.display = '';
-                visibleCount++;
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('searchInput');
+        const resultCount = document.getElementById('resultCount');
+        const tableRows = document.querySelectorAll('#detallesTable .detalle-row');
+        const totalDetalles = tableRows.length;
+
+        function updateSearch() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            let visibleCount = 0;
+
+            tableRows.forEach(row => {
+                const idVenta = row.cells[0].textContent.toLowerCase();
+                const idProducto = row.cells[0].textContent.toLowerCase();
+                const idAlmacen = row.cells[0].textContent.toLowerCase();
+                const precio = row.cells[1].textContent.toLowerCase();
+                const cantidad = row.cells[2].textContent.toLowerCase();
+
+                // Búsqueda en todos los campos relevantes
+                const match = idVenta.includes(searchTerm) ||
+                    idProducto.includes(searchTerm) ||
+                    idAlmacen.includes(searchTerm) ||
+                    precio.includes(searchTerm) ||
+                    cantidad.includes(searchTerm);
+
+                if (match || searchTerm === '') {
+                    row.style.display = '';
+                    visibleCount++;
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            // Actualizar contador
+            if (searchTerm === '') {
+                resultCount.textContent = `Mostrando ${totalDetalles} detalles de venta`;
             } else {
-                row.style.display = 'none';
+                resultCount.textContent = `Encontrados ${visibleCount} de ${totalDetalles} detalles de venta`;
+            }
+        }
+
+        searchInput.addEventListener('input', updateSearch);
+
+        // Buscar con Enter
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                updateSearch();
             }
         });
-        
-        // Actualizar contador
-        if (searchTerm === '') {
-            resultCount.textContent = `Mostrando ${totalDetalles} detalles de venta`;
-        } else {
-            resultCount.textContent = `Encontrados ${visibleCount} de ${totalDetalles} detalles de venta`;
-        }
-    }
-    
-    searchInput.addEventListener('input', updateSearch);
-    
-    // Buscar con Enter
-    searchInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            updateSearch();
-        }
+
+        // Focus al buscador al cargar la página
+        searchInput.focus();
     });
-    
-    // Focus al buscador al cargar la página
-    searchInput.focus();
-});
 </script>
 @endsection

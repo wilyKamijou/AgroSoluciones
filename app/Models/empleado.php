@@ -25,7 +25,7 @@ class Empleado extends Model
         return $this->belongsTo(TipoEmpleado::class, 'id_tipoE');
     }
 
-    public function users()
+    public function user()
     {
         return $this->belongsTo(user::class, 'user_id', 'id');
     }

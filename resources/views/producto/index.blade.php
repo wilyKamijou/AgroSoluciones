@@ -79,6 +79,11 @@
                             @endforeach
                         </select>
                     </div>
+                    <!-- precio -->
+                    <div class="col-md-4">
+                        <label class="form-label">Precio del producto</label>
+                        <input type="text" name="precioPr" class="form-control" placeholder="ingrese el precio del producto" required>
+                    </div>
 
                     <!-- Botones -->
                     <div class="col-md-12 mt-3">
@@ -97,9 +102,9 @@
                     <div class="flex-grow-1" style="max-width: 300px;">
                         <input type="text" id="searchInput" class="form-control" placeholder="Buscar por nombre, apellido o tipo...">
                     </div>
-                                    <button class="btn btn-outline-secondary" type="button">
-                    <i class="bi bi-search"></i>
-                </button>
+                    <button class="btn btn-outline-secondary" type="button">
+                        <i class="bi bi-search"></i>
+                    </button>
 
                     <!-- Botón simple de PDF -->
                     <a href="{{ url('/empleado/pdf') }}" class="btn btn-danger btn-sm">
@@ -113,6 +118,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Nombre</th>
+                            <th>Precio</th>
                             <th>Nombre Técnico</th>
                             <th>Descripción</th>
                             <th>Composición Química</th>
@@ -135,6 +141,7 @@
                         <tr class="producto-row">
                             <td><strong>{{$producto->id_producto}}</strong></td>
                             <td>{{$producto->nombrePr}}</td>
+                            <td>{{$producto->precioPr}}Bs.</td>
                             <td>{{$producto->nombreTecnico}}</td>
                             <td>
                                 <span class="texto-largo" title="{{$producto->descripcionPr}}">

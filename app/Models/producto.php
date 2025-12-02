@@ -18,7 +18,8 @@ class producto extends Model
         'fechaFabricacion',
         'fechaVencimiento',
         'unidadMedida',
-        'id_categoria'
+        'id_categoria',
+        'precioPr'
     ];
 
     public function categoria()
@@ -28,7 +29,7 @@ class producto extends Model
 
     public function detalleAlmacenes()
     {
-        return $this->belongsToMany(DetalleAlmacen::class, 'id_producto');
+        return $this->hasManyMany(DetalleAlmacen::class, 'id_producto');
     }
     /*
     public function detalleCompras()

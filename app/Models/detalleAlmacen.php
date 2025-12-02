@@ -10,7 +10,7 @@ class detalleAlmacen extends Model
 {
     public $incrementing = false;
     protected $primaryKey = ['id_producto', 'id_almacen'];
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $fillable = [
         'id_producto',
@@ -36,6 +36,6 @@ class detalleAlmacen extends Model
 */
     public function detalleVenta()
     {
-        return $this->belongsTo(detalleVenta::class, ['id_producto', 'id_almacen']);
+        return $this->belongsToMany(detalleVenta::class, ['id_producto', 'id_almacen']);
     }
 }

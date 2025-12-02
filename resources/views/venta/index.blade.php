@@ -6,9 +6,9 @@
 <link rel="stylesheet" href="{{ asset('css/ventas.css') }}">
 <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
 <link rel="stylesheet" href="/css/custom.css">
-    <section class="content-header">
-        <h1 class="text-center mb-4">Gestión de Ventas</h1>
-    </section>
+<section class="content-header">
+    <h1 class="text-center mb-4">Gestión de Ventas</h1>
+</section>
 <div class="center-wrapper">
 
 
@@ -17,204 +17,203 @@
 
         <!-- Card de Registrar Venta -->
         <div class="card shadow-sm p-4 mb-4">
-    <h4 class="mb-3">Registrar Venta</h4>
+            <h4 class="mb-3">Registrar Venta</h4>
 
-    <form action="/venta/guardar" method="POST" class="row g-3">
-        @csrf
+            <form action="/venta/guardar" method="POST" class="row g-3">
+                @csrf
 
-        <!-- Fecha -->
-        <div class="col-md-6">
-            <label class="form-label">Fecha de la venta</label>
-            <input type="date" name="fechaVe" class="form-control" required>
+                <!-- Fecha -->
+                <div class="col-md-6">
+                    <label class="form-label">Fecha de la venta</label>
+                    <input type="date" name="fechaVe" class="form-control" required>
+                </div>
+
+                <!-- Monto total -->
+                <div class="col-md-6">
+                    <label class="form-label">Monto Total</label>
+                    <input type="text" step="0.01" name="montoTotalVe" class="form-control" placeholder="Ingrese el monto total" required>
+                </div>
+
+                <!-- Cliente -->
+                <div class="col-md-6">
+                    <label class="form-label">Cliente de la venta</label>
+                    <select name="id_cliente" class="form-control" required>
+                        <option value="" disabled selected>Seleccione un cliente</option>
+                        @foreach($clientes as $cliente)
+                        <option value="{{ $cliente->id_cliente }}">
+                            {{ $cliente->nombreCl }} {{ $cliente->apellidosCl }}
+                        </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <!-- Empleado -->
+                <div class="col-md-6">
+                    <label class="form-label">Empleado que registró la venta</label>
+                    <select name="id_empleado" class="form-control" required>
+                        <option value="" disabled selected>Seleccione un empleado</option>
+                        @foreach($empleados as $empleado)
+                        <option value="{{ $empleado->id_empleado }}">
+                            {{ $empleado->nombreEm }} {{ $empleado->apellidosEm }}
+                        </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <!-- Botón Guardar -->
+                <div class="col-md-3 mt-3">
+                    <button type="submit" class="btn btn-primary w-100">Registrar</button>
+                </div>
+
+            </form>
+
         </div>
-
-        <!-- Monto total -->
-        <div class="col-md-6">
-            <label class="form-label">Monto Total</label>
-            <input type="number" step="0.01" name="montoTotalVe" class="form-control" placeholder="Ingrese el monto total" required>
-        </div>
-
-        <!-- Cliente -->
-        <div class="col-md-6">
-            <label class="form-label">Cliente de la venta</label>
-            <select name="id_cliente" class="form-control" required>
-                <option value="" disabled selected>Seleccione un cliente</option>
-                @foreach($clientes as $cliente)
-                    <option value="{{ $cliente->id_cliente }}">
-                        {{ $cliente->nombreCl }} {{ $cliente->apellidosCl }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
-
-        <!-- Empleado -->
-        <div class="col-md-6">
-            <label class="form-label">Empleado que registró la venta</label>
-            <select name="id_empleado" class="form-control" required>
-                <option value="" disabled selected>Seleccione un empleado</option>
-                @foreach($empleados as $empleado)
-                    <option value="{{ $empleado->id_empleado }}">
-                        {{ $empleado->nombreEm }} {{ $empleado->apellidosEm }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
-
-        <!-- Botón Guardar -->
-        <div class="col-md-3 mt-3">
-            <button type="submit" class="btn btn-primary w-100">Registrar</button>
-        </div>
-
-    </form>
-
-</div>
 
 
         <!-- Card Tabla -->
         <div class="card p-4 shadow-sm">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h4 class="mb-0">Lista de Ventas</h4>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="mb-0">Lista de Ventas</h4>
 
-        <div class="d-flex gap-2 align-items-center">
-            <!-- Buscador -->
-            <div class="input-group" style="width: 300px;">
-                <input type="text" id="searchInput" class="form-control" placeholder="Buscar por empleado, cliente, monto o fecha...">
-                               <button class="btn btn-outline-secondary" type="button">
-                    <i class="bi bi-search"></i>
-                </button>
+                <div class="d-flex gap-2 align-items-center">
+                    <!-- Buscador -->
+                    <div class="input-group" style="width: 300px;">
+                        <input type="text" id="searchInput" class="form-control" placeholder="Buscar por empleado, cliente, monto o fecha...">
+                        <button class="btn btn-outline-secondary" type="button">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+
+                    <!-- Botones de acción -->
+                    <a href="{{ url('/venta/pdf') }}" class="btn btn-danger">
+                        <i class="bi bi-file-earmark-pdf"></i> PDF
+                    </a>
+                </div>
             </div>
 
-            <!-- Botones de acción -->
-            <a href="{{ url('/venta/pdf') }}" class="btn btn-danger">
-                <i class="bi bi-file-earmark-pdf"></i> PDF
-            </a>
+            <!-- Contador de resultados -->
+            <div class="mb-3">
+                <small class="text-muted" id="resultCount">
+                    Mostrando {{ count($ventas) }} ventas
+                </small>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover" id="ventasTable">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Fecha</th>
+                            <th>Monto Total</th>
+                            <th>Empleado</th>
+                            <th>Cliente</th>
+                            <th style="width: 120px;">Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($ventas as $venta)
+                        @php
+                        $empleadoVenta = $empleados->firstWhere('id_empleado', $venta->id_empleado);
+                        $clienteVenta = $clientes->firstWhere('id_cliente', $venta->id_cliente);
+                        @endphp
+                        <tr class="venta-row">
+                            <td><strong>{{ $venta->id_venta }}</strong></td>
+                            <td>{{ date('d/m/Y', strtotime($venta->fechaVe)) }}</td>
+                            <td>{{ number_format($venta->montoTotalVe, 2) }} Bs.</td>
+                            <td>
+                                @if($empleadoVenta)
+                                {{ $empleadoVenta->nombreEm }} {{ $empleadoVenta->apellidosEm }}
+                                @else
+                                <span class="text-danger">Empleado no encontrado</span>
+                                @endif
+                            </td>
+                            <td>
+                                @if($clienteVenta)
+                                {{ $clienteVenta->nombreCl }} {{ $clienteVenta->apellidosCl }}
+                                @else
+                                <span class="text-danger">Cliente no encontrado</span>
+                                @endif
+                            </td>
+                            <td>
+                                <div class="d-flex gap-2">
+                                    <a href="/venta/{{ $venta->id_venta }}/editar" class="btn btn-primary btn-sm">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+
+                                    <form action="/venta/{{ $venta->id_venta }}/eliminar" method="POST">
+                                        @csrf
+                                        @method('delete')
+
+                                        <button class="btn btn-danger btn-sm">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
-
-    <!-- Contador de resultados -->
-    <div class="mb-3">
-        <small class="text-muted" id="resultCount">
-            Mostrando {{ count($ventas) }} ventas
-        </small>
-    </div>
-
-    <div class="table-responsive">
-        <table class="table table-hover" id="ventasTable">
-            <thead class="table-light">
-                <tr>
-                    <th>ID</th>
-                    <th>Fecha</th>
-                    <th>Monto Total</th>
-                    <th>Empleado</th>
-                    <th>Cliente</th>
-                    <th style="width: 120px;">Opciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($ventas as $venta)
-                @php
-                    $empleadoVenta = $empleados->firstWhere('id_empleado', $venta->id_empleado);
-                    $clienteVenta = $clientes->firstWhere('id_cliente', $venta->id_cliente);
-                @endphp
-                <tr class="venta-row">
-                    <td><strong>{{ $venta->id_venta }}</strong></td>
-                    <td>{{ date('d/m/Y', strtotime($venta->fechaVe)) }}</td>
-                    <td>${{ number_format($venta->montoTotalVe, 2) }}</td>
-                    <td>
-                        @if($empleadoVenta)
-                            {{ $empleadoVenta->nombreEm }} {{ $empleadoVenta->apellidosEm }}
-                        @else
-                            <span class="text-danger">Empleado no encontrado</span>
-                        @endif
-                    </td>
-                    <td>
-                        @if($clienteVenta)
-                            {{ $clienteVenta->nombreCl }} {{ $clienteVenta->apellidosCl }}
-                        @else
-                            <span class="text-danger">Cliente no encontrado</span>
-                        @endif
-                    </td>
-                    <td>
-                        <div class="d-flex gap-2">
-                                                       <a href="/venta/{{ $venta->id_venta }}/editar"
-                               class="btn btn-primary btn-sm">
-                                <i class="fas fa-edit"></i>
-                            </a>
-
-                            <form action="/venta/{{ $venta->id_venta }}/eliminar" method="POST">
-                                @csrf
-                                @method('delete')
-
-                                <button class="btn btn-danger btn-sm">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-</div>
 
     </section>
 
 </div>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.getElementById('searchInput');
-    const resultCount = document.getElementById('resultCount');
-    const tableRows = document.querySelectorAll('#ventasTable .venta-row');
-    const totalVentas = tableRows.length;
-    
-    function updateSearch() {
-        const searchTerm = searchInput.value.toLowerCase().trim();
-        let visibleCount = 0;
-        
-        tableRows.forEach(row => {
-            const id = row.cells[0].textContent.toLowerCase();
-            const fecha = row.cells[1].textContent.toLowerCase();
-            const monto = row.cells[2].textContent.toLowerCase();
-            const empleado = row.cells[3].textContent.toLowerCase();
-            const cliente = row.cells[4].textContent.toLowerCase();
-            
-            // Búsqueda inteligente en todos los campos
-            const match = id.includes(searchTerm) || 
-                         fecha.includes(searchTerm) || 
-                         monto.includes(searchTerm) || 
-                         empleado.includes(searchTerm) || 
-                         cliente.includes(searchTerm);
-            
-            if (match || searchTerm === '') {
-                row.style.display = '';
-                visibleCount++;
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('searchInput');
+        const resultCount = document.getElementById('resultCount');
+        const tableRows = document.querySelectorAll('#ventasTable .venta-row');
+        const totalVentas = tableRows.length;
+
+        function updateSearch() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            let visibleCount = 0;
+
+            tableRows.forEach(row => {
+                const id = row.cells[0].textContent.toLowerCase();
+                const fecha = row.cells[1].textContent.toLowerCase();
+                const monto = row.cells[2].textContent.toLowerCase();
+                const empleado = row.cells[3].textContent.toLowerCase();
+                const cliente = row.cells[4].textContent.toLowerCase();
+
+                // Búsqueda inteligente en todos los campos
+                const match = id.includes(searchTerm) ||
+                    fecha.includes(searchTerm) ||
+                    monto.includes(searchTerm) ||
+                    empleado.includes(searchTerm) ||
+                    cliente.includes(searchTerm);
+
+                if (match || searchTerm === '') {
+                    row.style.display = '';
+                    visibleCount++;
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            // Actualizar contador
+            if (searchTerm === '') {
+                resultCount.textContent = `Mostrando ${totalVentas} ventas`;
             } else {
-                row.style.display = 'none';
+                resultCount.textContent = `Encontradas ${visibleCount} de ${totalVentas} ventas`;
+            }
+        }
+
+        searchInput.addEventListener('input', updateSearch);
+
+        // Buscar con Enter
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                updateSearch();
             }
         });
-        
-        // Actualizar contador
-        if (searchTerm === '') {
-            resultCount.textContent = `Mostrando ${totalVentas} ventas`;
-        } else {
-            resultCount.textContent = `Encontradas ${visibleCount} de ${totalVentas} ventas`;
-        }
-    }
-    
-    searchInput.addEventListener('input', updateSearch);
-    
-    // Buscar con Enter
-    searchInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            updateSearch();
-        }
+
+        // Focus al buscador al cargar la página
+        searchInput.focus();
     });
-    
-    // Focus al buscador al cargar la página
-    searchInput.focus();
-});
 </script>
 
 @endsection

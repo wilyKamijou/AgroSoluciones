@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Empleado;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Faker\Factory as Faker;
+use Illuminate\Support\Facades\DB;
+
+use function Laravel\Prompts\select;
 
 class UsersController extends Controller
 {
@@ -46,48 +50,76 @@ class UsersController extends Controller
         return view('user.index', compact('users'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
         return view('user.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
-        $user = user::create($request->all());
-        return redirect('/user');
+        $ex = DB::table('users')
+            ->where('name', $request->name)
+            ->exists();
+        if ($ex) {
+            return redirect()->back()->with('error', 'No se puede guardar porque el nombre ya existe.');
+        } else {
+            $ex = DB::table('users')
+                ->where('email', $request->email)
+                ->exists();
+            if ($ex) {
+                return redirect()->back()->with('error', 'No se puede guardar porque el correo ya existe.');
+            }
+            $user = user::create($request->all());
+            return redirect()->back()->with('success', 'Cuenta se guardada correctamente.');
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show($resenas)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit($id)
     {
         $user = user::findorFail($id);
         return view('user.edit', compact('user'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request,  $id)
     {
-        $user = user::findorFail($id);
-        $user->update($request->all());
-        return redirect('/user');
+        $ex = DB::table('users')
+            ->where('name', $request->name)
+            ->select(
+                'email',
+                'id'
+            )->first();
+        if ($ex == null) {
+            $co = DB::table('users')
+                ->where('email', $request->email)
+                ->select(
+                    'email',
+                    'id'
+                )->first();
+
+            if ($co != null and $co->id != $id) {
+                return redirect()->back()->with('error', 'No se puede actualizar porque el correo ya se esta usando.');
+            }
+            $us = User::find($id);
+            $us->update($request->all());
+            return redirect('/user')->with('success', 'Cuenta actualizada correctamente.');
+        } else {
+
+            if ($ex->id == $id and $ex->email != $request->email) {
+                $co = DB::table('users')
+                    ->where('email', $request->email)
+                    ->exists();
+                if ($co) {
+                    return redirect()->back()->with('error', 'No se puede actualizar porque el correo ya se esta usando.');
+                }
+                $us = User::find($id);
+                $us->update($request->all());
+                return redirect('/user')->with('success', 'Cuenta actualizada correctamente.');
+            } else {
+                return redirect()->back()->with('error', 'No se puede actualizar porque el nombre de usuario ya se esta usando.');
+            }
+        }
     }
     public function cambiarRol($id)
     {
@@ -103,8 +135,12 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        $user = user::findorfail($id);
+        $ex = Empleado::where('user_id', $id)->exists();
+        if ($ex) {
+            return redirect()->back()->with('error', 'No se puede eliminar porque esta asociado a un empleado.');
+        }
+        $user = user::find($id);
         $user->delete();
-        return redirect('/user');
+        return redirect()->back()->with('success', 'Cuenta se eliminado correctamente.');
     }
 }
