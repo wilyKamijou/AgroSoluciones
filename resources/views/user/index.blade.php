@@ -173,25 +173,4 @@
     </section>
 </div>
 
-<!-- JavaScript para el buscador -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.getElementById('searchInput');
-    const tableRows = document.querySelectorAll('#usersTable .user-row');
-    
-    searchInput.addEventListener('input', function() {
-        const searchTerm = this.value.toLowerCase().trim();
-        
-        tableRows.forEach(row => {
-            const rowText = row.textContent.toLowerCase();
-            if (rowText.includes(searchTerm)) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
-            }
-        });
-    });
-});
-</script>
-
 @endsection

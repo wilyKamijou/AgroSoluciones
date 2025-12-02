@@ -122,57 +122,5 @@
         </div>
     </section>
 </div>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.getElementById('searchInput');
-    const resultCount = document.getElementById('resultCount');
-    const tableRows = document.querySelectorAll('#almacenesTable .almacen-row');
-    const totalAlmacenes = tableRows.length;
-    
-    function updateSearch() {
-        const searchTerm = searchInput.value.toLowerCase().trim();
-        let visibleCount = 0;
-        
-        tableRows.forEach(row => {
-            const id = row.cells[0].textContent.toLowerCase();
-            const nombre = row.cells[1].textContent.toLowerCase();
-            const descripcion = row.cells[2].textContent.toLowerCase();
-            const direccion = row.cells[3].textContent.toLowerCase();
-            
-            // Búsqueda en todos los campos relevantes
-            const match = id.includes(searchTerm) || 
-                         nombre.includes(searchTerm) || 
-                         descripcion.includes(searchTerm) || 
-                         direccion.includes(searchTerm);
-            
-            if (match || searchTerm === '') {
-                row.style.display = '';
-                visibleCount++;
-            } else {
-                row.style.display = 'none';
-            }
-        });
-        
-        // Actualizar contador
-        if (searchTerm === '') {
-            resultCount.textContent = `Mostrando ${totalAlmacenes} almacenes`;
-        } else {
-            resultCount.textContent = `Encontrados ${visibleCount} de ${totalAlmacenes} almacenes`;
-        }
-    }
-    
-    searchInput.addEventListener('input', updateSearch);
-    
-    // Buscar con Enter
-    searchInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            updateSearch();
-        }
-    });
-    
-    // Focus al buscador al cargar la página
-    searchInput.focus();
-});
-</script>
+
 @endsection
