@@ -117,6 +117,21 @@ Route::middleware('auth')->group(function () {
     route::Put('/detalleVe/{id1}/{id2}/{id3}/actualizar', [DetalleVentaController::class, 'update'])->name('home');
     route::delete('/detalleVe/{id1}/{id2}/{id3}/eliminar', [DetalleVentaController::class, 'destroy'])->name('home');
     Route::get('/detalleVe/pdf', [DetalleVentaController::class, 'downloadPDF'])->name('detalleVenta.pdf');
+    Route::get('/api/producto/{id}/precio', function($id) {
+    $producto = App\Models\producto::find($id);
+    
+    if ($producto) {
+        return response()->json([
+            'success' => true,
+            'precio' => $producto->precioPr
+        ]);
+    }
+    
+    return response()->json([
+        'success' => false,
+        'message' => 'Producto no encontrado'
+    ], 404);
+});
     //rutas para categoria de productos
     route::get('/categoria', [CategoriaController::class, 'index'])->name('home');
     route::get('/categoria/crear', [CategoriaController::class, 'create'])->name('home');

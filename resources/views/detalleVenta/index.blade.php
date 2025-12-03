@@ -17,7 +17,7 @@
         <div class="card shadow-sm p-4 mb-4 card-compact">
             <h4 class="mb-3">Registrar Nuevo Detalle de Venta</h4>
 
-            <form action="/detalleVe/guardar" method="POST" class="compact-form">
+            <form action="/detalleVe/guardar" method="POST" class="compact-form" id="detalleVentaForm">
                 @csrf
 
                 <div class="row g-3">
@@ -41,13 +41,16 @@
                     <!-- Almacén y Producto -->
                     <div class="col-md-6">
                         <label class="form-label">Producto en Almacén</label>
-                        <select name="idDal" class="form-control" required>
+                        <select name="idDal" class="form-control" id="productoAlmacenSelect" required>
                             <option value="" disabled selected>Seleccione producto y almacén</option>
                             @foreach($detalleAs as $detalleA)
                             @foreach($productos as $producto)
                             @foreach($almacenes as $almacen)
                             @if (($detalleA->id_almacen == $almacen->id_almacen) and ($detalleA->id_producto == $producto->id_producto))
-                            <option value="{{$detalleA->id_producto}}|{{$detalleA->id_almacen}}">
+                            <option 
+                                value="{{$detalleA->id_producto}}|{{$detalleA->id_almacen}}"
+                                data-producto-id="{{$detalleA->id_producto}}"
+                                data-precio="{{$producto->precioPr}}">
                                 {{$producto->nombrePr}} - {{$almacen->nombreAl}}
                             </option>
                             @endif
@@ -60,7 +63,8 @@
                     <!-- Precio -->
                     <div class="col-md-4">
                         <label class="form-label">Precio Unitario</label>
-                        <input type="text" step="0.01" name="precioDv" class="form-control" placeholder="Ingrese el precio" required>
+                        <input type="text" step="0.01" name="precioDv" id="precioInput" class="form-control" placeholder="Precio se autocompletará">
+                        <small class="text-muted">Precio sugerido del producto</small>
                     </div>
 
                     <!-- Cantidad -->
@@ -149,6 +153,7 @@
                 </table>
             </div>
         </div>
-    </section>
+     </section>
 </div>
+
 @endsection

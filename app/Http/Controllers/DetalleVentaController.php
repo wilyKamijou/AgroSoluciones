@@ -44,7 +44,16 @@ class DetalleVentaController extends Controller
         $almacenes = almacen::all();
         $clientes = cliente::all();
         $detalleAs = detalleAlmacen::all();
-        return view('detalleVenta.index', compact('detalleVs', 'ventas', 'productos', 'almacenes', 'clientes', 'detalleAs'));
+
+            $productosConPrecios = [];
+    foreach ($productos as $producto) {
+        $productosConPrecios[$producto->id_producto] = [
+            'precio' => $producto->precioPr,
+            'nombre' => $producto->nombrePr
+        ];
+    }
+
+        return view('detalleVenta.index', compact('detalleVs', 'ventas', 'productos', 'almacenes', 'clientes', 'detalleAs', 'productosConPrecios'));
     }
 
     public function create()

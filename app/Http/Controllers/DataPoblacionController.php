@@ -190,92 +190,108 @@ class DataPoblacionController extends Controller
                 'nombrePr' => 'Glifosato Premium', 'nombreTecnico' => 'Glifosato 480 SL',
                 'descripcionPr' => 'Herbicida sistémico no selectivo', 'compocicionQuimica' => 'Glifosato 480 g/L',
                 'consentracionQuimica' => '48%', 'fechaFabricacion' => $fechaFabricacion,
-                'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Litro', 'id_categoria' => 1
+                'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Litro', 'id_categoria' => 1,
+                'precioPr' => 250.00
             ],
             [
                 'nombrePr' => 'Atrazina Forte', 'nombreTecnico' => 'Atrazina 500 SC',
                 'descripcionPr' => 'Herbicida selectivo para maíz', 'compocicionQuimica' => 'Atrazina 500 g/L',
                 'consentracionQuimica' => '50%', 'fechaFabricacion' => $fechaFabricacion,
-                'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Litro', 'id_categoria' => 1
+                'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Litro', 'id_categoria' => 1,
+                'precioPr' => 300.00
             ],
             [
                 'nombrePr' => 'Imidacloprid', 'nombreTecnico' => 'Imidacloprid 350 SC',
                 'descripcionPr' => 'Insecticida sistémico', 'compocicionQuimica' => 'Imidacloprid 350 g/L',
                 'consentracionQuimica' => '35%', 'fechaFabricacion' => $fechaFabricacion,
-                'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Litro', 'id_categoria' => 2
+                'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Litro', 'id_categoria' => 2,
+                'precioPr' => 450.00
             ],
             [
                 'nombrePr' => 'Lambda Cihalotrin', 'nombreTecnico' => 'Lambda Cihalotrin 50 EC',
                 'descripcionPr' => 'Insecticida de contacto', 'compocicionQuimica' => 'Lambda Cihalotrin 50 g/L',
                 'consentracionQuimica' => '5%', 'fechaFabricacion' => $fechaFabricacion,
-                'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Litro', 'id_categoria' => 2
+                'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Litro', 'id_categoria' => 2,
+                'precioPr' => 400.00
+                
             ],
             [
                 'nombrePr' => 'Azoxistrobina', 'nombreTecnico' => 'Azoxistrobina 250 SC',
                 'descripcionPr' => 'Fungicida sistémico', 'compocicionQuimica' => 'Azoxistrobina 250 g/L',
                 'consentracionQuimica' => '25%', 'fechaFabricacion' => $fechaFabricacion,
-                'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Litro', 'id_categoria' => 3
+                'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Litro', 'id_categoria' => 3,
+                'precioPr' => 550.00
             ],
             [
                 'nombrePr' => 'Mancozeb', 'nombreTecnico' => 'Mancozeb 800 WP',
                 'descripcionPr' => 'Fungicida de contacto', 'compocicionQuimica' => 'Mancozeb 800 g/Kg',
                 'consentracionQuimica' => '80%', 'fechaFabricacion' => $fechaFabricacion,
-                'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Kilogramo', 'id_categoria' => 3
+                'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Kilogramo', 'id_categoria' => 3,
+                'precioPr' => 350.00
             ],
             [
                 'nombrePr' => 'Urea Agrícola', 'nombreTecnico' => 'Urea 46-0-0',
                 'descripcionPr' => 'Fertilizante nitrogenado', 'compocicionQuimica' => 'Nitrógeno 46%',
                 'consentracionQuimica' => '46%', 'fechaFabricacion' => $fechaFabricacion,
-                'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Kilogramo', 'id_categoria' => 4
+                'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Kilogramo', 'id_categoria' => 4,
+                'precioPr' => 280.00
             ],
             [
                 'nombrePr' => 'Triple 17', 'nombreTecnico' => 'NPK 17-17-17',
                 'descripcionPr' => 'Fertilizante completo', 'compocicionQuimica' => 'N 17%, P 17%, K 17%',
                 'consentracionQuimica' => '51%', 'fechaFabricacion' => $fechaFabricacion,
-                'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Kilogramo', 'id_categoria' => 4
+                'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Kilogramo', 'id_categoria' => 4,
+                'precioPr' => 320.00
             ],
             [
                 'nombrePr' => 'Etefón', 'nombreTecnico' => 'Etefón 480 SL',
                 'descripcionPr' => 'Regulador de maduración', 'compocicionQuimica' => 'Etefón 480 g/L',
                 'consentracionQuimica' => '48%', 'fechaFabricacion' => $fechaFabricacion,
-                'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Litro', 'id_categoria' => 5
+                'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Litro', 'id_categoria' => 5,
+                'precioPr' => 600.00
             ],
             [
                 'nombrePr' => 'Abamectina', 'nombreTecnico' => 'Abamectina 18 EC',
                 'descripcionPr' => 'Acaricida e insecticida', 'compocicionQuimica' => 'Abamectina 18 g/L',
                 'consentracionQuimica' => '1.8%', 'fechaFabricacion' => $fechaFabricacion,
-                'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Litro', 'id_categoria' => 6
+                'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Litro', 'id_categoria' => 6,
+                'precioPr' => 700.00
             ],
             // ... agregar más productos hasta 30
             [
                 'nombrePr' => 'Oxamyl', 'nombreTecnico' => 'Oxamyl 100 SL',
                 'descripcionPr' => 'Nematicida sistémico', 'compocicionQuimica' => 'Oxamyl 100 g/L',
                 'consentracionQuimica' => '10%', 'fechaFabricacion' => $fechaFabricacion,
-                'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Litro', 'id_categoria' => 7
+                'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Litro', 'id_categoria' => 7,
+                'precioPr' => 800.00
             ],
             [
                 'nombrePr' => 'Brodifacoum', 'nombreTecnico' => 'Brodifacoum 0.005%',
                 'descripcionPr' => 'Rodenticida anticoagulante', 'compocicionQuimica' => 'Brodifacoum 0.005%',
                 'consentracionQuimica' => '0.005%', 'fechaFabricacion' => $fechaFabricacion,
-                'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Kilogramo', 'id_categoria' => 8
+                'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Kilogramo', 'id_categoria' => 8,
+                'precioPr' => 1500.00
             ],
             [
                 'nombrePr' => 'Silicona Antideriva', 'nombreTecnico' => 'Coadyuvante Silicona',
                 'descripcionPr' => 'Reductor de deriva', 'compocicionQuimica' => 'Silicona 100%',
                 'consentracionQuimica' => '100%', 'fechaFabricacion' => $fechaFabricacion,
-                'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Litro', 'id_categoria' => 9
+                 'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Litro', 'id_categoria' => 9,
+                'precioPr' => 120.00
             ],
             [
                 'nombrePr' => 'Algas Marinas', 'nombreTecnico' => 'Extracto de Algas',
                 'descripcionPr' => 'Bioestimulante natural', 'compocicionQuimica' => 'Extracto de algas 100%',
                 'consentracionQuimica' => '100%', 'fechaFabricacion' => $fechaFabricacion,
-                'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Litro', 'id_categoria' => 10
+                'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Litro', 'id_categoria' => 10,
+                'precioPr' => 400.00
             ],
             [
                 'nombrePr' => 'Rhizobium', 'nombreTecnico' => 'Inoculante Rhizobium',
                 'descripcionPr' => 'Bacteria fijadora de nitrógeno', 'compocicionQuimica' => 'Rhizobium spp.',
                 'consentracionQuimica' => '1x10^9 UFC/g', 'fechaFabricacion' => $fechaFabricacion,
-                'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Kilogramo', 'id_categoria' => 11
+                'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Kilogramo', 'id_categoria' => 11,
+                'precioPr' => 350.00
             ],
         ];
 
@@ -290,6 +306,7 @@ class DataPoblacionController extends Controller
                 'fechaFabricacion' => $fechaFabricacion,
                 'fechaVencimiento' => $fechaVencimiento,
                 'unidadMedida' => ($i % 2 == 0) ? 'Litro' : 'Kilogramo',
+                'precioPr' => rand(200, 1000),
                 'id_categoria' => rand(1, 15)
             ];
         }
@@ -413,7 +430,7 @@ class DataPoblacionController extends Controller
                 ];
             }
         }
-
+        
         // Insertar en lotes para mejor performance
         foreach (array_chunk($detallesAlmacen, 100) as $chunk) {
             DetalleAlmacen::insert($chunk);
