@@ -16,86 +16,89 @@
         <!-- Card de Registrar Tipo Empleado (Más compacta) -->
         <div class="card shadow-sm p-4 mb-4 card-compact">
             <h4 class="mb-3">Registrar Nuevo Tipo de Empleado</h4>
-            
+
             <form action="/tipo/guardar" method="POST" class="compact-form">
                 @csrf
-                
+
                 <div class="row g-3">
                     <!-- Descripción -->
-                    <div class="col-md-8">
+                    <div class="col-md-6">
+                        <label class="form-label">Nombre del Tipo</label>
+                        <input type="text" name="nombreE" class="form-control" placeholder="Ingrese tipo de puesto" required>
+                    </div>
+
+                    <!-- Descripción -->
+                    <div class="col-md-6">
                         <label class="form-label">Descripción del Tipo</label>
                         <input type="text" name="descripcionTip" class="form-control" placeholder="Ingrese la descripción del tipo de empleado" required>
                     </div>
-                    
+
                     <!-- Botones -->
                     <div class="col-md-4 d-flex align-items-end">
                         <button type="submit" class="btn btn-primary me-2">Guardar</button>
-                     
+
                     </div>
                 </div>
             </form>
         </div>
 
         <div class="card p-4 shadow-sm">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h4 class="mb-0">Lista de Tipos de Empleado</h4>
-        
-        <div class="d-flex gap-2 align-items-center">
-            <!-- Buscador -->
-            <div class="input-group" style="width: 300px;">
-                <input type="text" id="searchInput" class="form-control" placeholder="Buscar por descripción...">
-                <button class="btn btn-outline-secondary" type="button">
-                    <i class="bi bi-search"></i>
-                </button>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="mb-0">Lista de Tipos de Empleado</h4>
+
+                <div class="d-flex gap-2 align-items-center">
+                    <!-- Buscador -->
+                    <div class="input-group" style="width: 300px;">
+                        <input type="text" id="searchInput" class="form-control" placeholder="Buscar por descripción...">
+                        <button class="btn btn-outline-secondary" type="button">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+
+                </div>
             </div>
 
+            <!-- Contador de resultados -->
+            <div class="mb-3">
+                <small class="text-muted" id="resultCount">
+                    Mostrando {{ count($tipos) }} tipos de empleado
+                </small>
+            </div>
+
+            <div class="table-container-small">
+                <table class="table table-hover table-small cols-4" id="tiposTable">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($tipos as $tipo)
+                        <tr class="tipo-row">
+                            <td>{{$tipo->id_tipoE}}</td>
+                            <td>{{$tipo->nombreE}}</td>
+                            <td>{{$tipo->descripcionTip}}</td>
+                            <td class="d-flex gap-2">
+                                <a href="/tipo/{{$tipo->id_tipoE}}/editar" class="btn btn-primary btn-sm">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <form action="/tipo/{{$tipo->id_tipoE}}/eliminar" method="POST">
+                                    @csrf
+                                    @method('delete')
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este tipo de empleado?')">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
-
-    <!-- Contador de resultados -->
-    <div class="mb-3">
-        <small class="text-muted" id="resultCount">
-            Mostrando {{ count($tipos) }} tipos de empleado
-        </small>
-    </div>
-
-    <div class="table-container-small">
-        <table class="table table-hover table-small cols-3" id="tiposTable">
-            <thead class="table-light">
-                <tr>
-                    <th>ID</th>
-                    <th>Descripción</th>
-                    <th>Opciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($tipos as $tipo)
-                <tr class="tipo-row">
-                    <td><strong>{{$tipo->id_tipoE}}</strong></td>
-                    <td>
-                        <span class="fw-bold text-primary">{{$tipo->descripcionTip}}</span>
-                    </td>
-                    <td class="d-flex gap-2">
-                        <a href="/tipo/{{$tipo->id_tipoE}}/editar" 
-                           class="btn btn-primary btn-sm">
-                            <i class="bi bi-pencil"></i>
-                        </a>
-                        
-                        <form action="/tipo/{{$tipo->id_tipoE}}/eliminar" method="POST">
-                            @csrf
-                            @method('delete')
-                            <button type="submit" class="btn btn-danger btn-sm"
-                                    onclick="return confirm('¿Estás seguro de eliminar este tipo de empleado?')">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-</div>
     </section>
 </div>
 @endsection

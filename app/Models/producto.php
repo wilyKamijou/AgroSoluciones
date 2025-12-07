@@ -18,8 +18,9 @@ class producto extends Model
         'fechaFabricacion',
         'fechaVencimiento',
         'unidadMedida',
-        'id_categoria',
-        'precioPr'
+        'precioPr',
+        'imagen_url',
+        'id_categoria'
     ];
 
     public function categoria()

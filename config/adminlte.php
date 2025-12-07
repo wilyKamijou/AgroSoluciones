@@ -322,12 +322,21 @@ return [
         ],
         [
             'text' => 'Usuarios',
-            'url' => '/user',
             'icon' => 'far fa-fw fa-user',
+            'submenu' => [
+                [
+                    'text' => 'Modulo de Usuarios',
+                    'url' => '/mUser',
+                ],
+                [
+                    'text' => 'Cuentes',
+                    'url' => '/user',
+                ]
+            ],
 
             'label_color' => 'success',
         ],
-                [
+        [
             'text' => 'Clientes',
             'url' => '/cliente',
             'icon' => 'fas fa-users',
@@ -336,7 +345,7 @@ return [
         ],
         [
             'text' => 'Empleados',
-            
+
             'icon' => 'far fa-address-book',
             'submenu' => [
                 [
@@ -356,6 +365,10 @@ return [
             'icon' => 'far fa-money-bill-alt',
             'submenu' => [
                 [
+                    'text' => 'Modulo de Ventas',
+                    'url' => '/mVenta',
+                ],
+                [
                     'text' => 'Ventas',
                     'url' => '/venta',
                 ],
@@ -366,11 +379,15 @@ return [
             ],
             'label_color' => 'success',
         ],
-    
+
         [
             'text' => 'Almacenes',
             'icon' => 'far fa-building',
             'submenu' => [
+                [
+                    'text' => 'Modulo de inventario',
+                    'url' => '/mAlmacen',
+                ],
                 [
                     'text' => 'Almacenes',
                     'url' => '/almacen',

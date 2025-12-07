@@ -47,10 +47,7 @@
                             @foreach($productos as $producto)
                             @foreach($almacenes as $almacen)
                             @if (($detalleA->id_almacen == $almacen->id_almacen) and ($detalleA->id_producto == $producto->id_producto))
-                            <option 
-                                value="{{$detalleA->id_producto}}|{{$detalleA->id_almacen}}"
-                                data-producto-id="{{$detalleA->id_producto}}"
-                                data-precio="{{$producto->precioPr}}">
+                            <option value="{{$detalleA->id_producto}}|{{$detalleA->id_almacen}}" data-producto-id="{{$detalleA->id_producto}}" data-precio="{{$producto->precioPr}}">
                                 {{$producto->nombrePr}} - {{$almacen->nombreAl}}
                             </option>
                             @endif
@@ -64,7 +61,7 @@
                     <div class="col-md-4">
                         <label class="form-label">Precio Unitario</label>
                         <input type="text" step="0.01" name="precioDv" id="precioInput" class="form-control" placeholder="Precio se autocompletará">
-                        <small class="text-muted">Precio sugerido del producto</small>
+
                     </div>
 
                     <!-- Cantidad -->
@@ -153,7 +150,7 @@
                 </table>
             </div>
         </div>
-     </section>
+    </section>
 </div>
 
 @endsection

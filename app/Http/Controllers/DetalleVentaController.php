@@ -45,13 +45,13 @@ class DetalleVentaController extends Controller
         $clientes = cliente::all();
         $detalleAs = detalleAlmacen::all();
 
-            $productosConPrecios = [];
-    foreach ($productos as $producto) {
-        $productosConPrecios[$producto->id_producto] = [
-            'precio' => $producto->precioPr,
-            'nombre' => $producto->nombrePr
-        ];
-    }
+        $productosConPrecios = [];
+        foreach ($productos as $producto) {
+            $productosConPrecios[$producto->id_producto] = [
+                'precio' => $producto->precioPr,
+                'nombre' => $producto->nombrePr
+            ];
+        }
 
         return view('detalleVenta.index', compact('detalleVs', 'ventas', 'productos', 'almacenes', 'clientes', 'detalleAs', 'productosConPrecios'));
     }

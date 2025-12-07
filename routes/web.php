@@ -21,7 +21,9 @@ use App\Http\Controllers\InformeController;
 use App\Http\Controllers\UsersController;
 use GuzzleHttp\Client;
 use App\Http\Controllers\DataPoblacionController;
-
+use App\Http\Controllers\ModuloAlmacenController;
+use App\Http\Controllers\ModuloUsersController;
+use App\Http\Controllers\ModuloVentaController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -42,6 +44,9 @@ Route::middleware('auth')->group(function () {
     route::get('/user/{id}/editar', [UsersController::class, 'edit'])->name('user.edit');
     route::Put('/user/{id}/actualizar', [UsersController::class, 'update'])->name('user.update');
     route::delete('/user/{id}/eliminar', [UsersController::class, 'destroy'])->name('user.destroy');
+    //modulo de usuario
+    route::get('/mUser', [ModuloUsersController::class, 'index'])->name('user.index');
+    route::post('/mUser/guardar', [ModuloUsersController::class, 'store'])->name('user.store');
     //rutas de empleado
     route::get('/empleado', [EmpleadoController::class, 'index'])->name('home');
     route::get('/empleado/crear', [EmpleadoController::class, 'create'])->name('home');
@@ -63,6 +68,10 @@ Route::middleware('auth')->group(function () {
     route::Put('/venta/{id}/actualizar', [VentaController::class, 'update'])->name('home');
     route::delete('/venta/{id}/eliminar', [VentaController::class, 'destroy'])->name('home');
     Route::get('/venta/pdf', [VentaController::class, 'downloadPDF'])->name('venta.pdf');
+    //modulo de ventas 
+    route::get('/mVenta', [ModuloVentaController::class, 'index'])->name('home');
+    route::get('/mVenta/crear', [ModuloVentaController::class, 'create'])->name('home');
+    route::post('/mVenta/guardar', [ModuloVentaController::class, 'store'])->name('home');
     //rutas de cliente
     route::get('/cliente', [ClienteController::class, 'index'])->name('home');
     route::get('/cliente/crear', [ClienteController::class, 'create'])->name('home');
@@ -85,6 +94,9 @@ Route::middleware('auth')->group(function () {
     route::Put('/almacen/{id}/actualizar', [AlmacenController::class, 'update'])->name('home');
     route::delete('/almacen/{id}/eliminar', [AlmacenController::class, 'destroy'])->name('home');
     Route::get('/almacen/pdf', [AlmacenController::class, 'downloadPDF'])->name('almacen.pdf');
+    //modulo de inventario
+    route::get('/mAlmacen', [ModuloAlmacenController::class, 'index'])->name('home');
+    route::post('/mAlmacen/guardar', [ModuloAlmacenController::class, 'store'])->name('home');
     //rutas para producto
     route::get('/producto', [ProductoController::class, 'index'])->name('home');
     route::get('/producto/crear', [ProductoController::class, 'create'])->name('home');
@@ -117,21 +129,21 @@ Route::middleware('auth')->group(function () {
     route::Put('/detalleVe/{id1}/{id2}/{id3}/actualizar', [DetalleVentaController::class, 'update'])->name('home');
     route::delete('/detalleVe/{id1}/{id2}/{id3}/eliminar', [DetalleVentaController::class, 'destroy'])->name('home');
     Route::get('/detalleVe/pdf', [DetalleVentaController::class, 'downloadPDF'])->name('detalleVenta.pdf');
-    Route::get('/api/producto/{id}/precio', function($id) {
-    $producto = App\Models\producto::find($id);
-    
-    if ($producto) {
+    Route::get('/api/producto/{id}/precio', function ($id) {
+        $producto = App\Models\producto::find($id);
+
+        if ($producto) {
+            return response()->json([
+                'success' => true,
+                'precio' => $producto->precioPr
+            ]);
+        }
+
         return response()->json([
-            'success' => true,
-            'precio' => $producto->precioPr
-        ]);
-    }
-    
-    return response()->json([
-        'success' => false,
-        'message' => 'Producto no encontrado'
-    ], 404);
-});
+            'success' => false,
+            'message' => 'Producto no encontrado'
+        ], 404);
+    });
     //rutas para categoria de productos
     route::get('/categoria', [CategoriaController::class, 'index'])->name('home');
     route::get('/categoria/crear', [CategoriaController::class, 'create'])->name('home');

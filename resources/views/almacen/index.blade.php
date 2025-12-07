@@ -16,29 +16,29 @@
         <!-- Card de Registrar Almacén -->
         <div class="card shadow-sm p-4 mb-4 card-compact">
             <h4 class="mb-3">Registrar Nuevo Almacén</h4>
-            
+
             <form action="/almacen/guardar" method="POST" class="compact-form">
                 @csrf
-                
+
                 <div class="row g-3">
                     <!-- Nombre -->
                     <div class="col-md-4">
                         <label class="form-label">Nombre del Almacén</label>
                         <input type="text" name="nombreAl" class="form-control" placeholder="Ingrese el nombre del almacén" required>
                     </div>
-                    
+
                     <!-- Descripción -->
                     <div class="col-md-4">
                         <label class="form-label">Descripción</label>
                         <input type="text" name="descripcionAl" class="form-control" placeholder="Ingrese la descripción del almacén" required>
                     </div>
-                    
+
                     <!-- Dirección -->
                     <div class="col-md-4">
                         <label class="form-label">Dirección</label>
                         <input type="text" name="direccionAl" class="form-control" placeholder="Ingrese la dirección del almacén" required>
                     </div>
-                    
+
                     <!-- Botones -->
                     <div class="col-md-12 mt-3">
                         <button type="submit" class="btn btn-primary me-2">Guardar</button>
@@ -47,80 +47,78 @@
             </form>
         </div>
 
-            <div class="card p-4 shadow-sm">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h4 class="mb-0">Lista de Almacenes</h4>
+        <div class="card p-4 shadow-sm">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="mb-0">Lista de Almacenes</h4>
 
-        <div class="d-flex gap-2 align-items-center">
-            <!-- Buscador -->
-            <div class="input-group" style="width: 300px;">
-                <input type="text" id="searchInput" class="form-control" placeholder="Buscar por nombre, descripción o dirección...">
-                <button class="btn btn-outline-secondary" type="button">
-                    <i class="bi bi-search"></i>
-                </button>
+                <div class="d-flex gap-2 align-items-center">
+                    <!-- Buscador -->
+                    <div class="input-group" style="width: 300px;">
+                        <input type="text" id="searchInput" class="form-control" placeholder="Buscar por nombre, descripción o dirección...">
+                        <button class="btn btn-outline-secondary" type="button">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+
+                    <!-- Botones de acción -->
+                    <a href="{{ url('/almacen/pdf') }}" class="btn btn-danger">
+                        <i class="bi bi-file-earmark-pdf"></i> PDF
+                    </a>
+                </div>
             </div>
 
-            <!-- Botones de acción -->
-            <a href="{{ url('/almacen/pdf') }}" class="btn btn-danger">
-                <i class="bi bi-file-earmark-pdf"></i> PDF
-            </a>
+            <!-- Contador de resultados -->
+            <div class="mb-3">
+                <small class="text-muted" id="resultCount">
+                    Mostrando {{ count($almacens) }} almacenes
+                </small>
+            </div>
+
+            <div class="table-container-small">
+                <table class="table table-hover table-small cols-5" id="almacenesTable">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Dirección</th>
+                            <th style="width: 140px;">Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($almacens as $almacen)
+                        <tr class="almacen-row">
+                            <td><strong>{{$almacen->id_almacen}}</strong></td>
+                            <td>{{$almacen->nombreAl}}</td>
+                            <td>
+                                <span class="text-muted small">{{$almacen->descripcionAl}}</span>
+                            </td>
+                            <td>
+                                <small class="text-muted">{{$almacen->direccionAl}}</small>
+                            </td>
+                            <td>
+                                <div class="d-flex gap-2">
+                                    <a href="/almacen/{{$almacen->id_almacen}}/editar" class="btn btn-primary btn-sm">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+
+                                    <form action="/almacen/{{$almacen->id_almacen}}/eliminar" method="POST">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este almacén?')">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
-
-    <!-- Contador de resultados -->
-    <div class="mb-3">
-        <small class="text-muted" id="resultCount">
-            Mostrando {{ count($almacens) }} almacenes
-        </small>
-    </div>
-
-    <div class="table-container-small">
-        <table class="table table-hover table-small cols-5" id="almacenesTable">
-            <thead class="table-light">
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Descripción</th>
-                    <th>Dirección</th>
-                    <th style="width: 140px;">Opciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($almacens as $almacen)
-                <tr class="almacen-row">
-                    <td><strong>{{$almacen->id_almacen}}</strong></td>
-                    <td>{{$almacen->nombreAl}}</td>
-                    <td>
-                        <span class="text-muted small">{{$almacen->descripcionAl}}</span>
-                    </td>
-                    <td>
-                        <small class="text-muted">{{$almacen->direccionAl}}</small>
-                    </td>
-                    <td>
-                        <div class="d-flex gap-2">
-                            <a href="/almacen/{{$almacen->id_almacen}}/editar" 
-                               class="btn btn-primary btn-sm">
-                                <i class="bi bi-pencil"></i>
-                            </a>
-                            
-                            <form action="/almacen/{{$almacen->id_almacen}}/eliminar" method="POST">
-                                @csrf
-                                @method('delete')
-                                <button type="submit" class="btn btn-danger btn-sm"
-                                        onclick="return confirm('¿Estás seguro de eliminar este almacén?')">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
 </div>
-        </div>
-    </section>
+</section>
 </div>
 
 @endsection

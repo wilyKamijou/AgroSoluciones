@@ -81,100 +81,99 @@
         </div>
 
         <div class="card p-4 shadow-sm">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h4 class="mb-0">Lista de Empleados</h4>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="mb-0">Lista de Empleados</h4>
 
-        <div class="d-flex gap-2 align-items-center">
-            <!-- Buscador -->
-            <div class="input-group" style="width: 300px;">
-                <input type="text" id="searchInput" class="form-control" placeholder="Buscar empleado...">
-                <button class="btn btn-outline-secondary" type="button">
-                    <i class="bi bi-search"></i>
-                </button>
+                <div class="d-flex gap-2 align-items-center">
+                    <!-- Buscador -->
+                    <div class="input-group" style="width: 300px;">
+                        <input type="text" id="searchInput" class="form-control" placeholder="Buscar empleado...">
+                        <button class="btn btn-outline-secondary" type="button">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+
+                    <!-- Botones de acción -->
+                    <a href="{{ url('/empleado/pdf') }}" class="btn btn-danger">
+                        <i class="bi bi-file-earmark-pdf"></i> PDF
+                    </a>
+                </div>
             </div>
 
-            <!-- Botones de acción -->
-            <a href="{{ url('/empleado/pdf') }}" class="btn btn-danger">
-                <i class="bi bi-file-earmark-pdf"></i> PDF
-            </a>
+            <!-- Contador de resultados -->
+            <div class="mb-3">
+                <small class="text-muted" id="resultCount">
+                    Mostrando {{ count($empleados) }} empleados
+                </small>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover" id="empleadosTable">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Apellidos</th>
+                            <th>Sueldo</th>
+                            <th>Teléfono</th>
+                            <th>Dirección</th>
+                            <th>Tipo</th>
+                            <th>Cuenta</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($empleados as $empleado)
+                        <tr class="empleado-row">
+                            <td><strong>{{$empleado->id_empleado}}</strong></td>
+                            <td>{{$empleado->nombreEm}}</td>
+                            <td>{{$empleado->apellidosEm}}</td>
+                            <td>${{ number_format($empleado->sueldoEm, 2) }}</td>
+                            <td>{{$empleado->telefonoEm}}</td>
+                            <td>
+                                <span class="texto-largo" title="{{$empleado->direccion}}">
+                                    {{ Str::limit($empleado->direccion, 30) }}
+                                </span>
+                            </td>
+                            <td>
+                                @php
+                                $tipoEmpleado = $tipos->firstWhere('id_tipoE', $empleado->id_tipoE);
+                                @endphp
+                                @if($tipoEmpleado)
+                                <span class="badge bg-info">{{ $tipoEmpleado->descripcionTip }}</span>
+                                @else
+                                <span class="badge bg-secondary">Sin tipo</span>
+                                @endif
+                            </td>
+                            <td>
+                                @php
+                                $cuentaEmpleado = $cuentas->firstWhere('id', $empleado->user_id);
+                                @endphp
+                                @if($cuentaEmpleado)
+                                <small class="text-muted">{{ $cuentaEmpleado->email}}</small>
+                                @else
+                                <span class="badge bg-warning">Sin cuenta</span>
+                                @endif
+                            </td>
+                            <td class="d-flex gap-2">
+                                <a href="/empleado/{{$empleado->id_empleado}}/editar" class="btn btn-primary btn-sm">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+
+                                <form action="/empleado/{{$empleado->id_empleado}}/eliminar" method="POST">
+                                    @csrf
+                                    @method('delete')
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este empleado?')">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
-
-    <!-- Contador de resultados -->
-    <div class="mb-3">
-        <small class="text-muted" id="resultCount">
-            Mostrando {{ count($empleados) }} empleados
-        </small>
-    </div>
-
-    <div class="table-responsive">
-        <table class="table table-hover" id="empleadosTable">
-            <thead class="table-light">
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Apellidos</th>
-                    <th>Sueldo</th>
-                    <th>Teléfono</th>
-                    <th>Dirección</th>
-                    <th>Tipo</th>
-                    <th>Cuenta</th>
-                    <th>Opciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($empleados as $empleado)
-                <tr class="empleado-row">
-                    <td><strong>{{$empleado->id_empleado}}</strong></td>
-                    <td>{{$empleado->nombreEm}}</td>
-                    <td>{{$empleado->apellidosEm}}</td>
-                    <td>${{ number_format($empleado->sueldoEm, 2) }}</td>
-                    <td>{{$empleado->telefonoEm}}</td>
-                    <td>
-                        <span class="texto-largo" title="{{$empleado->direccion}}">
-                            {{ Str::limit($empleado->direccion, 30) }}
-                        </span>
-                    </td>
-                    <td>
-                        @php
-                            $tipoEmpleado = $tipos->firstWhere('id_tipoE', $empleado->id_tipoE);
-                        @endphp
-                        @if($tipoEmpleado)
-                            <span class="badge bg-info">{{ $tipoEmpleado->descripcionTip }}</span>
-                        @else
-                            <span class="badge bg-secondary">Sin tipo</span>
-                        @endif
-                    </td>
-                    <td>
-                        @php
-                            $cuentaEmpleado = $cuentas->firstWhere('id', $empleado->user_id);
-                        @endphp
-                        @if($cuentaEmpleado)
-                            <small class="text-muted">{{ $cuentaEmpleado->email}}</small>
-                        @else
-                            <span class="badge bg-warning">Sin cuenta</span>
-                        @endif
-                    </td>
-                    <td class="d-flex gap-2">
-                        <a href="/empleado/{{$empleado->id_empleado}}/editar" class="btn btn-primary btn-sm">
-                            <i class="bi bi-pencil"></i>
-                        </a>
-
-                        <form action="/empleado/{{$empleado->id_empleado}}/eliminar" method="POST">
-                            @csrf
-                            @method('delete')
-                            <button type="submit" class="btn btn-danger btn-sm" 
-                                    onclick="return confirm('¿Estás seguro de eliminar este empleado?')">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-</div>
     </section>
 </div>
 

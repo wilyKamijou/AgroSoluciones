@@ -10,6 +10,7 @@ class tipoEmpleado extends Model
     use HasFactory;
     protected $primaryKey = 'id_tipoE';
     protected $fillable = [
+        'nombreE',
         'descripcionTip'
     ];
 

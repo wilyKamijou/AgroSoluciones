@@ -20,15 +20,14 @@
         font-weight: bold;
         font-size: 14px;
     }
-    
+
     .bg-light-primary {
         background-color: rgba(59, 125, 221, 0.1) !important;
     }
-    
+
     .user-row:hover {
         background-color: rgba(0, 0, 0, 0.02);
     }
-
 </style>
 
 <section class="content-header">
@@ -40,28 +39,28 @@
         <!-- Card de Registrar Usuario -->
         <div class="card shadow-sm p-4 mb-4">
             <h4 class="mb-3">Registrar Nuevo Usuario</h4>
-            
+
             <form action="/user/guardar" method="POST" class="row g-3">
                 @csrf
-                
+
                 <!-- Nombre -->
                 <div class="col-md-4">
                     <label class="form-label">Nombre</label>
                     <input type="text" name="name" class="form-control" placeholder="Ingrese el nombre del usuario" required>
                 </div>
-                
+
                 <!-- Correo -->
                 <div class="col-md-4">
                     <label class="form-label">Correo Electrónico</label>
                     <input type="email" name="email" class="form-control" placeholder="usuario@dominio.com" required>
                 </div>
-                
+
                 <!-- Contraseña -->
                 <div class="col-md-4">
                     <label class="form-label">Contraseña</label>
                     <input type="password" name="password" class="form-control" placeholder="Mínimo 8 caracteres" required minlength="8">
                 </div>
-                
+
                 <!-- Rol -->
                 <div class="col-md-6">
                     <label class="form-label">Rol</label>
@@ -71,7 +70,7 @@
                         <option value="cliente">Cliente</option>
                     </select>
                 </div>
-                
+
                 <!-- Botones -->
                 <div class="col-md-12 mt-3">
                     <button type="submit" class="btn btn-primary">Guardar</button>
@@ -84,7 +83,7 @@
         <div class="card p-4 shadow-sm">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h4 class="mb-0">Lista de Usuarios</h4>
-                
+
                 <div class="d-flex gap-2 align-items-center">
                     <!-- Buscador -->
                     <div class="input-group" style="width: 300px;">
@@ -93,9 +92,9 @@
                             <i class="bi bi-search"></i>
                         </button>
                     </div>
-                    
-                    
-   
+
+
+
                 </div>
             </div>
 
@@ -144,17 +143,15 @@
                                 </span>
                             </td>
                             <td class="d-flex gap-2">
-                                <a href="/user/{{ $user->id }}/editar" 
-                                   class="btn btn-primary btn-sm">
+                                <a href="/user/{{ $user->id }}/editar" class="btn btn-primary btn-sm">
                                     <i class="bi bi-pencil"></i>
                                 </a>
-                                
+
                                 @if($user->id !== Auth::id())
                                 <form action="/user/{{ $user->id }}/eliminar" method="POST">
                                     @csrf
                                     @method('delete')
-                                    <button type="submit" class="btn btn-danger btn-sm" 
-                                            onclick="return confirm('¿Estás seguro de eliminar este usuario?')">
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este usuario?')">
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </form>

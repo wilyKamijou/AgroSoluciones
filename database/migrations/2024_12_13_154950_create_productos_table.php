@@ -15,13 +15,14 @@ return new class extends Migration
             $table->id('id_producto');
             $table->string('nombrePr', 30);
             $table->string('nombreTecnico', 30);
-            $table->string('descripcionPr', 60);
+            $table->string('descripcionPr', 60)->nullable();
             $table->string('compocicionQuimica', 60);
             $table->string('consentracionQuimica', 60);
             $table->date('fechaFabricacion');
             $table->date('fechaVencimiento');
             $table->string('unidadMedida', 30);
             $table->float('precioPr');
+            $table->string('imagen_url')->nullable();
 
             $table->unsignedBigInteger('id_categoria');
             $table->foreign('id_categoria')->references('id_categoria')->on('categorias');
