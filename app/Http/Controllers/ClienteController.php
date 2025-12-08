@@ -11,6 +11,7 @@ use function Laravel\Prompts\alert;
 
 class ClienteController extends Controller
 {
+
     public function index()
     {
         $clientes = Cliente::all();

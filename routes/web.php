@@ -69,8 +69,10 @@ Route::middleware('auth')->group(function () {
     route::delete('/venta/{id}/eliminar', [VentaController::class, 'destroy'])->name('home');
     Route::get('/venta/pdf', [VentaController::class, 'downloadPDF'])->name('venta.pdf');
     //modulo de ventas 
+    Route::get('/mVenta/buscar', [ModuloVentaController::class, 'buscar']);
+    Route::get('/mVenta/buscarA', [ModuloVentaController::class, 'buscarA']);
+    //Route::get('/mVenta/verificar', [ModuloVentaController::class, 'verificar']);
     route::get('/mVenta', [ModuloVentaController::class, 'index'])->name('home');
-    route::get('/mVenta/crear', [ModuloVentaController::class, 'create'])->name('home');
     route::post('/mVenta/guardar', [ModuloVentaController::class, 'store'])->name('home');
     //rutas de cliente
     route::get('/cliente', [ClienteController::class, 'index'])->name('home');
