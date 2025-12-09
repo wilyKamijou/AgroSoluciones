@@ -18,7 +18,7 @@ class venta extends Model
 
     public function cliente()
     {
-        return $this->belongsTo(Cliente::class, 'id_cliente');
+        return $this->belongsTo(cliente::class, 'id_cliente');
     }
 
     public function empleado()
@@ -28,6 +28,6 @@ class venta extends Model
 
     public function detalleVentas()
     {
-        return $this->belongsToMany(DetalleVenta::class, 'id_venta');
+        return $this->belongsToMany(detalleVenta::class, 'id_venta');
     }
 }

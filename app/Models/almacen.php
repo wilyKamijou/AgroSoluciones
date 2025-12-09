@@ -17,6 +17,6 @@ class almacen extends Model
 
     public function detalleAlmacenes()
     {
-        return $this->belongsToMany(DetalleAlmacen::class, 'id_almacen');
+        return $this->belongsToMany(detalleAlmacen::class, 'id_almacen');
     }
 }

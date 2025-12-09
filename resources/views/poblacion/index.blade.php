@@ -200,7 +200,7 @@
                                 <form action="{{ route('poblacion.tipo-empleado') }}" method="POST" class="mb-2">
                                     @csrf
                                     <button type="submit" class="btn btn-primary btn-poblar w-100">
-                                        <i class="bi bi-person-badge"></i> Tipos de Empleado (6 roles)
+                                        <i class="bi bi-person-badge"></i> Tipos de Empleado (4 roles)
                                     </button>
                                 </form>
 

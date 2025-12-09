@@ -25,12 +25,12 @@ class producto extends Model
 
     public function categoria()
     {
-        return $this->belongsTo(Categoria::class, 'id_categoria');
+        return $this->belongsTo(categoria::class, 'id_categoria');
     }
 
     public function detalleAlmacenes()
     {
-        return $this->hasManyMany(DetalleAlmacen::class, 'id_producto');
+        return $this->hasManyMany(detalleAlmacen::class, 'id_producto');
     }
     /*
     public function detalleCompras()

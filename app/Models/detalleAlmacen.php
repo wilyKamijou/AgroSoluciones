@@ -21,12 +21,12 @@ class detalleAlmacen extends Model
 
     public function producto()
     {
-        return $this->belongsTo(Producto::class, 'id_producto');
+        return $this->belongsTo(producto::class, 'id_producto');
     }
 
     public function almacen()
     {
-        return $this->belongsTo(Almacen::class, 'id_almacen');
+        return $this->belongsTo(almacen::class, 'id_almacen');
     }
     /*
     public function detalleCompra()

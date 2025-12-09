@@ -21,12 +21,12 @@ class detalleVenta extends Model
 
     public function venta()
     {
-        return $this->belongsTo(Venta::class, 'id_venta');
+        return $this->belongsTo(venta::class, 'id_venta');
     }
 
     public function detalleAlmacen()
     {
-        return $this->belongsToMany(DetalleAlmacen::class, ['id_producto', 'id_almacen']);
+        return $this->belongsToMany(detalleAlmacen::class, ['id_producto', 'id_almacen']);
     }
     /*
     public function producto()

@@ -53,13 +53,11 @@ class DataPoblacionController extends Controller
         }
 
         $tiposEmpleado = [
-            ['descripcionTip' => 'Gerente de Tienda'],
-            ['descripcionTip' => 'Vendedor de Agroquímicos'],
-            ['descripcionTip' => 'Asesor Técnico Agrícola'],
-            ['descripcionTip' => 'Almacenista'],
-            ['descripcionTip' => 'Responsable de Seguridad'],
-            ['descripcionTip' => 'Auxiliar de Ventas']
-        ];
+            ['nombreE' => 'Owner', 'descripcionTip' => 'Propietario del Sistema'],
+            ['nombreE' => 'Gerente', 'descripcionTip' => 'Gerente de Tienda'],
+            ['nombreE' => 'Encargado Ventas', 'descripcionTip' => 'Responsable de Ventas'],
+            ['nombreE' => 'Encargado Almacenes', 'descripcionTip' => 'Responsable de Almacenes'],
+        ];  
 
         TipoEmpleado::insert($tiposEmpleado);
 
@@ -109,7 +107,7 @@ class DataPoblacionController extends Controller
                 'sueldoEm' => $this->faker->numberBetween(7000, 15000),
                 'telefonoEm' => $this->faker->numerify('55#######'),
                 'direccion' => $this->faker->streetAddress(),
-                'id_tipoE' => $this->faker->numberBetween(1, 6),
+                'id_tipoE' => $this->faker->numberBetween(1, 4), // Asigna un tipo de empleado existente
                 'user_id' => $userIds[$i] // Asigna usuario correspondiente
             ];
         }

@@ -65,11 +65,11 @@ class MenuServiceProvider extends ServiceProvider
         // ===== AGREGAR ITEMS SEGÚN ROL =====
 
         // Dashboard
-        if (in_array($rol, ['Owner', 'Gerente', 'Encargado Ventas', 'Encargado Almacenes'])) {
+        if (in_array($rol, ['Owner', 'Gerente'])) {
             $menuBase[] = [
-                'text' => 'Dashboard',
-                'url' => '/dashboard',
-                'icon' => 'fas fa-home',
+                'text' => 'Reportes',
+                'url' => '/reportes',
+                'icon' => 'fas fa-chart-bar',
                 'label_color' => 'success',
             ];
         }

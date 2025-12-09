@@ -24,6 +24,7 @@ use App\Http\Controllers\DataPoblacionController;
 use App\Http\Controllers\ModuloAlmacenController;
 use App\Http\Controllers\ModuloUsersController;
 use App\Http\Controllers\ModuloVentaController;
+use App\Http\Controllers\ReporteController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -182,53 +183,19 @@ Route::middleware('auth')->group(function () {
             Route::post('/detalle-venta', [DataPoblacionController::class, 'poblarDetalleVenta'])->name('poblacion.detalle-venta');
         });
     });
-    // routes/web.php
-    // routes/web.php
-Route::get('/diagnostico', function() {
-    $user = auth()->user();
-    
-    if (!$user) {
-        return "No autenticado";
-    }
-
-    return response()->json([
-        'usuario' => $user->email,
-        'rol_actual' => \App\Helpers\RolHelper::rolActual(),
-        'es_owner' => \App\Helpers\RolHelper::esOwner(),
-        'tiene_empleado' => $user->empleado ? 'Sí' : 'No',
-        'empleado_id' => optional($user->empleado)->id_empleado,
-        'tipo_empleado' => optional(optional($user->empleado)->tipoEmpleado)->nombreE,
-        'descripcion_tip' => optional(optional($user->empleado)->tipoEmpleado)->descripcionTip,
-        'gates' => [
-            'ver-dashboard' => \Illuminate\Support\Facades\Gate::allows('ver-dashboard'),
-            'ver-modulo-usuarios' => \Illuminate\Support\Facades\Gate::allows('ver-modulo-usuarios'),
-            'ver-modulo-ventas' => \Illuminate\Support\Facades\Gate::allows('ver-modulo-ventas'),
-        ]
-    ]);
-})->middleware('auth');
+  
 
 
-// routes/web.php
-Route::get('/test-gates-direct', function() {
-    $user = auth()->user();
-    
-    if (!$user) {
-        return "No autenticado";
-    }
+// Ruta para la vista principal de reportes
+Route::get('/reportes', [ReporteController::class, 'index'])->name('reportes.index');
 
-    // Probar Gates manualmente
-    $gates = [
-        'ver-dashboard' => \Illuminate\Support\Facades\Gate::forUser($user)->allows('ver-dashboard'),
-        'ver-modulo-usuarios' => \Illuminate\Support\Facades\Gate::forUser($user)->allows('ver-modulo-usuarios'),
-        'ver-modulo-empleados' => \Illuminate\Support\Facades\Gate::forUser($user)->allows('ver-modulo-empleados'),
-    ];
-
-    return response()->json([
-        'usuario' => $user->email,
-        'rol' => \App\Helpers\RolHelper::rolActual(),
-        'gates' => $gates,
-        'empleado_relacion' => $user->empleado ? 'Existe' : 'No existe',
-    ]);
-})->middleware('auth');
+// Rutas para las APIs de reportes
+Route::prefix('api/reportes')->group(function () {
+    Route::get('/productos-mas-vendidos-cantidad', [ReporteController::class, 'productosMasVendidosPorCantidad']);
+    Route::get('/productos-mas-vendidos-monto', [ReporteController::class, 'productosMasVendidosPorMonto']);
+    Route::get('/distribucion-almacenes', [ReporteController::class, 'productosEnAlmacenes']);
+    Route::get('/empleados-top-ventas', [ReporteController::class, 'empleadoConMasVentas']);
+    Route::get('/completo', [ReporteController::class, 'reporteCompleto']);
+});
 
 });

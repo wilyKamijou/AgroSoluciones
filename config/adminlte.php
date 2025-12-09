@@ -319,8 +319,8 @@ return [
     // Dashboard - Solo si tiene permiso
     [
         'text' => 'Dashboard',
-        'url' => '/dashboard',
-        'icon' => 'fas fa-home',
+        'url' => '/reportes',
+        'icon' => 'fas fa-tachometer-alt',
         'can' => 'ver-dashboard',
     ],
 
