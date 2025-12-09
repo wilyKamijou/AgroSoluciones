@@ -45,10 +45,10 @@ class DetalleAlmacenController extends Controller
     }
     public function edit($id1, $id2)
     {
-        $almacenes = almacen::all();
+        $almacens = almacen::all();
         $productos = producto::all();
         $detalle = DetalleAlmacen::where('id_producto', $id1)->where('id_almacen', $id2)->first();
-        return view('detalleAl.edit', compact('detalle', 'productos', 'almacenes'));
+        return view('detalleAl.edit', compact('detalle', 'productos', 'almacens'));
     }
 
     public function store(Request $request)

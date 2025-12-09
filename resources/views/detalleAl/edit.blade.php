@@ -1,50 +1,51 @@
 @extends('home')
 
 @section ("contenido")
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="ruta-a-tu-archivo.css">
 
-    <h2 style= "font-size: 5rem; font-family:'Times New Roman', Times, serif" class="text-center" >Editar Datos De Los Detalles Del Almacen</h2>
-    <form action="/detalleAl/{{$detalle->id_producto}}/{{$detalle->id_almacen}}/actualizar" method="POST">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="ruta-a-tu-archivo.css">
+
+<h2 style="font-size: 5rem; font-family:'Times New Roman', Times, serif" class="text-center">Editar Datos De Los Detalles Del Almacen</h2>
+<div class="card shadow-sm p-4 mb-4 card-compact">
+    <form action="/detalleAl/{{$detalle->id_producto}}/{{$detalle->id_almacen}}/actualizar" method="POST" class="row g-3">
         @method('PUT')
         <!-- CSRF Token (Laravel) -->
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-             <!-- Tipo de producto-->
-        <div class="mb-3">
-            <label for="id_tipoE" class="form-label">Elija el producto:</label>
-                <select id="id_tipoE" name="id_producto" class="form-select" required>
+        <div class="row g-3">
+            <!-- Producto -->
+            <div class="col-md-4">
+                <label class="form-label">Producto</label>
+                <select name="id_producto" class="form-control" required>
                     <option value="" disabled selected>Seleccione el producto</option>
                     @foreach ($productos as $producto)
-                       <option value={{$producto->id_producto}}> {{$producto->nombrePr}} </option>
+                    <option value="{{$producto->id_producto}}">{{$producto->nombrePr}}</option>
                     @endforeach
-                <!-- Agrega más opciones según los tipos disponibles -->
                 </select>
-        </div>
+            </div>
 
-           <!-- Tipo de almacen -->
-        <div class="mb-3">
-            <label for="id_tipoE" class="form-label">Elija el almacen:</label>
-                <select id="id_tipoE" name="id_almacen" class="form-select" required>
-                    <option value="" disabled selected>Seleccione el almacen</option>
-                    @foreach ($almacenes as $almacen)
-                       <option value={{$almacen->id_almacen}}> {{$almacen->nombreAl}} </option>
+            <!-- Almacén -->
+            <div class="col-md-4">
+                <label class="form-label">Almacén</label>
+                <select name="id_almacen" class="form-control" required>
+                    <option value="" disabled selected>Seleccione el almacén</option>
+                    @foreach ($almacens as $almacen)
+                    <option value="{{$almacen->id_almacen}}">{{$almacen->nombreAl}}</option>
                     @endforeach
-                <!-- Agrega más opciones según los tipos disponibles -->
                 </select>
-        </div>
+            </div>
 
-           <!-- fecha -->
-           <div class="mb-3">
-            <label for="ubicacion" class="form-label">Stock disponible del producto:</label>
-            <input type="integer" id="ubicacion" name="stock" class="form-control" value="{{$detalle->stock}}" required>
-        </div>
+            <!-- Stock -->
+            <div class="col-md-4">
+                <label class="form-label">Stock Disponible</label>
+                <input type="number" name="stock" class="form-control" value="{{$detalle->stock}}" required>
+            </div>
 
-        <!-- Botones -->
-        <div class="mb-3">
-            <button type="submit" class="btn btn-primary">Guardar</button>
-            <a href="/detalleAl" class="btn btn-secondary">Cancelar</a>
-        </div>
+            <!-- Botones -->
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <a href="/detalleAl" class="btn btn-secondary">Cancelar</a>
+            </div>
     </form>
+</div>
+
 @endsection

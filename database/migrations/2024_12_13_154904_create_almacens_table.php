@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('almacens', function (Blueprint $table) {
             $table->id('id_almacen');
-            $table->string('nombreAl', 60);
-            $table->string('descripcionAl', 60);
-            $table->string('direccionAl', 60);
+            $table->string('nombreAl');
+            $table->string('descripcionAl');
+            $table->string('direccionAl');
             $table->timestamps();
         });
     }

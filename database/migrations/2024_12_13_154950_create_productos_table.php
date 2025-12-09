@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('productos', function (Blueprint $table) {
             $table->id('id_producto');
-            $table->string('nombrePr', 30);
-            $table->string('nombreTecnico', 30);
-            $table->string('descripcionPr', 60)->nullable();
-            $table->string('compocicionQuimica', 60);
-            $table->string('consentracionQuimica', 60);
+            $table->string('nombrePr');
+            $table->string('nombreTecnico');
+            $table->string('descripcionPr')->nullable();
+            $table->string('compocicionQuimica');
+            $table->string('consentracionQuimica');
             $table->date('fechaFabricacion');
             $table->date('fechaVencimiento');
-            $table->string('unidadMedida', 30);
+            $table->string('unidadMedida');
             $table->float('precioPr');
             $table->string('imagen_url')->nullable();
 
