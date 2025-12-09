@@ -21,7 +21,7 @@ class TipoEmpleadoController extends Controller
 
     public function store(Request $request)
     {
-        $ex = tipoEmpleado::where('descripcionTip', $request->descripcionTip)->exists();
+        $ex = tipoEmpleado::where('nombreE', $request->descripcionTip)->exists();
         if ($ex) {
             return redirect()->back()->with('error', 'No se puede Guardar porque ya existe ese tipo de empleado.');
         }
@@ -35,7 +35,7 @@ class TipoEmpleadoController extends Controller
     }
     public function update(Request $request, $id)
     {
-        $ex = TipoEmpleado::where('descripcionTip', $request->descripcionTip)->exists();
+        $ex = TipoEmpleado::where('nombreE', $request->descripcionTip)->exists();
         if ($ex) {
             return redirect()->back()->with('error', 'No se puede Guardar porque ya existe ese tipo de empleado.');
         }

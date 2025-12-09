@@ -84,111 +84,209 @@
                         <label class="form-label">Precio del producto</label>
                         <input type="text" name="precioPr" class="form-control" placeholder="ingrese el precio del producto" required>
                     </div>
-
-                    <!-- Botones -->
-                    <div class="col-md-12 mt-3">
-                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    <!-- URL de la Imagen -->
+                    <div class="col-mb-5">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <label for="imagen_url" class="form-label">
+                                <i class="fas fa-image me-1 text-muted"></i>URL de la Imagen
+                            </label>
+                            <div>
+                                <button type="button" id="buscarImagenPixabay" class="btn btn-sm btn-outline-primary me-2">
+                                    <i class="fas fa-search me-1"></i> Buscar automático
+                                </button>
+                                <button type="button" id="buscarManualPixabay" class="btn btn-sm btn-outline-info me-2">
+                                    <i class="fas fa-external-link-alt me-1"></i> Pixabay
+                                </button>
+                                <button type="button" id="buscarManualUnsplash" class="btn btn-sm btn-outline-info me-2">
+                                    <i class="fas fa-external-link-alt me-1"></i> Unsplash
+                                </button>
+                                <button type="button" id="previsualizarImagen" class="btn btn-sm btn-outline-secondary">
+                                    <i class="fas fa-eye me-1"></i> Previsualizar
+                                </button>
+                            </div>
+                        </div>
+                        <input type="url" id="imagen_url" name="imagen_url" class="form-control" placeholder="https://pixabay.com/images/id-12345/" required>
+                        <small class="text-muted">Busca imágenes profesionales o ingresa una URL</small>
+                        <div class="invalid-feedback">
+                            Por favor ingresa una URL válida de imagen.
+                        </div>
+                        <div id="imagenPrevisualizacion" class="mt-3 text-center d-none">
+                            <img src="" alt="Previsualización" class="img-thumbnail" style="max-height: 200px;">
+                            <div class="mt-2 text-muted small">Previsualización de la imagen</div>
+                            <div id="creditosImagen" class="text-muted smaller mt-1"></div>
+                        </div>
                     </div>
                 </div>
-            </form>
+
+                <!-- Botones -->
+                <div class="col-md-12 mt-3">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
         </div>
+        </form>
+</div>
 
-        <!-- Card Tabla -->
-        <div class="card p-4 shadow-sm">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h4 class="mb-0">Lista de Productos</h4>
-                <div class="d-flex gap-2 align-items-center">
-                    <!-- Barra de búsqueda -->
-                    <div class="flex-grow-1" style="max-width: 300px;">
-                        <input type="text" id="searchInput" class="form-control" placeholder="Buscar por nombre, apellido o tipo...">
-                    </div>
-                    <button class="btn btn-outline-secondary" type="button">
-                        <i class="bi bi-search"></i>
-                    </button>
-
-                    <!-- Botón simple de PDF -->
-                    <a href="{{ url('/empleado/pdf') }}" class="btn btn-danger btn-sm">
-                        PDF
-                    </a>
-                </div>
+<!-- Card Tabla -->
+<div class="card p-4 shadow-sm">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="mb-0">Lista de Productos</h4>
+        <div class="d-flex gap-2 align-items-center">
+            <!-- Barra de búsqueda -->
+            <div class="flex-grow-1" style="max-width: 300px;">
+                <input type="text" id="searchInput" class="form-control" placeholder="Buscar por nombre, apellido o tipo...">
             </div>
-            <div class="table-responsive">
-                <table class="table table-hover" id="productosTable">
-                    <thead class="table-light">
-                        <tr>
-                            <th>ID</th>
-                            <th>Nombre</th>
-                            <th>Precio</th>
-                            <th>Nombre Técnico</th>
-                            <th>Descripción</th>
-                            <th>Composición Química</th>
-                            <th>Concentración Química</th>
-                            <th>Fecha fabricación</th>
-                            <th>Fecha Vencimiento</th>
-                            <th>Unidad medida</th>
-                            <th>Categoría</th>
-                            <th>Opciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($productos as $producto)
-                        @php
-                        $categoria = $categorias->firstWhere('id_categoria', $producto->id_categoria);
-                        $hoy = now();
-                        $vencimiento = \Carbon\Carbon::parse($producto->fechaVencimiento);
-                        $diasParaVencer = $hoy->diffInDays($vencimiento, false);
-                        @endphp
-                        <tr class="producto-row">
-                            <td><strong>{{$producto->id_producto}}</strong></td>
-                            <td>{{$producto->nombrePr}}</td>
-                            <td>{{$producto->precioPr}}Bs.</td>
-                            <td>{{$producto->nombreTecnico}}</td>
-                            <td>
-                                <span class="texto-largo" title="{{$producto->descripcionPr}}">
-                                    {{ Str::limit($producto->descripcionPr, 50) }}
+            <button class="btn btn-outline-secondary" type="button">
+                <i class="bi bi-search"></i>
+            </button>
+
+            <!-- Botón simple de PDF -->
+            <a href="{{ url('/empleado/pdf') }}" class="btn btn-danger btn-sm">
+                PDF
+            </a>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover" id="productosTable">
+            <thead class="table-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Nombre Técnico</th>
+                    <th>Descripción</th>
+                    <th>Composición Química</th>
+                    <th>Concentración Química</th>
+                    <th>Fecha fabricación</th>
+                    <th>Fecha Vencimiento</th>
+                    <th>Unidad medida</th>
+                    <th>Categoría</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($productos as $producto)
+                @php
+                $categoria = $categorias->firstWhere('id_categoria', $producto->id_categoria);
+                $hoy = now();
+                $vencimiento = \Carbon\Carbon::parse($producto->fechaVencimiento);
+                $diasParaVencer = $hoy->diffInDays($vencimiento, false);
+                @endphp
+                <tr class="producto-row">
+                    <td><strong>{{$producto->id_producto}}</strong></td>
+                    <td>{{$producto->nombrePr}}</td>
+                    <td>{{$producto->precioPr}}Bs.</td>
+                    <td>{{$producto->nombreTecnico}}</td>
+                    <td>
+                        <span class="texto-largo" title="{{$producto->descripcionPr}}">
+                            {{ Str::limit($producto->descripcionPr, 50) }}
+                        </span>
+                    </td>
+                    <td>{{$producto->compocicionQuimica}}</td>
+                    <td>{{$producto->consentracionQuimica}}</td>
+                    <td>{{$producto->fechaFabricacion}}</td>
+                    <td>
+                        @if($diasParaVencer < 0) <span class="badge bg-danger" title="Vencido">
+                            <i class="bi bi-exclamation-triangle"></i> {{$producto->fechaVencimiento}}
+                            </span>
+                            @elseif($diasParaVencer <= 30) <span class="badge bg-warning" title="Por vencer ({{$diasParaVencer}} días)">
+                                {{$producto->fechaVencimiento}}
                                 </span>
-                            </td>
-                            <td>{{$producto->compocicionQuimica}}</td>
-                            <td>{{$producto->consentracionQuimica}}</td>
-                            <td>{{$producto->fechaFabricacion}}</td>
-                            <td>
-                                @if($diasParaVencer < 0) <span class="badge bg-danger" title="Vencido">
-                                    <i class="bi bi-exclamation-triangle"></i> {{$producto->fechaVencimiento}}
-                                    </span>
-                                    @elseif($diasParaVencer <= 30) <span class="badge bg-warning" title="Por vencer ({{$diasParaVencer}} días)">
-                                        {{$producto->fechaVencimiento}}
-                                        </span>
-                                        @else
-                                        <span class="badge bg-success">{{$producto->fechaVencimiento}}</span>
-                                        @endif
-                            </td>
-                            <td>{{$producto->unidadMedida}}</td>
-                            <td>
-                                @if($categoria)
-                                <span class="badge bg-info">{{$categoria->nombreCat}}</span>
                                 @else
-                                <span class="badge bg-secondary">Sin categoría</span>
+                                <span class="badge bg-success">{{$producto->fechaVencimiento}}</span>
                                 @endif
-                            </td>
-                            <td class="d-flex gap-2">
-                                <a href="/producto/{{$producto->id_producto}}/editar" class="btn btn-primary btn-sm">
-                                    <i class="bi bi-pencil"></i>
-                                </a>
+                    </td>
+                    <td>{{$producto->unidadMedida}}</td>
+                    <td>
+                        @if($categoria)
+                        <span class="badge bg-info">{{$categoria->nombreCat}}</span>
+                        @else
+                        <span class="badge bg-secondary">Sin categoría</span>
+                        @endif
+                    </td>
+                    <td class="d-flex gap-2">
+                        <a href="/producto/{{$producto->id_producto}}/editar" class="btn btn-primary btn-sm">
+                            <i class="bi bi-pencil"></i>
+                        </a>
 
-                                <form action="/producto/{{$producto->id_producto}}/eliminar" method="POST">
-                                    @csrf
-                                    @method('delete')
-                                    <button type="submit" class="btn btn-danger btn-sm">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
+                        <form action="/producto/{{$producto->id_producto}}/eliminar" method="POST">
+                            @csrf
+                            @method('delete')
+                            <button type="submit" class="btn btn-danger btn-sm">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
+</section>
 </div>
 @endsection
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+        const inputURL = document.getElementById("imagen_url");
+        const previewDiv = document.getElementById("imagenPrevisualizacion");
+        const previewImg = previewDiv.querySelector("img");
+        const creditos = document.getElementById("creditosImagen");
+
+        /* =============================
+           BOTÓN: BUSQUEDA AUTOMÁTICA
+           ============================= */
+        document.getElementById("buscarImagenPixabay").addEventListener("click", function() {
+            if (!inputURL.value.trim()) {
+                alert("Debes ingresar primero un nombre de producto para buscar la imagen.");
+                return;
+            }
+
+            // Simulación de búsqueda automática
+            const query = encodeURIComponent(inputURL.value.trim());
+
+            // Abrir búsqueda en Pixabay
+            window.open(`https://pixabay.com/images/search/${query}`, "_blank");
+        });
+
+        /* =============================
+           BOTÓN: IR A PIXABAY
+           ============================= */
+        document.getElementById("buscarManualPixabay").addEventListener("click", function() {
+            window.open("https://pixabay.com/", "_blank");
+        });
+
+        /* =============================
+           BOTÓN: IR A UNSPLASH
+           ============================= */
+        document.getElementById("buscarManualUnsplash").addEventListener("click", function() {
+            window.open("https://unsplash.com/", "_blank");
+        });
+
+        /* =============================
+           BOTÓN: PREVISUALIZAR IMAGEN
+           ============================= */
+        document.getElementById("previsualizarImagen").addEventListener("click", function() {
+            const url = inputURL.value.trim();
+
+            if (!url) {
+                alert("Ingrese una URL de imagen primero.");
+                return;
+            }
+
+            // Mostrar previsualización
+            previewImg.src = url;
+            previewDiv.classList.remove("d-none");
+
+            // Créditos (automático si proviene de Pixabay)
+            if (url.includes("pixabay.com")) {
+                creditos.innerHTML = "Fuente: Pixabay · Licencia gratuita";
+            } else if (url.includes("unsplash.com")) {
+                creditos.innerHTML = "Fuente: Unsplash · Licencia gratuita";
+            } else {
+                creditos.innerHTML = "";
+            }
+        });
+
+    });
+</script>

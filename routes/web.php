@@ -65,12 +65,12 @@ Route::get('/test-role-middleware', function() {
     route::get('/mUser', [ModuloUsersController::class, 'index'])->name('user.index');
     route::post('/mUser/guardar', [ModuloUsersController::class, 'store'])->name('user.store');
     //rutas de empleado
-    route::get('/empleado', [EmpleadoController::class, 'index'])->name('home');
-    route::get('/empleado/crear', [EmpleadoController::class, 'create'])->name('home');
-    route::post('/empleado/guardar', [EmpleadoController::class, 'store'])->name('home');
-    route::get('/empleado/{id}/editar', [EmpleadoController::class, 'edit'])->name('home');
-    route::Put('/empleado/{id}/actualizar', [EmpleadoController::class, 'update'])->name('home');
-    route::delete('/empleado/{id}/eliminar', [EmpleadoController::class, 'destroy'])->name('home');
+    route::get('/empleado', [EmpleadoController::class, 'index']);
+    route::get('/empleado/crear', [EmpleadoController::class, 'create']);
+    route::post('/empleado/guardar', [EmpleadoController::class, 'store']);
+    route::get('/empleado/{id}/editar', [EmpleadoController::class, 'edit']);
+    route::Put('/empleado/{id}/actualizar', [EmpleadoController::class, 'update']);
+    route::delete('/empleado/{id}/eliminar', [EmpleadoController::class, 'destroy']);
     Route::get('/empleado/pdf', [EmpleadoController::class, 'downloadPDF'])->name('empleado.pdf');
 
     // Rutas para gestión de cuenta
@@ -78,75 +78,75 @@ Route::get('/test-role-middleware', function() {
     Route::get('/mi-cuenta/cambiar-password', [App\Http\Controllers\CuentaController::class, 'cambiarPassword'])->name('cuenta.password');
     Route::post('/mi-cuenta/actualizar-password', [App\Http\Controllers\CuentaController::class, 'actualizarPassword'])->name('cuenta.actualizar-password');
     //rutas de venta
-    route::get('/venta', [VentaController::class, 'index'])->name('home');
-    route::get('/venta/crear', [VentaController::class, 'create'])->name('home');
-    route::post('/venta/guardar', [VentaController::class, 'store'])->name('home');
-    route::get('/venta/{id}/editar', [VentaController::class, 'edit'])->name('home');
-    route::Put('/venta/{id}/actualizar', [VentaController::class, 'update'])->name('home');
-    route::delete('/venta/{id}/eliminar', [VentaController::class, 'destroy'])->name('home');
+    route::get('/venta', [VentaController::class, 'index']);
+    route::get('/venta/crear', [VentaController::class, 'create']);
+    route::post('/venta/guardar', [VentaController::class, 'store']);
+    route::get('/venta/{id}/editar', [VentaController::class, 'edit']);
+    route::Put('/venta/{id}/actualizar', [VentaController::class, 'update']);
+    route::delete('/venta/{id}/eliminar', [VentaController::class, 'destroy']);
     Route::get('/venta/pdf', [VentaController::class, 'downloadPDF'])->name('venta.pdf');
     //modulo de ventas 
     Route::get('/mVenta/buscar', [ModuloVentaController::class, 'buscar']);
     Route::get('/mVenta/buscarA', [ModuloVentaController::class, 'buscarA']);
     //Route::get('/mVenta/verificar', [ModuloVentaController::class, 'verificar']);
-    route::get('/mVenta', [ModuloVentaController::class, 'index'])->name('home');
-    route::post('/mVenta/guardar', [ModuloVentaController::class, 'store'])->name('home');
+    route::get('/mVenta', [ModuloVentaController::class, 'index']);
+    route::post('/mVenta/guardar', [ModuloVentaController::class, 'store']);
     //rutas de cliente
-    route::get('/cliente', [ClienteController::class, 'index'])->name('home');
-    route::get('/cliente/crear', [ClienteController::class, 'create'])->name('home');
-    route::post('/cliente/guardar', [ClienteController::class, 'store'])->name('home');
-    route::get('/cliente/{id}/editar', [ClienteController::class, 'edit'])->name('home');
-    route::Put('/cliente/{id}/actualizar', [ClienteController::class, 'update'])->name('home');
-    route::delete('/cliente/{id}/eliminar', [ClienteController::class, 'destroy'])->name('home');
+    route::get('/cliente', [ClienteController::class, 'index']);
+    route::get('/cliente/crear', [ClienteController::class, 'create']);
+    route::post('/cliente/guardar', [ClienteController::class, 'store']);
+    route::get('/cliente/{id}/editar', [ClienteController::class, 'edit']);
+    route::Put('/cliente/{id}/actualizar', [ClienteController::class, 'update']);
+    route::delete('/cliente/{id}/eliminar', [ClienteController::class, 'destroy']);
     //rutas para tipos de empleado
-    route::get('/tipo', [TipoEmpleadoController::class, 'index'])->name('home');
-    route::get('/tipo/crear', [TipoEmpleadoController::class, 'create'])->name('home');
-    route::post('/tipo/guardar', [TipoEmpleadoController::class, 'store'])->name('home');
-    route::get('/tipo/{id}/editar', [TipoEmpleadoController::class, 'edit'])->name('home');
-    route::Put('/tipo/{id}/actualizar', [TipoEmpleadoController::class, 'update'])->name('home');
-    route::delete('/tipo/{id}/eliminar', [TipoEmpleadoController::class, 'destroy'])->name('home');
+    route::get('/tipo', [TipoEmpleadoController::class, 'index']);
+    route::get('/tipo/crear', [TipoEmpleadoController::class, 'create']);
+    route::post('/tipo/guardar', [TipoEmpleadoController::class, 'store']);
+    route::get('/tipo/{id}/editar', [TipoEmpleadoController::class, 'edit']);
+    route::Put('/tipo/{id}/actualizar', [TipoEmpleadoController::class, 'update']);
+    route::delete('/tipo/{id}/eliminar', [TipoEmpleadoController::class, 'destroy']);
     //rutas para almacen
-    route::get('/almacen', [AlmacenController::class, 'index'])->name('home');
-    route::get('/almacen/crear', [AlmacenController::class, 'create'])->name('home');
-    route::post('/almacen/guardar', [AlmacenController::class, 'store'])->name('home');
-    route::get('/almacen/{id}/editar', [AlmacenController::class, 'edit'])->name('home');
-    route::Put('/almacen/{id}/actualizar', [AlmacenController::class, 'update'])->name('home');
-    route::delete('/almacen/{id}/eliminar', [AlmacenController::class, 'destroy'])->name('home');
+    route::get('/almacen', [AlmacenController::class, 'index']);
+    route::get('/almacen/crear', [AlmacenController::class, 'create']);
+    route::post('/almacen/guardar', [AlmacenController::class, 'store']);
+    route::get('/almacen/{id}/editar', [AlmacenController::class, 'edit']);
+    route::Put('/almacen/{id}/actualizar', [AlmacenController::class, 'update']);
+    route::delete('/almacen/{id}/eliminar', [AlmacenController::class, 'destroy']);
     Route::get('/almacen/pdf', [AlmacenController::class, 'downloadPDF'])->name('almacen.pdf');
     //modulo de inventario
     route::get('/mAlmacen', [ModuloAlmacenController::class, 'index'])->name('home');
     route::post('/mAlmacen/guardar', [ModuloAlmacenController::class, 'store'])->name('home');
     //rutas para producto
-    route::get('/producto', [ProductoController::class, 'index'])->name('home');
-    route::get('/producto/crear', [ProductoController::class, 'create'])->name('home');
-    route::post('/producto/guardar', [ProductoController::class, 'store'])->name('home');
-    route::get('/producto/{id}/editar', [ProductoController::class, 'edit'])->name('home');
-    route::Put('/producto/{id}/actualizar', [ProductoController::class, 'update'])->name('home');
-    route::delete('/producto/{id}/eliminar', [ProductoController::class, 'destroy'])->name('home');
+    route::get('/producto', [ProductoController::class, 'index']);
+    route::get('/producto/crear', [ProductoController::class, 'create']);
+    route::post('/producto/guardar', [ProductoController::class, 'store']);
+    route::get('/producto/{id}/editar', [ProductoController::class, 'edit']);
+    route::Put('/producto/{id}/actualizar', [ProductoController::class, 'update']);
+    route::delete('/producto/{id}/eliminar', [ProductoController::class, 'destroy']);
     Route::get('/producto/pdf', [ProductoController::class, 'downloadPDF'])->name('producto.pdf');
     //rutas categrias
-    route::get('/categoria', [CategoriaController::class, 'index'])->name('home');
-    route::get('/categoria/crear', [CategoriaController::class, 'create'])->name('home');
-    route::post('/categoria/guardar', [CategoriaController::class, 'store'])->name('home');
-    route::get('/categoria/{id}/editar', [CategoriaController::class, 'edit'])->name('home');
-    route::Put('/categoria/{id}/actualizar', [CategoriaController::class, 'update'])->name('home');
-    route::delete('/categoria/{id}/eliminar', [CategoriaController::class, 'destroy'])->name('home');
+    route::get('/categoria', [CategoriaController::class, 'index']);
+    route::get('/categoria/crear', [CategoriaController::class, 'create']);
+    route::post('/categoria/guardar', [CategoriaController::class, 'store']);
+    route::get('/categoria/{id}/editar', [CategoriaController::class, 'edit']);
+    route::Put('/categoria/{id}/actualizar', [CategoriaController::class, 'update']);
+    route::delete('/categoria/{id}/eliminar', [CategoriaController::class, 'destroy']);
     //rutas para detalle almacen
-    route::get('/detalleAl', [DetalleAlmacenController::class, 'index'])->name('home');
-    route::get('/detalleAl/crear', [DetalleAlmacenController::class, 'create'])->name('home');
-    route::post('/detalleAl/guardar', [DetalleAlmacenController::class, 'store'])->name('home');
-    route::get('/detalleAl/{id1}/{id2}/editar', [DetalleAlmacenController::class, 'edit'])->name('home');
-    route::Put('/detalleAl/{id1}/{id2}/actualizar', [DetalleAlmacenController::class, 'update'])->name('home');
-    route::delete('/detalleAl/{id1}/{id2}/eliminar', [DetalleAlmacenController::class, 'destroy'])->name('home');
+    route::get('/detalleAl', [DetalleAlmacenController::class, 'index']);
+    route::get('/detalleAl/crear', [DetalleAlmacenController::class, 'create']);
+    route::post('/detalleAl/guardar', [DetalleAlmacenController::class, 'store']);
+    route::get('/detalleAl/{id1}/{id2}/editar', [DetalleAlmacenController::class, 'edit']);
+    route::Put('/detalleAl/{id1}/{id2}/actualizar', [DetalleAlmacenController::class, 'update']);
+    route::delete('/detalleAl/{id1}/{id2}/eliminar', [DetalleAlmacenController::class, 'destroy']);
     Route::get('/detalleAl/pdf', [DetalleAlmacenController::class, 'downloadPDF'])->name('detalleAlmacen.pdf');
 
     //rutas para detalle venta
-    route::get('/detalleVe', [DetalleVentaController::class, 'index'])->name('home');
-    route::get('/detalleVe/crear', [DetalleVentaController::class, 'create'])->name('home');
-    route::post('/detalleVe/guardar', [DetalleVentaController::class, 'store'])->name('home');
-    route::get('/detalleVe/{id1}/{id2}/{id3}/editar', [DetalleVentaController::class, 'edit'])->name('home');
-    route::Put('/detalleVe/{id1}/{id2}/{id3}/actualizar', [DetalleVentaController::class, 'update'])->name('home');
-    route::delete('/detalleVe/{id1}/{id2}/{id3}/eliminar', [DetalleVentaController::class, 'destroy'])->name('home');
+    route::get('/detalleVe', [DetalleVentaController::class, 'index']);
+    route::get('/detalleVe/crear', [DetalleVentaController::class, 'create']);
+    route::post('/detalleVe/guardar', [DetalleVentaController::class, 'store']);
+    route::get('/detalleVe/{id1}/{id2}/{id3}/editar', [DetalleVentaController::class, 'edit']);
+    route::Put('/detalleVe/{id1}/{id2}/{id3}/actualizar', [DetalleVentaController::class, 'update']);
+    route::delete('/detalleVe/{id1}/{id2}/{id3}/eliminar', [DetalleVentaController::class, 'destroy']);
     Route::get('/detalleVe/pdf', [DetalleVentaController::class, 'downloadPDF'])->name('detalleVenta.pdf');
     Route::get('/api/producto/{id}/precio', function ($id) {
         $producto = App\Models\producto::find($id);

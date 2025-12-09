@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('empleados', function (Blueprint $table) {
             $table->id('id_empleado');
-            $table->string('nombreEm', 60);
-            $table->string('apellidosEm', 60);
+            $table->string('nombreEm');
+            $table->string('apellidosEm');
             $table->integer('sueldoEm');
             $table->integer('telefonoEm')->nullable();
-            $table->string('direccion', 60)->nullable();
+            $table->string('direccion')->nullable();
 
             $table->unsignedBigInteger('id_tipoE');
             $table->foreign('id_tipoE')->references('id_tipoE')->on('tipo_empleados');

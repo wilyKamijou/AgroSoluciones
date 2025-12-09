@@ -111,8 +111,9 @@ class DetalleVentaController extends Controller
         $detalleAs = detalleAlmacen::all();
         $almacenes = almacen::all();
         $productos = producto::all();
+        $clientes = cliente::all();
         $detalleVe = detalleVenta::where('id_venta', $id1)->where('id_producto', $id2)->where('id_almacen', $id3)->first();
-        return view('detalleVenta.edit', compact('ventas', 'detalleAs', 'almacenes', 'productos', 'detalleVe'));
+        return view('detalleVenta.edit', compact('ventas', 'detalleAs', 'almacenes', 'productos', 'detalleVe', 'clientes'));
     }
     public function update(Request $request, $id1, $id2, $id3)
     {
