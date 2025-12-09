@@ -30,20 +30,37 @@ Route::get('/', function () {
 });
 Auth::routes();
 
-
+Route::get('/test-helper', function() {
+    return response()->json([
+        'rol' => \App\Helpers\RolHelper::rol(),
+        'rolActual' => \App\Helpers\RolHelper::rolActual(),
+        'esOwner' => \App\Helpers\RolHelper::esOwner(),
+        'menu' => \App\Helpers\RolHelper::menu(),
+        'usuario' => auth()->user()->email ?? 'No autenticado',
+        'empleado' => optional(auth()->user())->empleado ? 'Sí' : 'No',
+    ]);
+})->middleware('auth');
 
 Route::middleware('auth')->group(function () {
+    // Dashboard - Accesible para todos los roles autenticados
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+        ->name('dashboard');
 
+        // routes/web.php
+Route::get('/test-role-middleware', function() {
+    return "Ruta pública de prueba";
+})->middleware('role:Owner,Gerente')->name('test.role');
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'home']);
 
-    //users
-    route::get('/user', [UsersController::class, 'index'])->name('user.index');
-    route::get('/user/crear', [UsersController::class, 'create'])->name('user.create');
-    route::post('/user/guardar', [UsersController::class, 'store'])->name('user.store');
-    route::get('/user/{id}/editar', [UsersController::class, 'edit'])->name('user.edit');
-    route::Put('/user/{id}/actualizar', [UsersController::class, 'update'])->name('user.update');
-    route::delete('/user/{id}/eliminar', [UsersController::class, 'destroy'])->name('user.destroy');
+   Route::middleware(['role:usuarios'])->prefix('empleados')->group(function () {
+        Route::get('/user', [UsersController::class, 'index'])->name('user.index');
+        Route::get('/user/crear', [UsersController::class, 'create'])->name('user.create');
+        Route::post('/user/guardar', [UsersController::class, 'store'])->name('user.store');
+        Route::get('/user/{id}/editar', [UsersController::class, 'edit'])->name('user.edit');
+        Route::put('/user/{id}/actualizar', [UsersController::class, 'update'])->name('user.update');
+        Route::delete('/user/{id}/eliminar', [UsersController::class, 'destroy'])->name('user.destroy');
+    });
     //modulo de usuario
     route::get('/mUser', [ModuloUsersController::class, 'index'])->name('user.index');
     route::post('/mUser/guardar', [ModuloUsersController::class, 'store'])->name('user.store');
