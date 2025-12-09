@@ -299,138 +299,171 @@ return [
     */
 
     'menu' => [
-        // Navbar items:
-        [
-            'type' => 'navbar-search',
-            'text' => 'search',
-            'topnav_right' => true,
-        ],
-        [
-            'type' => 'fullscreen-widget',
-            'topnav_right' => true,
-        ],
-
-        // Sidebar items:
-        [
-            'type' => 'sidebar-menu-search',
-            'text' => 'search',
-        ],
-        [
-            'text' => 'blog',
-            'url' => 'admin/blog',
-            'can' => 'manage-blog',
-        ],
-        [
-            'text' => 'Usuarios',
-            'icon' => 'far fa-fw fa-user',
-            'submenu' => [
-                [
-                    'text' => 'Modulo de Usuarios',
-                    'url' => '/mUser',
-                ],
-                [
-                    'text' => 'Cuentes',
-                    'url' => '/user',
-                ]
-            ],
-
-            'label_color' => 'success',
-        ],
-        [
-            'text' => 'Clientes',
-            'url' => '/cliente',
-            'icon' => 'fas fa-users',
-
-            'label_color' => 'success',
-        ],
-        [
-            'text' => 'Empleados',
-
-            'icon' => 'far fa-address-book',
-            'submenu' => [
-                [
-                    'text' => 'Empleados',
-                    'url' => '/empleado',
-                ],
-                [
-                    'text' => 'Tipos de empleados',
-                    'url' => '/tipo',
-                ]
-            ],
-            'label_color' => 'success',
-        ],
-
-        [
-            'text' => 'Ventas',
-            'icon' => 'far fa-money-bill-alt',
-            'submenu' => [
-                [
-                    'text' => 'Modulo de Ventas',
-                    'url' => '/mVenta',
-                ],
-                [
-                    'text' => 'Ventas',
-                    'url' => '/venta',
-                ],
-                [
-                    'text' => 'Detalle de las ventas',
-                    'url' => '/detalleVe',
-                ]
-            ],
-            'label_color' => 'success',
-        ],
-
-        [
-            'text' => 'Almacenes',
-            'icon' => 'far fa-building',
-            'submenu' => [
-                [
-                    'text' => 'Modulo de inventario',
-                    'url' => '/mAlmacen',
-                ],
-                [
-                    'text' => 'Almacenes',
-                    'url' => '/almacen',
-                ],
-                [
-                    'text' => 'Detalle de los almacenes',
-                    'url' => '/detalleAl',
-                ]
-            ],
-            'label_color' => 'success',
-        ],
-        [
-            'text' => 'Productos',
-            'icon' => 'fas fa-flask',
-            'submenu' => [
-                [
-                    'text' => 'Productos',
-                    'url' => '/producto',
-                ],
-                [
-                    'text' => 'Categorias de productos',
-                    'url' => '/categoria',
-                ]
-            ],
-            'label_color' => 'success',
-        ],
-        [
-            'text' => 'Poblacion de datos',
-            'url'  => '/poblacion',
-            'icon' => 'fas fa-database',
-        ],
-        ['header' => 'Ajustes de la cuenta'],
-        [
-            'text' => 'Mi Perfil',
-            'url' => '/mi-cuenta/perfil',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'Cambiar Contraseña',
-            'url' => '/mi-cuenta/cambiar-password',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
+    // Navbar items:
+    [
+        'type' => 'navbar-search',
+        'text' => 'search',
+        'topnav_right' => true,
     ],
+    [
+        'type' => 'fullscreen-widget',
+        'topnav_right' => true,
+    ],
+
+    // Sidebar items:
+    [
+        'type' => 'sidebar-menu-search',
+        'text' => 'search',
+    ],
+    
+    // Dashboard - Solo si tiene permiso
+    [
+        'text' => 'Dashboard',
+        'url' => '/dashboard',
+        'icon' => 'fas fa-home',
+        'can' => 'ver-dashboard',
+    ],
+
+    // Usuarios - Solo Owner y Gerente
+    [
+        'text' => 'Usuarios',
+        'icon' => 'far fa-fw fa-user',
+        'can' => 'ver-modulo-usuarios',
+        'submenu' => [
+            [
+                'text' => 'Modulo de Usuarios',
+                'url' => '/mUser',
+                'can' => 'ver-modulo-usuarios',
+            ],
+            [
+                'text' => 'Cuentas',
+                'url' => '/user',
+                'can' => 'ver-modulo-cuentas',
+            ]
+        ],
+        'label_color' => 'success',
+    ],
+    
+    // Clientes - Owner, Gerente, Encargado Ventas
+    [
+        'text' => 'Clientes',
+        'url' => '/cliente',
+        'icon' => 'fas fa-users',
+        'can' => 'ver-modulo-clientes',
+        'label_color' => 'success',
+    ],
+    
+    // Empleados - Solo Owner y Gerente
+    [
+        'text' => 'Empleados',
+        'icon' => 'far fa-address-book',
+        'can' => 'ver-modulo-empleados',
+        'submenu' => [
+            [
+                'text' => 'Empleados',
+                'url' => '/empleado',
+                'can' => 'ver-modulo-empleados',
+            ],
+            [
+                'text' => 'Tipos de empleados',
+                'url' => '/tipo',
+                'can' => 'ver-modulo-tipos-empleados',
+            ]
+        ],
+        'label_color' => 'success',
+    ],
+
+    // Ventas - Owner, Gerente, Encargado Ventas
+    [
+        'text' => 'Ventas',
+        'icon' => 'far fa-money-bill-alt',
+        'can' => 'ver-modulo-ventas',
+        'submenu' => [
+            [
+                'text' => 'Modulo de Ventas',
+                'url' => '/mVenta',
+                'can' => 'ver-modulo-ventas',
+            ],
+            [
+                'text' => 'Ventas',
+                'url' => '/venta',
+                'can' => 'ver-modulo-ventas',
+            ],
+            [
+                'text' => 'Detalle de las ventas',
+                'url' => '/detalleVe',
+                'can' => 'ver-modulo-detalle-ventas',
+            ]
+        ],
+        'label_color' => 'success',
+    ],
+
+    // Almacenes - Owner, Gerente, Encargado Almacenes
+    [
+        'text' => 'Almacenes',
+        'icon' => 'far fa-building',
+        'can' => 'ver-modulo-almacenes',
+        'submenu' => [
+            [
+                'text' => 'Modulo de inventario',
+                'url' => '/mAlmacen',
+                'can' => 'ver-modulo-almacenes',
+            ],
+            [
+                'text' => 'Almacenes',
+                'url' => '/almacen',
+                'can' => 'ver-modulo-almacenes',
+            ],
+            [
+                'text' => 'Detalle de los almacenes',
+                'url' => '/detalleAl',
+                'can' => 'ver-modulo-detalle-almacenes',
+            ]
+        ],
+        'label_color' => 'success',
+    ],
+    
+    // Productos - Todos excepto ?
+    [
+        'text' => 'Productos',
+        'icon' => 'fas fa-flask',
+        'can' => 'ver-modulo-productos',
+        'submenu' => [
+            [
+                'text' => 'Productos',
+                'url' => '/producto',
+                'can' => 'ver-modulo-productos',
+            ],
+            [
+                'text' => 'Categorias de productos',
+                'url' => '/categoria',
+                'can' => 'ver-modulo-categorias',
+            ]
+        ],
+        'label_color' => 'success',
+    ],
+    
+    // Poblacion de datos - Solo Owner y Gerente
+    [
+        'text' => 'Poblacion de datos',
+        'url'  => '/poblacion',
+        'icon' => 'fas fa-database',
+        'can' => 'ver-modulo-poblacion',
+    ],
+    
+    // Ajustes de cuenta - Todos los usuarios autenticados
+    ['header' => 'Ajustes de la cuenta'],
+    [
+        'text' => 'Mi Perfil',
+        'url' => '/mi-cuenta/perfil',
+        'icon' => 'fas fa-fw fa-user',
+    ],
+    [
+        'text' => 'Cambiar Contraseña',
+        'url' => '/mi-cuenta/cambiar-password',
+        'icon' => 'fas fa-fw fa-lock',
+    ],
+],
 
     /*
     |--------------------------------------------------------------------------

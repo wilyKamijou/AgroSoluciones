@@ -23,9 +23,19 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
+            "App\\Models\\": ["app/Models/empleado.php", "app/Models/tipoEmpleado.php"],  
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+            
+        },
+          "files": [
+        "app/Helpers/RolHelper.php"  
+           ],
+        "classmap": [
+            "app/Models/empleado.php",
+            "app/Models/tipoEmpleado.php"
+        ]
+        
     },
     "autoload-dev": {
         "psr-4": {
@@ -65,4 +75,5 @@
     },
     "minimum-stability": "stable",
     "prefer-stable": true
+    
 }

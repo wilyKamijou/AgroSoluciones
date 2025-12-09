@@ -22,12 +22,12 @@ class Empleado extends Model
 
     public function tipoEmpleado()
     {
-        return $this->belongsTo(TipoEmpleado::class, 'id_tipoE');
+        return $this->belongsTo(tipoEmpleado::class, 'id_tipoE');
     }
 
     public function user()
     {
-        return $this->belongsTo(user::class, 'user_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     public function ventas()
