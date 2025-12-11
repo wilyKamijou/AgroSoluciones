@@ -21,9 +21,11 @@ use App\Http\Controllers\InformeController;
 use App\Http\Controllers\UsersController;
 use GuzzleHttp\Client;
 use App\Http\Controllers\DataPoblacionController;
+use App\Http\Controllers\EnviarController;
 use App\Http\Controllers\ModuloAlmacenController;
 use App\Http\Controllers\ModuloUsersController;
 use App\Http\Controllers\ModuloVentaController;
+use App\Http\Controllers\PaginaController;
 use App\Http\Controllers\ReporteController;
 
 Route::get('/', function () {
@@ -46,9 +48,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/user/{id}/editar', [UsersController::class, 'edit'])->name('user.edit');
         Route::put('/user/{id}/actualizar', [UsersController::class, 'update'])->name('user.update');
         Route::delete('/user/{id}/eliminar', [UsersController::class, 'destroy'])->name('user.destroy');
-        
 
-    //modulo de usuario
+
+        //modulo de usuario
         route::get('/mUser', [ModuloUsersController::class, 'index'])->name('user.index');
         route::post('/mUser/guardar', [ModuloUsersController::class, 'store'])->name('user.store');
         //rutas de empleado
@@ -61,12 +63,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/empleado/pdf', [EmpleadoController::class, 'downloadPDF'])->name('empleado.pdf');
     });
 
-    
+    //pagina web
+    Route::get('/pagina', [PaginaController::class, 'index']);
+    Route::post('/enviar', [EnviarController::class, 'enviar']);
+
     // Rutas para gestión de cuenta
     Route::get('/mi-cuenta/perfil', [App\Http\Controllers\CuentaController::class, 'perfil'])->name('cuenta.perfil');
     Route::get('/mi-cuenta/cambiar-password', [App\Http\Controllers\CuentaController::class, 'cambiarPassword'])->name('cuenta.password');
     Route::post('/mi-cuenta/actualizar-password', [App\Http\Controllers\CuentaController::class, 'actualizarPassword'])->name('cuenta.actualizar-password');
-    
+
 
     Route::middleware('auth', 'role:Owner,Encargado Ventas')->group(function () {
         //rutas de venta
@@ -153,20 +158,19 @@ Route::middleware('auth')->group(function () {
         route::Put('/detalleAl/{id1}/{id2}/actualizar', [DetalleAlmacenController::class, 'update']);
         route::delete('/detalleAl/{id1}/{id2}/eliminar', [DetalleAlmacenController::class, 'destroy']);
         Route::get('/detalleAl/pdf', [DetalleAlmacenController::class, 'downloadPDF'])->name('detalleAlmacen.pdf');
-            //rutas para categoria de productos
-        route::get('/categoria', [CategoriaController::class, 'index'])->name('home');
-        route::get('/categoria/crear', [CategoriaController::class, 'create'])->name('home');
-        route::post('/categoria/guardar', [CategoriaController::class, 'store'])->name('home');
-        route::get('/categoria/{id}/editar', [CategoriaController::class, 'edit'])->name('home');
-        route::Put('/categoria/{id}/actualizar', [CategoriaController::class, 'update'])->name('home');
-        route::delete('/categoria/{id}/eliminar', [CategoriaController::class, 'destroy'])->name('home');
-    
+        //rutas para categoria de productos
+        route::get('/categoria', [CategoriaController::class, 'index']);
+        route::get('/categoria/crear', [CategoriaController::class, 'create']);
+        route::post('/categoria/guardar', [CategoriaController::class, 'store']);
+        route::get('/categoria/{id}/editar', [CategoriaController::class, 'edit']);
+        route::Put('/categoria/{id}/actualizar', [CategoriaController::class, 'update']);
+        route::delete('/categoria/{id}/eliminar', [CategoriaController::class, 'destroy']);
     });
-    
-    
-    
+
+
+
     Route::middleware('auth', 'role:Owner')->group(function () {
-    // Rutas para poblar datos
+        // Rutas para poblar datos
         Route::prefix('poblacion')->group(function () {
             Route::get('/', [DataPoblacionController::class, 'index'])->name('poblacion.index');
             Route::post('/tipo-empleado', [DataPoblacionController::class, 'poblarTipoEmpleado'])->name('poblacion.tipo-empleado');
@@ -183,19 +187,18 @@ Route::middleware('auth')->group(function () {
             Route::post('/detalle-venta', [DataPoblacionController::class, 'poblarDetalleVenta'])->name('poblacion.detalle-venta');
         });
     });
-  
 
 
-// Ruta para la vista principal de reportes
-Route::get('/reportes', [ReporteController::class, 'index'])->name('reportes.index');
 
-// Rutas para las APIs de reportes
-Route::prefix('api/reportes')->group(function () {
-    Route::get('/productos-mas-vendidos-cantidad', [ReporteController::class, 'productosMasVendidosPorCantidad']);
-    Route::get('/productos-mas-vendidos-monto', [ReporteController::class, 'productosMasVendidosPorMonto']);
-    Route::get('/distribucion-almacenes', [ReporteController::class, 'productosEnAlmacenes']);
-    Route::get('/empleados-top-ventas', [ReporteController::class, 'empleadoConMasVentas']);
-    Route::get('/completo', [ReporteController::class, 'reporteCompleto']);
-});
+    // Ruta para la vista principal de reportes
+    Route::get('/reportes', [ReporteController::class, 'index'])->name('reportes.index');
 
+    // Rutas para las APIs de reportes
+    Route::prefix('api/reportes')->group(function () {
+        Route::get('/productos-mas-vendidos-cantidad', [ReporteController::class, 'productosMasVendidosPorCantidad']);
+        Route::get('/productos-mas-vendidos-monto', [ReporteController::class, 'productosMasVendidosPorMonto']);
+        Route::get('/distribucion-almacenes', [ReporteController::class, 'productosEnAlmacenes']);
+        Route::get('/empleados-top-ventas', [ReporteController::class, 'empleadoConMasVentas']);
+        Route::get('/completo', [ReporteController::class, 'reporteCompleto']);
+    });
 });

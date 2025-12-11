@@ -6,34 +6,37 @@
 <link rel="stylesheet" href="ruta-a-tu-archivo.css">
 
 <h2 style="font-size: 5rem; font-family:'Times New Roman', Times, serif" class="text-center">Editar Datos Del Usuario</h2>
-<form action="/user/{{$user->id}}/actualizar" method="POST">
-    @method('PUT')
+<div class="card shadow-sm p-4 mb-4">
+    <form action="/user/{{$user->id}}/actualizar" method="POST" class="row g-3">
+        @method('PUT')
 
-    <!-- CSRF Token (Laravel) -->
-    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <!-- CSRF Token (Laravel) -->
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-    <!-- Nombre -->
-    <div class="mb-3">
-        <label for="nombrePr" class="form-label">Nombre del usuario:</label>
-        <input type="text" id="nombre" name="name" class="form-control" value="{{$user->name}}" required>
-    </div>
 
-    <!-- Descripcion -->
-    <div class="mb-3">
-        <label for="ubicacionPr" class="form-label">Correo del usuario:</label>
-        <input type="text" id="ubicacionPr" name="email" class="form-control" value="{{$user->email}}" requiered>
-    </div>
+        <!-- Nombre -->
+        <div class="col-md-4">
+            <label class="form-label">Nombre</label>
+            <input type="text" name="name" class="form-control" value="{{$user->name}}" required>
+        </div>
 
-    <!-- precio-->
-    <div class="mb-3">
-        <label for="ubicacion" class="form-label">Contraseña del usuario:</label>
-        <input type="text" id="ubicacion" name="password" class="form-control" value="{{$user->password}}" required>
-    </div>
+        <!-- Correo -->
+        <div class="col-md-4">
+            <label class="form-label">Correo Electrónico</label>
+            <input type="email" name="email" class="form-control" value="{{$user->email}}" required>
+        </div>
 
-    <!-- Botones -->
-    <div class="mb-3">
-        <button type="submit" class="btn btn-primary">Guardar</button>
-        <a href="/user" class="btn btn-secondary">Cancelar</a>
-    </div>
-</form>
+        <!-- Contraseña -->
+        <div class="col-md-4">
+            <label class="form-label">Contraseña</label>
+            <input type="text" name="password" class="form-control" value="{{$user->password}}" required minlength="8">
+        </div>
+        <!-- Botones -->
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a href="/user" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+
 @endsection

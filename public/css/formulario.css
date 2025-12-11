@@ -1,0 +1,106 @@
+/* ===== FUENTE GENERAL ===== */
+* {
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+
+/* ===== CONTENEDOR ===== */
+.formulario-container {
+    max-width: 550px;
+    margin: 50px auto;
+    padding: 35px 30px;
+    border-radius: 20px;
+    
+    /* Fondo semi-transparente con efecto glass */
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+    animation: slideFade 0.6s ease forwards;
+}
+
+/* Animación de entrada */
+@keyframes slideFade {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== TÍTULO ===== */
+.formulario-container h2 {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: #111827;
+    letter-spacing: 0.5px;
+}
+
+/* ===== LABEL ===== */
+.formulario-container label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #374151;
+}
+
+/* ===== INPUTS Y TEXTAREA ===== */
+.formulario-container input,
+.formulario-container textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(0,0,0,0.15);
+    font-size: 15px;
+    background: rgba(255, 255, 255, 0.9);
+    transition: all 0.25s ease;
+    outline: none;
+    margin-bottom: 18px;
+}
+
+/* Efecto al escribir */
+.formulario-container input:focus,
+.formulario-container textarea:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 4px 12px rgba(59,130,246,0.3);
+    background: #fff;
+}
+
+/* ===== BOTÓN ===== */
+.formulario-container button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    color: white;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.25s ease-in-out;
+    box-shadow: 0 6px 15px rgba(22,163,74,0.4);
+}
+
+/* Hover elegante */
+.formulario-container button:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 18px rgba(22,163,74,0.55);
+}
+
+/* Active */
+.formulario-container button:active {
+    transform: scale(0.98);
+}
+
+/* ===== MENSAJES ===== */
+.alert-success {
+    background: #ecfdf5;
+    border-left: 6px solid #10b981;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    color: #065f46;
+    font-weight: 600;
+}

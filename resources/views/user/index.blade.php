@@ -61,16 +61,6 @@
                     <input type="password" name="password" class="form-control" placeholder="Mínimo 8 caracteres" required minlength="8">
                 </div>
 
-                <!-- Rol -->
-                <div class="col-md-6">
-                    <label class="form-label">Rol</label>
-                    <select name="role" class="form-control" required>
-                        <option value="" disabled selected>Seleccione el rol</option>
-                        <option value="admin">Administrador</option>
-                        <option value="cliente">Cliente</option>
-                    </select>
-                </div>
-
                 <!-- Botones -->
                 <div class="col-md-12 mt-3">
                     <button type="submit" class="btn btn-primary">Guardar</button>
@@ -105,7 +95,7 @@
                             <th>ID</th>
                             <th>Usuario</th>
                             <th>Correo</th>
-                            <th>Rol</th>
+
                             <th>Estado</th>
                             <th>Opciones</th>
                         </tr>
@@ -131,12 +121,7 @@
                                     Último acceso: {{ $user->last_login_at ? $user->last_login_at->diffForHumans() : 'Nunca' }}
                                 </small>
                             </td>
-                            <td>
-                                <span class="badge {{ $user->role === 'admin' ? 'bg-danger' : 'bg-primary' }}">
-                                    <i class="bi {{ $user->role === 'admin' ? 'bi-shield-check' : 'bi-person' }} me-1"></i>
-                                    {{ ucfirst($user->role) }}
-                                </span>
-                            </td>
+
                             <td>
                                 <span class="badge bg-success">
                                     <i class="bi bi-check-circle me-1"></i> Activo
