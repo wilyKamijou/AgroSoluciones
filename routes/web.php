@@ -29,12 +29,13 @@ use App\Http\Controllers\PaginaController;
 use App\Http\Controllers\ReporteController;
 
 Route::get('/', function () {
-    return view('auth.login');
+    return redirect()->route('inicio');
 });
+//pagina web
+Route::get('/pagina', [PaginaController::class, 'index'])->name('inicio');
+Route::post('/enviar', [EnviarController::class, 'enviar']);
+
 Auth::routes();
-
-
-
 // Rutas protegidas por autenticación y roles
 Route::middleware('auth')->group(function () {
 
@@ -63,9 +64,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/empleado/pdf', [EmpleadoController::class, 'downloadPDF'])->name('empleado.pdf');
     });
 
-    //pagina web
-    Route::get('/pagina', [PaginaController::class, 'index']);
-    Route::post('/enviar', [EnviarController::class, 'enviar']);
+
 
     // Rutas para gestión de cuenta
     Route::get('/mi-cuenta/perfil', [App\Http\Controllers\CuentaController::class, 'perfil'])->name('cuenta.perfil');
