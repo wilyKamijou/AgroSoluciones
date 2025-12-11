@@ -39,7 +39,7 @@ Auth::routes();
 // Rutas protegidas por autenticación y roles
 Route::middleware('auth')->group(function () {
 
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'home']);
+
 
     Route::middleware('auth', 'role:Owner,Gerente')->group(function () {
         // Rutas para gestión de usuarios

@@ -16,7 +16,7 @@
         <!-- Card de Información de la Cuenta -->
         <div class="card shadow-sm p-4 mb-4">
             <h4 class="mb-3">Información de la Cuenta</h4>
-            
+
             <div class="row g-3">
                 <!-- Información del Usuario -->
                 <div class="col-md-6">
@@ -25,7 +25,7 @@
                         {{ $usuario->email }}
                     </div>
                 </div>
-                
+
                 <div class="col-md-6">
                     <label class="form-label fw-bold">Fecha de Registro</label>
                     <div class="form-control bg-light">
@@ -39,7 +39,7 @@
         @if($empleado)
         <div class="card shadow-sm p-4">
             <h4 class="mb-3">Información del Empleado</h4>
-            
+
             <div class="row g-3">
                 <!-- Nombre -->
                 <div class="col-md-6">
@@ -48,7 +48,7 @@
                         {{ $empleado->nombreEm }}
                     </div>
                 </div>
-                
+
                 <!-- Apellidos -->
                 <div class="col-md-6">
                     <label class="form-label fw-bold">Apellidos</label>
@@ -56,7 +56,7 @@
                         {{ $empleado->apellidosEm }}
                     </div>
                 </div>
-                
+
                 <!-- Sueldo -->
                 <div class="col-md-6">
                     <label class="form-label fw-bold">Sueldo</label>
@@ -64,7 +64,7 @@
                         ${{ number_format($empleado->sueldoEm, 2) }}
                     </div>
                 </div>
-                
+
                 <!-- Teléfono -->
                 <div class="col-md-6">
                     <label class="form-label fw-bold">Teléfono</label>
@@ -72,7 +72,7 @@
                         {{ $empleado->telefonoEm }}
                     </div>
                 </div>
-                
+
                 <!-- Dirección -->
                 <div class="col-md-12">
                     <label class="form-label fw-bold">Dirección</label>
@@ -93,7 +93,7 @@
 
         <!-- Botones de Acción -->
         <div class="d-flex justify-content-between mt-4">
-            <a href="/home" class="btn btn-secondary">
+            <a href="/reportes" class="btn btn-secondary">
                 <i class="bi bi-arrow-left"></i> Volver al Inicio
             </a>
             <a href="{{ route('cuenta.password') }}" class="btn btn-primary">

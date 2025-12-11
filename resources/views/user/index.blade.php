@@ -64,7 +64,7 @@
                 <!-- Botones -->
                 <div class="col-md-12 mt-3">
                     <button type="submit" class="btn btn-primary">Guardar</button>
-                    <a href="/user" class="btn btn-secondary">Cancelar</a>
+
                 </div>
             </form>
         </div>
