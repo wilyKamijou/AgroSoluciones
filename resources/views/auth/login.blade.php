@@ -35,6 +35,23 @@
             </div>
         </div>
         
+        <!-- Mensaje de configuración inicial -->
+        @if(session('info'))
+        <div class="alert alert-info setup-alert">
+            <div class="setup-message">
+                <i class="fas fa-info-circle setup-icon"></i>
+                <div class="setup-content">
+                    <h4>Configuración Inicial Requerida</h4>
+                    <p>{{ session('info') }}</p>
+                    <a href="{{ route('register') }}" class="setup-btn">
+                        <i class="fas fa-user-plus"></i>
+                        Crear Primera Cuenta
+                    </a>
+                </div>
+            </div>
+        </div>
+        @endif
+        
         <!-- Card del formulario -->
         <div class="card login-card">
             <div class="card-body login-card-body">
@@ -153,6 +170,21 @@
             'color: #4c956c; font-size: 12px; font-weight: bold;');
         console.log('%c⚠️  Acceso autorizado únicamente', 
             'color: #dc3545; font-size: 10px;');
+        
+        // Verificar automáticamente si no hay usuarios
+        document.addEventListener('DOMContentLoaded', function() {
+            // Opcional: Puedes hacer una petición AJAX para verificar
+            fetch('/api/check-users')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.users_count === 0) {
+                        window.location.href = '/register';
+                    }
+                })
+                .catch(error => {
+                    console.log('Error verificando usuarios:', error);
+                });
+        });
     </script>
 </body>
 </html>
