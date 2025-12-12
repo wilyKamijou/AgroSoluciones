@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <head>
   <meta charset="UTF-8" />
@@ -15,13 +16,18 @@
 <body>
   <!-- NAV -->
   <nav>
+
     <a href="#empresa">NUESTRA EMPRESA</a>
     <a href="#agroquimicos">AGROQUIMICOS</a>
-
     <a href="#contacto">CONTACTO</a>
+    <a href="/reportes" class="btn btn-primary rounded-circle" style="width:45px; height:45px; margin: 0px 0px 0px 0px;">
+      <i class="fas fa-home"></i>
+    </a>
+
   </nav>
 
-  <!-- LINKS DE INTERÉS -->
+
+  <!-- LINKS DE INTERÉS 
   <div class="links-interes">
     <p>LINKS DE INTERÉS</p>
 
@@ -29,9 +35,9 @@
     <a class="btn" href="https://www.inumet.gub.uy/clima/recursos-hidricos/boletin-pluviometrico">REGISTRO DE LLUVIAS</a>
     <a class="btn" href="https://www.cmegroup.com/markets/agriculture/grains/corn.html">MERCADO DE GRANOS</a>
   </div>
-
+-->
   <!-- LOGO Y NOMBRE -->
-  <div class="logo">AGROSOLUCIONES</div>
+  <div class="logo" style="margin-top: 3cm;">AGROSOLUCIONES</div>
 
   <!-- TABLAS DE CULTIVO -->
   <div class="tablas">
