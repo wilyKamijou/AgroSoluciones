@@ -189,71 +189,81 @@ class DataPoblacionController extends Controller
                 'descripcionPr' => 'Herbicida sistémico no selectivo', 'compocicionQuimica' => 'Glifosato 480 g/L',
                 'consentracionQuimica' => '48%', 'fechaFabricacion' => $fechaFabricacion,
                 'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Litro', 'id_categoria' => 1,
-                'precioPr' => 250.00
+                'precioPr' => 250.00,
+                'imagen_url' => 'https://sembrarideas.com.ar/wp-content/uploads/2016/06/glynomyl-premium-imagen-producto.jpg'
             ],
             [
                 'nombrePr' => 'Atrazina Forte', 'nombreTecnico' => 'Atrazina 500 SC',
                 'descripcionPr' => 'Herbicida selectivo para maíz', 'compocicionQuimica' => 'Atrazina 500 g/L',
                 'consentracionQuimica' => '50%', 'fechaFabricacion' => $fechaFabricacion,
                 'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Litro', 'id_categoria' => 1,
-                'precioPr' => 300.00
+                'precioPr' => 300.00,
+                'imagen_url' => 'https://www.invesa.com/wp-content/uploads/2020/08/Atrazina80_1k-1024x1024.png'
             ],
             [
                 'nombrePr' => 'Imidacloprid', 'nombreTecnico' => 'Imidacloprid 350 SC',
                 'descripcionPr' => 'Insecticida sistémico', 'compocicionQuimica' => 'Imidacloprid 350 g/L',
                 'consentracionQuimica' => '35%', 'fechaFabricacion' => $fechaFabricacion,
                 'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Litro', 'id_categoria' => 2,
-                'precioPr' => 450.00
+                'precioPr' => 450.00,
+                'imagen_url' => 'https://dva.com/wp-content/uploads/2020/07/IMIDACLOPRID-350-SC-DVA.jpg'
             ],
             [
                 'nombrePr' => 'Lambda Cihalotrin', 'nombreTecnico' => 'Lambda Cihalotrin 50 EC',
                 'descripcionPr' => 'Insecticida de contacto', 'compocicionQuimica' => 'Lambda Cihalotrin 50 g/L',
                 'consentracionQuimica' => '5%', 'fechaFabricacion' => $fechaFabricacion,
                 'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Litro', 'id_categoria' => 2,
-                'precioPr' => 400.00
-                
+                'precioPr' => 400.00,
+                'imagen_url' => 'https://carvalcorp.com/wp-content/uploads/2025/08/LAMBDA-500mL.jpg'
             ],
             [
                 'nombrePr' => 'Azoxistrobina', 'nombreTecnico' => 'Azoxistrobina 250 SC',
                 'descripcionPr' => 'Fungicida sistémico', 'compocicionQuimica' => 'Azoxistrobina 250 g/L',
                 'consentracionQuimica' => '25%', 'fechaFabricacion' => $fechaFabricacion,
                 'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Litro', 'id_categoria' => 3,
-                'precioPr' => 550.00
+                'precioPr' => 550.00,
+                'imagen_url' => 'https://qira-production.s3.amazonaws.com/product-pdf/61920-image1-1730485659030'
             ],
             [
                 'nombrePr' => 'Mancozeb', 'nombreTecnico' => 'Mancozeb 800 WP',
                 'descripcionPr' => 'Fungicida de contacto', 'compocicionQuimica' => 'Mancozeb 800 g/Kg',
                 'consentracionQuimica' => '80%', 'fechaFabricacion' => $fechaFabricacion,
                 'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Kilogramo', 'id_categoria' => 3,
-                'precioPr' => 350.00
+                'precioPr' => 350.00,
+                'imagen_url' => 'https://www.cropprotection.net/uploads/202028235/mancozeb15119280851.jpg'
             ],
             [
                 'nombrePr' => 'Urea Agrícola', 'nombreTecnico' => 'Urea 46-0-0',
                 'descripcionPr' => 'Fertilizante nitrogenado', 'compocicionQuimica' => 'Nitrógeno 46%',
                 'consentracionQuimica' => '46%', 'fechaFabricacion' => $fechaFabricacion,
                 'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Kilogramo', 'id_categoria' => 4,
-                'precioPr' => 280.00
+                'precioPr' => 280.00,
+                'imagen_url' => 'https://www.agrogaia.es/wp-content/uploads/2025/04/fertilizante-urea-1.webp'
             ],
             [
                 'nombrePr' => 'Triple 17', 'nombreTecnico' => 'NPK 17-17-17',
                 'descripcionPr' => 'Fertilizante completo', 'compocicionQuimica' => 'N 17%, P 17%, K 17%',
                 'consentracionQuimica' => '51%', 'fechaFabricacion' => $fechaFabricacion,
                 'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Kilogramo', 'id_categoria' => 4,
-                'precioPr' => 320.00
+                'precioPr' => 320.00,
+                'imagen_url' => 'https://risso-chemical.com/wp-content/uploads/2024/04/Tower-Granulation-NPK-17-17-17SOP-1.png'
             ],
             [
                 'nombrePr' => 'Etefón', 'nombreTecnico' => 'Etefón 480 SL',
                 'descripcionPr' => 'Regulador de maduración', 'compocicionQuimica' => 'Etefón 480 g/L',
                 'consentracionQuimica' => '48%', 'fechaFabricacion' => $fechaFabricacion,
                 'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Litro', 'id_categoria' => 5,
-                'precioPr' => 600.00
+                'precioPr' => 600.00,
+                'imagen_url' => 'https://www.bestplanthormones.com/uploads/202315034/accelerate-ripening-ethephon-480g-lb9029599-1407-41bc-81fe-d6bec0fe50b0.jpg'
+
             ],
             [
                 'nombrePr' => 'Abamectina', 'nombreTecnico' => 'Abamectina 18 EC',
                 'descripcionPr' => 'Acaricida e insecticida', 'compocicionQuimica' => 'Abamectina 18 g/L',
                 'consentracionQuimica' => '1.8%', 'fechaFabricacion' => $fechaFabricacion,
                 'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Litro', 'id_categoria' => 6,
-                'precioPr' => 700.00
+                'precioPr' => 700.00,
+                'imagen_url' => 'https://www.agrospec.cl/wp-content/uploads/2023/11/Envase_Abamectin-18EC_250cc_364x364pix.jpg'
             ],
             // ... agregar más productos hasta 30
             [
@@ -261,53 +271,43 @@ class DataPoblacionController extends Controller
                 'descripcionPr' => 'Nematicida sistémico', 'compocicionQuimica' => 'Oxamyl 100 g/L',
                 'consentracionQuimica' => '10%', 'fechaFabricacion' => $fechaFabricacion,
                 'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Litro', 'id_categoria' => 7,
-                'precioPr' => 800.00
+                'precioPr' => 800.00,
+                'imagen_url' => 'https://www.cropprotection.net/uploads/202028235/oxamyl43152857305.jpg'
             ],
             [
                 'nombrePr' => 'Brodifacoum', 'nombreTecnico' => 'Brodifacoum 0.005%',
                 'descripcionPr' => 'Rodenticida anticoagulante', 'compocicionQuimica' => 'Brodifacoum 0.005%',
                 'consentracionQuimica' => '0.005%', 'fechaFabricacion' => $fechaFabricacion,
                 'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Kilogramo', 'id_categoria' => 8,
-                'precioPr' => 1500.00
+                'precioPr' => 1500.00,
+                'imagen_url' => 'https://sipcamjardin.es/wp-content/uploads/2020/06/78-VITHAL-GARDEN-RATICIDA-BLOQUES-BRODIFACOUM-300-GR.jpg'
             ],
             [
                 'nombrePr' => 'Silicona Antideriva', 'nombreTecnico' => 'Coadyuvante Silicona',
                 'descripcionPr' => 'Reductor de deriva', 'compocicionQuimica' => 'Silicona 100%',
                 'consentracionQuimica' => '100%', 'fechaFabricacion' => $fechaFabricacion,
                  'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Litro', 'id_categoria' => 9,
-                'precioPr' => 120.00
+                'precioPr' => 120.00,
+                'imagen_url' => 'https://agrolink.ec/wp-content/uploads/2025/03/productos-para-web_0008_Capa-21.jpg'
+
             ],
             [
                 'nombrePr' => 'Algas Marinas', 'nombreTecnico' => 'Extracto de Algas',
                 'descripcionPr' => 'Bioestimulante natural', 'compocicionQuimica' => 'Extracto de algas 100%',
                 'consentracionQuimica' => '100%', 'fechaFabricacion' => $fechaFabricacion,
                 'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Litro', 'id_categoria' => 10,
-                'precioPr' => 400.00
+                'precioPr' => 400.00,
+                'imagen_url' => 'https://m.media-amazon.com/images/I/71DndsmPJ1L._AC_SX679_.jpg'
             ],
             [
                 'nombrePr' => 'Rhizobium', 'nombreTecnico' => 'Inoculante Rhizobium',
                 'descripcionPr' => 'Bacteria fijadora de nitrógeno', 'compocicionQuimica' => 'Rhizobium spp.',
                 'consentracionQuimica' => '1x10^9 UFC/g', 'fechaFabricacion' => $fechaFabricacion,
                 'fechaVencimiento' => $fechaVencimiento, 'unidadMedida' => 'Kilogramo', 'id_categoria' => 11,
-                'precioPr' => 350.00
+                'precioPr' => 350.00,
+                'imagen_url' => 'https://www.biogram.cl/wp-content/uploads/2019/04/RIZOFIX_JQG9912_1800px_72dpi.jpg'
             ],
         ];
-
-        // Agregar productos adicionales para llegar a 30
-        for ($i = 16; $i <= 30; $i++) {
-            $productos[] = [
-                'nombrePr' => 'Producto Agrícola ' . $i,
-                'nombreTecnico' => 'Tecnico ' . $i . ' SC',
-                'descripcionPr' => 'Descripción del producto agrícola ' . $i,
-                'compocicionQuimica' => 'Componente ' . $i . ' 500 g/L',
-                'consentracionQuimica' => '50%',
-                'fechaFabricacion' => $fechaFabricacion,
-                'fechaVencimiento' => $fechaVencimiento,
-                'unidadMedida' => ($i % 2 == 0) ? 'Litro' : 'Kilogramo',
-                'precioPr' => rand(200, 1000),
-                'id_categoria' => rand(1, 15)
-            ];
-        }
 
         Producto::insert($productos);
 

@@ -1,473 +1,59 @@
+/* ===== VARIABLES CSS ===== */
+:root {
+  --primary: #00A859;
+  --primary-dark: #00874A;
+  --secondary: #2D9CDB;
+  --accent: #FF6B35;
+  --light: #F8F9FA;
+  --dark: #2D3436;
+  --gray: #6C757D;
+  --light-gray: #E9ECEF;
+  --white: #FFFFFF;
+  --shadow-sm: 0 4px 12px rgba(0,0,0,0.05);
+  --shadow: 0 10px 30px rgba(0,0,0,0.08);
+  --shadow-lg: 0 20px 50px rgba(0,0,0,0.12);
+  --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  --radius-sm: 8px;
+  --radius: 16px;
+  --radius-lg: 24px;
+}
+
+/* ===== RESET Y BASE ===== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  background: url("https://i.postimg.cc/jjP1tjVb/descarga.png") no-repeat center
-    center / cover;
-  height: 100vh;
-  color: white;
-  text-align: center;
-}
-
-/* NAVBAR */
-nav {
-  width: 100%;
-  padding: 20px 0;
-  position: fixed;
-  top: 0;
-  display: flex;
-  justify-content: center; /* Centra horizontalmente */
-  align-items: center;     /* Centra verticalmente */
-  gap: 20px;               /* Espacio parejo entre elementos */
-  font-weight: bold;
-  background: rgba(0, 0, 0, 0.2);
-}
-
-nav a {
-  color: white;
-  margin: 0 20px; /* Puedes dejarlo si quieres más separación */
-  text-decoration: none;
-  font-size: 14px;
-  letter-spacing: 1px;
-  display: flex;           /* Asegura alineación uniforme */
-  align-items: center;
-}
-
-
-/* LINKS DE INTERÉS */
-.links-interes {
-  margin-top: 120px;
-}
-
-.btn {
-  display: block;
-  width: 230px;
-  margin: 8px auto;
-  padding: 10px;
-  border: 1px solid white;
-  border-radius: 4px;
-  background: rgba(0, 0, 0, 0.3);
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-/* LOGO Y TITULO */
-.logo {
-  margin-top: 40px;
-  font-size: 80px;
-  font-weight: bold;
-}
-
-/* TABLAS DE CULTIVO */
-.tablas {
-  margin-top: 40px;
-}
-
-.cultivos {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.card {
-  width: 200px;
-  height: 80px;
-  border: 1px solid white;
-  border-radius: 5px;
-  font-weight: bold;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-size: cover;
-  background-position: center;
-  cursor: pointer;
-  color: white; /* Color del texto */
-  text-decoration: none; /* Quita subrayado */
-}
-
-.maiz {
-  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
-    url("https://i.postimg.cc/sfG1f85N/maiz.png");
-}
-
-.soya {
-  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
-    url("https://i.postimg.cc/dtM3hB95/soya.png");
-}
-
-.sorgo {
-  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
-    url("https://i.postimg.cc/HW8jWKb3/sorgo.png");
-}
-
-h3 {
-  margin-bottom: 10px;
-  font-size: 15px;
-}
-
-/* SECCIÓN NOSOTROS */
-.nosotros {
-  background: #ffffff;
-  padding: 0 80px 80px;
-  margin-top: 80px;
-  color: #00333f;
-}
-
-.hojas {
-  width: 100%;
-  margin-top: -40px;
-}
-
-.titulo-central {
-  text-align: center;
-  margin-top: 30px;
-  font-size: 22px;
-  letter-spacing: 2px;
-}
-
-.contenedor-nosotros {
-  margin-top: 60px;
-  display: flex;
-  justify-content: space-between;
-  gap: 40px;
-}
-
-.columna {
-  width: 33%;
-  font-size: 14px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   line-height: 1.6;
-}
-
-.columna h3 {
-  font-size: 20px;
-  margin-bottom: 10px;
-  color: #003f4c;
-}
-
-.columna p {
-  margin-bottom: 12px;
-}
-
-.columna .mini {
-  font-size: 13px;
-  text-align: center;
-}
-
-.columna a {
-  color: #004a5a;
-  text-decoration: none;
-}
-
-/* SECCIÓN AGROQUÍMICOS */
-.agroquimicos {
-  text-align: center;
-  padding: 80px 80px;
-  background: #f7faf8;
-}
-
-.titulo-agro {
-  font-size: 40px;
-  letter-spacing: 2px;
-  color: #00333f;
-  margin-bottom: 20px;
-}
-
-.descripcion-agro {
-  width: 80%;
-  margin: auto;
-  font-size: 15px;
-  color: #444;
-  line-height: 1.7;
-  margin-bottom: 50px;
-}
-
-.subtitulo-verde {
-  font-size: 22px;
-  color: #2c8c2c;
-  font-weight: bold;
-  margin-bottom: 40px;
-}
-
-.contenedor-tarjetas {
-  display: flex;
-  justify-content: space-between;
-  gap: 25px;
-}
-
-.tarjeta {
-  width: 19%;
-  background: transparent;
-  text-align: center;
-  color: #00333f;
-  padding: 10px;
-}
-
-.tarjeta img {
-  width: 100%;
-  border-radius: 10px;
-}
-
-.tarjeta h4 {
-  margin-top: 15px;
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.tarjeta p {
-  font-size: 14px;
-  margin: 12px 0 20px;
-  color: #444;
-}
-
-.btn-productos {
-  background: #80c040;
-  color: #fff;
-  border: none;
-  padding: 8px 20px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 13px;
-  font-weight: bold;
-}
-
-.btn-productos:hover {
-  background: #6aaa36;
-}
-
-/* SECCIÓN LISTA DE PRODUCTOS */
-.lista-productos {
-  padding: 80px 60px;
-  background: #ffffff;
-  text-align: center;
-}
-
-.titulo-lista {
-  font-size: 36px;
-  letter-spacing: 2px;
-  color: #0c3c45;
-  margin-bottom: 5px;
-}
-
-.subtitulo-lista {
-  font-size: 14px;
-  color: #777;
-  margin-bottom: 50px;
-}
-
-.subtitulo-lista span {
-  color: #2c8c2c;
-  font-weight: bold;
-}
-
-.grid-productos {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 35px;
-  justify-items: center;
-}
-
-.principio {
-  font-size: 13px;
-  color: #888;
-  min-height: 35px;
-}
-
-.nombre-prod {
-  font-size: 20px;
-  color: #0c3c45;
-  margin: 10px 0;
-}
-
-.descripcion-prod {
-  font-size: 14px;
-  color: #444;
-  line-height: 1.4;
-}
-
-.categorias-abajo {
-  margin-top: 60px;
-  font-size: 12px;
-  color: #2c8c2c;
-  font-weight: bold;
-  letter-spacing: 1px;
-}
-
-/* SECCIONES DE PRODUCTOS */
-.productos-categoria {
-  padding: 60px 80px;
-  background: #ffffff;
-  text-align: center;
-  color: #00333f;
-}
-
-.titulo-categoria {
-  font-size: 40px;
-  font-weight: bold;
-  letter-spacing: 2px;
-  margin-bottom: 5px;
-  color: #00465a;
-  text-transform: uppercase;
-}
-
-.subtitulo-categoria {
-  font-size: 14px;
-  color: #444;
-  margin-bottom: 40px;
-  text-transform: uppercase;
-}
-
-.grid-productos {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 30px;
-  justify-items: center;
-}
-
-.producto {
-  background: #ffffff;
-  border-radius: 10px;
-  padding: 20px;
-  width: 240px;
-  text-align: center;
-  border: 1px solid #e5e5e5;
-  transition: transform 0.2s;
-}
-
-.producto:hover {
-  transform: translateY(-5px);
-}
-
-.producto img {
-  width: 160px;
-  height: auto;
-  margin-bottom: 10px;
-}
-
-.producto h3 {
-  font-size: 18px;
-  font-weight: bold;
-  margin: 10px 0;
-}
-
-.producto p {
-  font-size: 13px;
-  color: #555;
-}
-
-.principio {
-  display: block;
-  font-size: 12px;
-  color: #999;
-  margin-bottom: 8px;
-  text-transform: uppercase;
-}
-
-.grid-productos {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 40px;
-  justify-items: center;
-}
-
-.principio {
-  font-size: 11px;
-  color: #888;
-  margin-bottom: 8px;
-}
-
-.menu-categorias {
-  margin-top: 40px;
-  text-align: center;
-  font-size: 14px;
-  letter-spacing: 1px;
-}
-
-.menu-categorias a {
-  text-decoration: none;
-  color: #00465a;
-  transition: 0.2s;
-}
-
-.menu-categorias a:hover {
-  color: #00a0b5;
-}
-
-/* SECCIÓN CONTACTO */
-.contacto {
-  background: #f7f7f7;
-  padding: 70px 40px;
-  text-align: center;
-  color: #7a7a7a;
-}
-
-.titulo-contacto {
-  font-size: 20px;
-  letter-spacing: 2px;
-  font-weight: 400;
-  margin-bottom: 50px;
-}
-
-.contacto-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 40px;
-  max-width: 1100px;
-  margin: auto;
+  color: var(--dark);
+  background-color: var(--light);
+  overflow-x: hidden;
   position: relative;
 }
 
-.contacto-item {
-  padding: 0 20px;
+/* ===== UTILIDADES ===== */
+.container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 5%; }
+.section { padding: 5rem 0; position: relative; }
+.text-gradient { background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hidden { opacity: 0; transform: translateY(20px); }
+.visible { opacity: 1; transform: translateY(0); }
+
+/* ===== FORM GROUP ===== */
+.form-group { margin-bottom: 1.5rem; }
+.form-label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--dark); }
+
+/* ===== ALERT SUCCESS ===== */
+.alert-success {
+  background: #D4EDDA;
+  color: #155724;
+  padding: 1rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: 1rem;
+  border: 1px solid #C3E6CB;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-.contacto-item h3 {
-  font-size: 18px;
-  font-weight: 700;
-  color: #7a7a7a;
-  letter-spacing: 1px;
-  margin-bottom: 10px;
-}
-
-.icono-contacto {
-  width: 35px;
-  opacity: 0.65;
-  margin-bottom: 10px;
-}
-
-.contacto-item p {
-  font-size: 14px;
-  line-height: 20px;
-  color: #7a7a7a;
-}
-
-/* LÍNEAS VERTICALES ENTRE CADA COLUMNA */
-.contacto-grid > div:not(:last-child) {
-  border-right: 1px solid #dcdcdc;
-}
-
-/* RESPONSIVE */
-@media (max-width: 900px) {
-  .contacto-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-  .contacto-grid > div:nth-child(1),
-  .contacto-grid > div:nth-child(2) {
-    border-bottom: 1px solid #dcdcdc;
-    padding-bottom: 20px;
-  }
-  .contacto-grid > div {
-    border-right: none !important;
-  }
-}
-
-@media (max-width: 600px) {
-  .contacto-grid {
-    grid-template-columns: 1fr;
-  }
-  .contacto-grid > div {
-    border: none !important;
-    padding-bottom: 20px;
-  }
-}
+.alert-success i { color: #155724; }

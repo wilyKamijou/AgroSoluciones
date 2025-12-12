@@ -1,281 +1,340 @@
 <!DOCTYPE html>
-<html lang="en">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="/css/agrosoluciones.css" />
-  <link rel="stylesheet" href="/css/productos.css">
-  <link rel="stylesheet" href="/css/formulario.css">
-
-  <script src="/js/agrosoluciones.js"></script>
-  <title>AGROSOLUCIONES</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/agrosoluciones.css">
+  <link rel="stylesheet" href="/css/animations.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <title>AGROSOLUCIONES | Soluciones Agrícolas</title>
 </head>
 
 <body>
-  <!-- NAV -->
-  <nav>
+  <!-- FONDO ANIMADO -->
+  <div class="animated-bg" id="animatedBg"></div>
 
-    <a href="#empresa">NUESTRA EMPRESA</a>
-    <a href="#agroquimicos">AGROQUIMICOS</a>
-    <a href="#contacto">CONTACTO</a>
-    <a href="/reportes" class="btn btn-primary rounded-circle" style="width:45px; height:45px; margin: 0px 0px 0px 0px;">
-      <i class="fas fa-home"></i>
-    </a>
-
-  </nav>
-
-
-  <!-- LINKS DE INTERÉS 
-  <div class="links-interes">
-    <p>LINKS DE INTERÉS</p>
-
-    <a class="btn" href="https://www.meteored.com.bo/">PRONÓSTICO DEL TIEMPO</a>
-    <a class="btn" href="https://www.inumet.gub.uy/clima/recursos-hidricos/boletin-pluviometrico">REGISTRO DE LLUVIAS</a>
-    <a class="btn" href="https://www.cmegroup.com/markets/agriculture/grains/corn.html">MERCADO DE GRANOS</a>
-  </div>
--->
-  <!-- LOGO Y NOMBRE -->
-  <div class="logo" style="margin-top: 3cm;">AGROSOLUCIONES</div>
-
-  <!-- TABLAS DE CULTIVO -->
-  <div class="tablas">
-    <h3>TABLAS DE CULTIVO</h3>
-    <div class="cultivos">
-      <a class="card maiz" href="https://i.postimg.cc/XrgJkT3S/tablamaiz.png" target="_blank" rel="noopener noreferrer">
-        MAÍZ
-      </a>
-
-      <a class="card soya" href="https://i.postimg.cc/G4j2xZrd/tablasoya.png" target="_blank" rel="noopener noreferrer">
-        SOYA
-      </a>
-
-      <a class="card sorgo" href="https://i.postimg.cc/Hrtx9fHC/tablasorgo.png" target="_blank" rel="noopener noreferrer">
-        SORGO
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-logo">
+      <i class="fas fa-seedling"></i>
+      <span>AGROSOLUCIONES</span>
+    </div>
+    <div class="nav-menu">
+      <a href="#empresa" class="nav-link">Empresa</a>
+      <a href="#productos" class="nav-link">Productos</a>
+      <a href="#cultivos" class="nav-link">Cultivos</a>
+      <a href="#contacto" class="nav-link">Contacto</a>
+      <a href="/reportes" class="nav-btn">
+        <i class="fas fa-chart-line"></i> Reportes
       </a>
     </div>
-  </div>
+  </nav>
 
-  <!-- SECCIÓN NOSOTROS -->
-  <section class="nosotros">
-    <img class="hojas" src="https://i.postimg.cc/PJ7mD8Sj/hojas.png" alt="Hojas" />
-
-    <h2 class="titulo-central" id="empresa">
-      AGROSOLUCIONES, LA FUERZA DEL AGRO
-    </h2>
-
-    <div class="contenedor-nosotros">
-      <!-- COLUMNA 1 -->
-      <div class="columna">
-        <h3>NUESTRA EMPRESA</h3>
-        <p>
-          AGROSOLUCIONES SRL, es una empresa dedicada a la importación de
-          productos agroquímicos con base en Santa Cruz de la Sierra, inicia
-          sus actividades de forma comercial el 2 de octubre de 2013, pasando
-          por una restructuración estratégica el 30 de noviembre de 2015,
-          dando una mejor estructura a la firma tanto en la administración
-          como en la parte comercial, para poder dar un mejor servicio y estar
-          más cerca del agricultor.
+  <!-- HERO -->
+  <section class="hero section">
+    <div class="container">
+      <div class="hero-content hidden" data-animate="slideInLeft">
+        <h1 class="hero-title text-gradient">
+          Innovación Agrícola<br>para el Futuro
+        </h1>
+        <p class="hero-subtitle">
+          Soluciones tecnológicas y productos de alta calidad para maximizar el rendimiento 
+          de tus cultivos. Más de 10 años cultivando éxito.
         </p>
-        <p>
-          AGROSOLUCIONES SRL, cuenta con un excelente portafolio de productos
-          los cuales en su mayoría provienen de la República de Uruguay,
-          siendo nuestro principal proveedor TAMPA S.A.
-        </p>
-        <p>
-          Un estricto control de producción ha garantizado productos del más
-          alto nivel de calidad, avalado esto por su permanente crecimiento en
-          nuestro mercado y la región. Todos estos años han confirmado el
-          esfuerzo realizado y nos compromete a seguir adelante con el proceso
-          de mejora continua para garantizarles a todos nuestros clientes
-          productos confiables y bien formulados.
-        </p>
-      </div>
-
-      <!-- COLUMNA 2 -->
-      <div class="columna">
-        <h3>VISIÓN</h3>
-        <p>
-          Convertirnos en una empresa líder del sector agrícola mediante la
-          innovación y permanente transferencia de tecnología a nuestros
-          clientes y ser reconocidos como un proveedor de productos
-          sustentables y de primera calidad.
-        </p>
-
-        <h3>MISIÓN</h3>
-        <p>
-          Somos una empresa dedicada a la comercialización de insumos
-          agrícolas comprometida en satisfacer las necesidades de nuestros
-          clientes respetando las normas de seguridad laboral y de protección
-          al medio ambiente brindando soluciones innovadoras que aportan al
-          desarrollo de la actividad.
-        </p>
-
-        <h3>VALORES</h3>
-        <p>
-          Poseer un comportamiento ético y responsable en lo individual y
-          organizacional. Mejorar en forma continua como empresa y como
-          personas.
-        </p>
-      </div>
-
-      <!-- COLUMNA 3 -->
-      <div class="columna">
-        <h3>RESPONSABILIDAD<br />SOCIAL<br />EMPRESARIAL<br />(RSE)</h3>
-
-        <p class="mini">Afiliados a:</p>
-        <p class="mini">APIA</p>
-        <p class="mini">Fundación Porsaleu</p>
-        <p class="mini">
-          <a href="https://www.apia-bolivia.org" target="_blank">www.apia-bolivia.org</a>
-        </p>
+        <a href="#productos" class="nav-btn animate-pulse">
+          <i class="fas fa-arrow-right"></i> Ver Productos
+        </a>
+        
+        <div class="hero-stats">
+          <div class="stat-item" style="--i: 1;">
+            <span class="stat-number">10+</span>
+            <span class="stat-label">Años de Experiencia</span>
+          </div>
+          <div class="stat-item" style="--i: 2;">
+            <span class="stat-number">50+</span>
+            <span class="stat-label">Productos</span>
+          </div>
+          <div class="stat-item" style="--i: 3;">
+            <span class="stat-number">500+</span>
+            <span class="stat-label">Clientes</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- SECCIÓN AGROQUÍMICOS -->
-  <section class="agroquimicos" id="agroquimicos">
-    <h2 class="titulo-agro">AGROQUÍMICOS</h2>
-
-    <p class="descripcion-agro">
-      La agroquímica es la ciencia química que estudia las causas y efectos de
-      las reacciones bioquímicas que afectan al crecimiento tanto animal como
-      vegetal. En esta rama se incluyen tanto los diferentes abonos o
-      fertilizantes como las sustancias fitosanitarias como herbicidas,
-      insecticidas, coadyuvantes, curasemillas y fungicidas.
-    </p>
-
-
-    <section class="productos-categoria" id="coadyuvantes">
-      {{-- MENU DE CATEGORÍAS DINÁMICO --}}
-      <div class="menu-categorias">
-        @foreach ($tipos as $tipo)
-        @php
-        $idCategoria = Str::slug($tipo->nombreCat, '-');
-        @endphp
-
-        <a href="#{{ $tipo->id_categoria }}">
-          {{ strtoupper($tipo->nombreCat) }}
-        </a>
-        @if(!$loop->last)
-        /
-        @endif
-        @endforeach
+  <!-- CULTIVOS -->
+  <section id="cultivos" class="section" style="background: var(--white);">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title text-gradient">Tablas de Cultivo</h2>
+        <p class="section-subtitle">Información técnica especializada para cada cultivo</p>
       </div>
-
-      <section class="productos-categoria" id="{{$tipo->id_categoria}}">
-
-        @foreach ($tipos as $tipo)
-        <h2 class="titulo-categoria">{{ $tipo->nombreCat }} </h2>
-        <div class="grid-productos">
-
-          @foreach ($tipo->productos as $producto)
-
-          <div class="producto">
-
-            <h3 class="principio">
-              <strong>{{$producto->nombrePr}}</strong>
-            </h3>
-
-            <img src="{{ $producto->imagen_url }}" alt="{{ $producto->nombrePr }}" />
-
-            <h3 class="subtitulo-categoria">{{ $producto->nombreTecnico }}</h3>
-
-            <p>
-              {{ $producto->consentracionQuimica }} <br />
-              {{ $producto->unidadMedida }}
-            </p>
+      
+      <div class="cultivos-grid">
+        <div class="cultivo-card hidden" data-animate="fadeInUp">
+          <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+               alt="Maíz" class="cultivo-image">
+          <div class="cultivo-content">
+            <h3 class="cultivo-title">Maíz</h3>
+            <p>Guía completa para el cultivo óptimo de maíz</p>
+            <a href="https://i.postimg.cc/XrgJkT3S/tablamaiz.png" 
+               target="_blank" class="cultivo-btn">
+              Ver Tabla <i class="fas fa-external-link-alt"></i>
+            </a>
           </div>
-          @endforeach
-
         </div>
 
-        @endforeach
-      </section>
-
-
-    </section>
-
-    <div class="formulario-container">
-
-      @if(session('success'))
-      <div class="alert-success">{{ session('success') }}</div>
-      @endif
-
-      <h2>Enviar Queja o Consulta</h2>
-
-      <form action="/enviar" method="POST">
-        @csrf
-
-        <label for="nombre">Nombre</label>
-        <input type="text" name="nombre" id="nombre" required>
-
-        <label for="email">Correo</label>
-        <input type="email" name="email" id="email" required>
-
-        <label for="asunto">Asunto</label>
-        <input type="text" name="asunto" id="asunto" required>
-
-        <label for="mensaje">Mensaje</label>
-        <textarea name="mensaje" id="mensaje" rows="5" required></textarea>
-
-        <button type="submit">Enviar</button>
-      </form>
-
-    </div>
-    <section class="contacto" id="contacto">
-      <h2 class="titulo-contacto">CONTACTO</h2>
-
-      <div class="contacto-grid">
-        <!-- DIRECCIÓN -->
-        <div class="contacto-item">
-          <h3>DIRECCIÓN</h3>
-          <img class="icono-contacto" src="https://cdn-icons-png.flaticon.com/512/684/684908.png" />
-          <p>
-            Av. Final Beni # 7800 <br />
-            Zona Barrio Nueva Jerusalén <br />
-            Santa Cruz - Bolivia
-          </p>
+        <div class="cultivo-card hidden" data-animate="fadeInUp" data-delay="0.1">
+          <img src="https://cdn.pixabay.com/photo/2017/02/05/11/11/soybeans-2039641_1280.jpg" 
+               alt="Soya" class="cultivo-image">
+          <div class="cultivo-content">
+            <h3 class="cultivo-title">Soya</h3>
+            <p>Tablas técnicas para el cultivo de soya</p>
+            <a href="https://i.postimg.cc/G4j2xZrd/tablasoya.png" 
+               target="_blank" class="cultivo-btn">
+              Ver Tabla <i class="fas fa-external-link-alt"></i>
+            </a>
+          </div>
         </div>
 
-        <!-- TEL/FAX -->
-        <div class="contacto-item">
-          <h3>TEL/CEL</h3>
-          <img class="icono-contacto" src="https://cdn-icons-png.flaticon.com/512/597/597177.png" />
-          <p>
-            Celular: <br />
-            70899084 <br />
-            70059647
-          </p>
-        </div>
-
-        <!-- EMAIL -->
-        <div class="contacto-item">
-          <h3>E-MAILS</h3>
-          <img class="icono-contacto" src="https://cdn-icons-png.flaticon.com/512/561/561127.png" />
-          <p>
-            info@AGROSOLUCIONES-bo.com <br />
-            Ing. William T. Jimenez
-          </p>
-        </div>
-
-        <!-- HORARIO -->
-        <div class="contacto-item">
-          <h3>HORARIO</h3>
-          <img class="icono-contacto" src="https://cdn-icons-png.flaticon.com/512/2088/2088617.png" />
-          <p>
-            Lunes a Viernes <br />
-            08:30 - 16:30 <br />
-            Sábado <br />
-            8:30 - 12:00 <br />
-            Domingo cerrado
-          </p>
+        <div class="cultivo-card hidden" data-animate="fadeInUp" data-delay="0.2">
+          <img src="https://cdn.pixabay.com/photo/2016/08/04/07/24/grain-1568509_1280.jpg" 
+               alt="Sorgo" class="cultivo-image">
+          <div class="cultivo-content">
+            <h3 class="cultivo-title">Sorgo</h3>
+            <p>Información técnica para cultivo de sorgo</p>
+            <a href="https://i.postimg.cc/Hrtx9fHC/tablasorgo.png" 
+               target="_blank" class="cultivo-btn">
+              Ver Tabla <i class="fas fa-external-link-alt"></i>
+            </a>
+          </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <script src="script.js"></script>
+  <!-- NOSOTROS -->
+  <section id="empresa" class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title text-gradient">Nuestra Empresa</h2>
+        <p class="section-subtitle">Innovación y calidad en soluciones agrícolas</p>
+      </div>
+      
+      <div class="nosotros-grid">
+        <div class="nosotros-card hidden" data-animate="slideInLeft">
+          <div class="card-icon">
+            <i class="fas fa-bullseye"></i>
+          </div>
+          <h3 class="card-title">Nuestra Historia</h3>
+          <p>Desde 2013, nos especializamos en importar productos agroquímicos de alta calidad para el mercado boliviano, trabajando con los mejores proveedores internacionales.</p>
+        </div>
+
+        <div class="nosotros-card hidden" data-animate="fadeInUp">
+          <div class="card-icon">
+            <i class="fas fa-eye"></i>
+          </div>
+          <h3 class="card-title">Visión & Misión</h3>
+          <p>Ser líderes en innovación agrícola mediante tecnología de punta y productos sustentables, comprometidos con la excelencia y el desarrollo sostenible.</p>
+        </div>
+
+        <div class="nosotros-card hidden" data-animate="slideInRight">
+          <div class="card-icon">
+            <i class="fas fa-hands-helping"></i>
+          </div>
+          <h3 class="card-title">Responsabilidad Social</h3>
+          <p>Trabajamos con APIA y Fundación Porsaleu para promover prácticas agrícolas responsables y apoyar a las comunidades productoras.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTOS -->
+  <section id="productos" class="section" style="background: var(--white);">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title text-gradient">Nuestros Productos</h2>
+        <p class="section-subtitle">Soluciones especializadas para cada necesidad agrícola</p>
+      </div>
+      
+      <div class="category-tabs">
+        @foreach ($tipos as $tipo)
+        <button class="category-tab {{ $loop->first ? 'active' : '' }}" 
+                data-category="{{ $tipo->id_categoria }}">
+          <span>{{ $tipo->nombreCat }}</span>
+        </button>
+        @endforeach
+      </div>
+      
+      @foreach ($tipos as $tipo)
+      <div class="categoria-productos" 
+           id="categoria-{{ $tipo->id_categoria }}"
+           style="{{ !$loop->first ? 'display: none;' : '' }}">
+        
+        @forelse ($tipo->productos as $producto)
+        <div class="producto-card hidden" 
+             data-animate="fadeInUp"
+             data-delay="{{ $loop->index * 0.1 }}"
+             data-category="{{ $tipo->id_categoria }}">
+          <img src="{{ $producto->imagen_url }}" 
+               alt="{{ $producto->nombrePr }}" 
+               class="producto-img"
+               loading="lazy"
+               onerror="this.src='https://via.placeholder.com/300x200/4CAF50/FFFFFF?text=AGRO+PRODUCTO'">
+          <h3 class="producto-title">{{ $producto->nombrePr }}</h3>
+          <p class="producto-subtitle">{{ $producto->nombreTecnico }}</p>
+          <div class="producto-details">
+            {{ $producto->consentracionQuimica }} • {{ $producto->unidadMedida }}
+          </div>
+          @if($producto->descripcionPr)
+          <div class="producto-descripcion">
+            {{ Str::limit($producto->descripcionPr, 100) }}
+          </div>
+          @endif
+        </div>
+        @empty
+        <div class="empty-state">
+          <i class="fas fa-seedling"></i>
+          <p>No hay productos en esta categoría</p>
+        </div>
+        @endforelse
+      </div>
+      @endforeach
+    </div>
+  </section>
+
+  <!-- FORMULARIO -->
+  <section class="section form-section">
+    <div class="container">
+      <div class="form-container hidden" data-animate="fadeInUp">
+        <h2 class="form-title text-gradient">Contáctanos</h2>
+        
+        @if(session('success'))
+        <div class="alert-success">
+          <i class="fas fa-check-circle"></i> {{ session('success') }}
+        </div>
+        @endif
+
+        <form action="/enviar" method="POST" id="contactForm">
+          @csrf
+          
+          <div class="form-group">
+            <label class="form-label">Nombre Completo</label>
+            <input type="text" name="nombre" class="form-input" placeholder="Tu nombre" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Correo Electrónico</label>
+            <input type="email" name="email" class="form-input" placeholder="ejemplo@email.com" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Asunto</label>
+            <select name="asunto" class="form-input" required>
+              <option value="">Selecciona un asunto</option>
+              <option value="consulta">Consulta General</option>
+              <option value="cotizacion">Solicitud de Cotización</option>
+              <option value="tecnica">Consulta Técnica</option>
+              <option value="soporte">Soporte</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Mensaje</label>
+            <textarea name="mensaje" class="form-input" rows="4" 
+                      placeholder="Describe tu consulta aquí..." required></textarea>
+          </div>
+
+          <button type="submit" class="form-submit">
+            <i class="fas fa-paper-plane"></i> Enviar Mensaje
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto" class="section contacto-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Contáctanos</h2>
+        <p class="section-subtitle">Estamos aquí para ayudarte</p>
+      </div>
+      
+      <div class="contacto-grid">
+        <div class="contacto-item hidden" data-animate="fadeInUp">
+          <div class="contacto-icon">
+            <i class="fas fa-map-marker-alt"></i>
+          </div>
+          <h3 class="contacto-title">Dirección</h3>
+          <p>Av. Final Beni #7800<br>Santa Cruz - Bolivia</p>
+        </div>
+
+        <div class="contacto-item hidden" data-animate="fadeInUp" data-delay="0.1">
+          <div class="contacto-icon">
+            <i class="fas fa-phone"></i>
+          </div>
+          <h3 class="contacto-title">Teléfono</h3>
+          <p>+591 70899084<br>+591 70059647</p>
+        </div>
+
+        <div class="contacto-item hidden" data-animate="fadeInUp" data-delay="0.2">
+          <div class="contacto-icon">
+            <i class="fas fa-envelope"></i>
+          </div>
+          <h3 class="contacto-title">Email</h3>
+          <p>info@agrosoluciones-bo.com</p>
+        </div>
+
+        <div class="contacto-item hidden" data-animate="fadeInUp" data-delay="0.3">
+          <div class="contacto-icon">
+            <i class="fas fa-clock"></i>
+          </div>
+          <h3 class="contacto-title">Horario</h3>
+          <p>Lun-Vie: 8:30-16:30<br>Sáb: 8:30-12:00</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="nav-logo footer-logo">
+          <i class="fas fa-seedling"></i>
+          <span>AGROSOLUCIONES</span>
+        </div>
+        
+        <div class="footer-links">
+          <a href="#empresa" class="footer-link">Empresa</a>
+          <a href="#productos" class="footer-link">Productos</a>
+          <a href="#cultivos" class="footer-link">Cultivos</a>
+          <a href="#contacto" class="footer-link">Contacto</a>
+          <a href="https://www.apia-bolivia.org" target="_blank" class="footer-link">APIA</a>
+        </div>
+        
+        <p class="footer-copyright">
+          © 2024 AGROSOLUCIONES SRL. Todos los derechos reservados.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- BOTONES FLOTANTES -->
+  <div class="floating-buttons">
+    <a href="#top" class="floating-btn" id="back-to-top">
+      <i class="fas fa-arrow-up"></i>
+    </a>
+    <a href="https://wa.me/59170899084" class="floating-btn whatsapp" target="_blank">
+      <i class="fab fa-whatsapp"></i>
+    </a>
+  </div>
+
+  <script src="/js/animations.js"></script>
+  <script src="/js/form-validation.js"></script>
+  <script src="/js/agrosoluciones.js"></script>
 </body>
-
 </html>
