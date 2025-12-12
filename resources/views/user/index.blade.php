@@ -77,19 +77,16 @@
                 <div class="d-flex gap-2 align-items-center">
                     <!-- Buscador -->
                     <div class="input-group" style="width: 300px;">
-                        <input type="text" id="searchInput" class="form-control" placeholder="Buscar por nombre o correo...">
+                        <input type="text" id="searchUsuarios" class="form-control" placeholder="Buscar por nombre o correo...">
                         <button class="btn btn-outline-secondary" type="button">
                             <i class="bi bi-search"></i>
                         </button>
                     </div>
-
-
-
                 </div>
             </div>
 
             <div class="table-responsive">
-                <table class="table table-hover" id="usersTable">
+                <table class="table table-hover" id="usuariosTable">
                     <thead class="table-light">
                         <tr>
                             <th>ID</th>

@@ -40,7 +40,7 @@
     if (document.getElementById('ventasTable')) {
       scriptsToLoad.push('{{ asset("js/buscadores/ventas.js") }}');
     }
-    if (document.getElementById('tiposEmpleadoTable')) {
+    if (document.getElementById('tiposTable')) {
       scriptsToLoad.push('{{ asset("js/buscadores/tipos-empleado.js") }}');
     }
     if (document.getElementById('productosTable')) {
@@ -63,6 +63,9 @@
     }
        if (document.getElementById('detallesTable') && window.location.pathname.includes('/detalleAl')) {
       scriptsToLoad.push('{{ asset("js/buscadores/detalle-almacen.js") }}');
+    }
+      if (document.getElementById('tiposProductoTable')) {
+      scriptsToLoad.push('{{ asset("js/buscadores/tipos-producto.js") }}');
     }
     
     // Cargar scripts dinámicamente

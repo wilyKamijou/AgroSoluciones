@@ -263,3 +263,27 @@ body {
 .content-wrapper {
     margin-left: 250px; /* ajusta según el tamaño real de tu sidebar */
 }
+/* Agregar esto a tu custom.css */
+.bg-warning.text-dark {
+    padding: 0 2px;
+    border-radius: 2px;
+    font-weight: bold;
+}
+
+.no-results-row {
+    background-color: #f8f9fa !important;
+}
+
+.no-results-row td {
+    border: none !important;
+}
+
+.btn-clear-search {
+    border-left: none;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.input-group .btn-clear-search:hover {
+    background-color: #e9ecef;
+}

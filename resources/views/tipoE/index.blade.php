@@ -62,7 +62,7 @@
             <div class="mb-3">
                 <small class="text-muted" id="resultCount">
                     Mostrando {{ count($tipos) }} tipos de empleado
-                </small>
+                </small> 
             </div>
 
             <div class="table-container-small">

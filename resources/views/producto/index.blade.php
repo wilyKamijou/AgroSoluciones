@@ -127,17 +127,19 @@
 </div>
 
 <!-- Card Tabla -->
-<div class="card p-4 shadow-sm">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h4 class="mb-0">Lista de Productos</h4>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h4 class="mb-0">Lista de Productos 
+        <small id="resultCount" class="text-muted fs-6 ms-2">
+            ({{ count($productos) }} productos)
+        </small>
+    </h4>
         <div class="d-flex gap-2 align-items-center">
             <!-- Barra de búsqueda -->
-            <div class="flex-grow-1" style="max-width: 300px;">
-                <input type="text" id="searchInput" class="form-control" placeholder="Buscar por nombre, apellido o tipo...">
+
+    <div class="flex-grow-1" style="max-width: 300px;">
+        <input type="text" id="searchProductos" class="form-control" 
+           placeholder="Buscar por nombre, descripción, categoría...">
             </div>
-            <button class="btn btn-outline-secondary" type="button">
-                <i class="bi bi-search"></i>
-            </button>
 
             <!-- Botón simple de PDF -->
             <a href="{{ url('/empleado/pdf') }}" class="btn btn-danger btn-sm">
@@ -146,7 +148,7 @@
         </div>
     </div>
     <div class="table-responsive">
-        <table class="table table-hover" id="productosTable">
+        <table class="table table-hover" id="productosTable">    
             <thead class="table-light">
                 <tr>
                     <th>ID</th>
