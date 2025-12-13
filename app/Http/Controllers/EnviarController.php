@@ -19,6 +19,7 @@ class enviarController extends Controller
     }
     public function enviar(Request $request)
     {
+
         $request->validate([
             'nombre'  => 'required',
             'email'   => 'required|email',

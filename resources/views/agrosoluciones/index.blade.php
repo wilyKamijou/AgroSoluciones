@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -39,13 +40,13 @@
           Innovación Agrícola<br>para el Futuro
         </h1>
         <p class="hero-subtitle">
-          Soluciones tecnológicas y productos de alta calidad para maximizar el rendimiento 
+          Soluciones tecnológicas y productos de alta calidad para maximizar el rendimiento
           de tus cultivos. Más de 10 años cultivando éxito.
         </p>
         <a href="#productos" class="nav-btn animate-pulse">
           <i class="fas fa-arrow-right"></i> Ver Productos
         </a>
-        
+
         <div class="hero-stats">
           <div class="stat-item" style="--i: 1;">
             <span class="stat-number">10+</span>
@@ -71,42 +72,36 @@
         <h2 class="section-title text-gradient">Tablas de Cultivo</h2>
         <p class="section-subtitle">Información técnica especializada para cada cultivo</p>
       </div>
-      
+
       <div class="cultivos-grid">
         <div class="cultivo-card hidden" data-animate="fadeInUp">
-          <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
-               alt="Maíz" class="cultivo-image">
+          <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Maíz" class="cultivo-image">
           <div class="cultivo-content">
             <h3 class="cultivo-title">Maíz</h3>
             <p>Guía completa para el cultivo óptimo de maíz</p>
-            <a href="https://i.postimg.cc/XrgJkT3S/tablamaiz.png" 
-               target="_blank" class="cultivo-btn">
+            <a href="https://i.postimg.cc/XrgJkT3S/tablamaiz.png" target="_blank" class="cultivo-btn">
               Ver Tabla <i class="fas fa-external-link-alt"></i>
             </a>
           </div>
         </div>
 
         <div class="cultivo-card hidden" data-animate="fadeInUp" data-delay="0.1">
-          <img src="https://cdn.pixabay.com/photo/2017/02/05/11/11/soybeans-2039641_1280.jpg" 
-               alt="Soya" class="cultivo-image">
+          <img src="https://cdn.pixabay.com/photo/2017/02/05/11/11/soybeans-2039641_1280.jpg" alt="Soya" class="cultivo-image">
           <div class="cultivo-content">
             <h3 class="cultivo-title">Soya</h3>
             <p>Tablas técnicas para el cultivo de soya</p>
-            <a href="https://i.postimg.cc/G4j2xZrd/tablasoya.png" 
-               target="_blank" class="cultivo-btn">
+            <a href="https://i.postimg.cc/G4j2xZrd/tablasoya.png" target="_blank" class="cultivo-btn">
               Ver Tabla <i class="fas fa-external-link-alt"></i>
             </a>
           </div>
         </div>
 
         <div class="cultivo-card hidden" data-animate="fadeInUp" data-delay="0.2">
-          <img src="https://cdn.pixabay.com/photo/2016/08/04/07/24/grain-1568509_1280.jpg" 
-               alt="Sorgo" class="cultivo-image">
+          <img src="https://cdn.pixabay.com/photo/2016/08/04/07/24/grain-1568509_1280.jpg" alt="Sorgo" class="cultivo-image">
           <div class="cultivo-content">
             <h3 class="cultivo-title">Sorgo</h3>
             <p>Información técnica para cultivo de sorgo</p>
-            <a href="https://i.postimg.cc/Hrtx9fHC/tablasorgo.png" 
-               target="_blank" class="cultivo-btn">
+            <a href="https://i.postimg.cc/Hrtx9fHC/tablasorgo.png" target="_blank" class="cultivo-btn">
               Ver Tabla <i class="fas fa-external-link-alt"></i>
             </a>
           </div>
@@ -122,7 +117,7 @@
         <h2 class="section-title text-gradient">Nuestra Empresa</h2>
         <p class="section-subtitle">Innovación y calidad en soluciones agrícolas</p>
       </div>
-      
+
       <div class="nosotros-grid">
         <div class="nosotros-card hidden" data-animate="slideInLeft">
           <div class="card-icon">
@@ -158,31 +153,21 @@
         <h2 class="section-title text-gradient">Nuestros Productos</h2>
         <p class="section-subtitle">Soluciones especializadas para cada necesidad agrícola</p>
       </div>
-      
+
       <div class="category-tabs">
         @foreach ($tipos as $tipo)
-        <button class="category-tab {{ $loop->first ? 'active' : '' }}" 
-                data-category="{{ $tipo->id_categoria }}">
+        <button class="category-tab {{ $loop->first ? 'active' : '' }}" data-category="{{ $tipo->id_categoria }}">
           <span>{{ $tipo->nombreCat }}</span>
         </button>
         @endforeach
       </div>
-      
+
       @foreach ($tipos as $tipo)
-      <div class="categoria-productos" 
-           id="categoria-{{ $tipo->id_categoria }}"
-           style="{{ !$loop->first ? 'display: none;' : '' }}">
-        
+      <div class="categoria-productos" id="categoria-{{ $tipo->id_categoria }}" style="{{ !$loop->first ? 'display: none;' : '' }}">
+
         @forelse ($tipo->productos as $producto)
-        <div class="producto-card hidden" 
-             data-animate="fadeInUp"
-             data-delay="{{ $loop->index * 0.1 }}"
-             data-category="{{ $tipo->id_categoria }}">
-          <img src="{{ $producto->imagen_url }}" 
-               alt="{{ $producto->nombrePr }}" 
-               class="producto-img"
-               loading="lazy"
-               onerror="this.src='https://via.placeholder.com/300x200/4CAF50/FFFFFF?text=AGRO+PRODUCTO'">
+        <div class="producto-card hidden" data-animate="fadeInUp" data-delay="{{ $loop->index * 0.1 }}" data-category="{{ $tipo->id_categoria }}">
+          <img src="{{ $producto->imagen_url }}" alt="{{ $producto->nombrePr }}" class="producto-img" loading="lazy" onerror="this.src='https://via.placeholder.com/300x200/4CAF50/FFFFFF?text=AGRO+PRODUCTO'">
           <h3 class="producto-title">{{ $producto->nombrePr }}</h3>
           <p class="producto-subtitle">{{ $producto->nombreTecnico }}</p>
           <div class="producto-details">
@@ -210,7 +195,7 @@
     <div class="container">
       <div class="form-container hidden" data-animate="fadeInUp">
         <h2 class="form-title text-gradient">Contáctanos</h2>
-        
+
         @if(session('success'))
         <div class="alert-success">
           <i class="fas fa-check-circle"></i> {{ session('success') }}
@@ -219,7 +204,7 @@
 
         <form action="/enviar" method="POST" id="contactForm">
           @csrf
-          
+
           <div class="form-group">
             <label class="form-label">Nombre Completo</label>
             <input type="text" name="nombre" class="form-input" placeholder="Tu nombre" required>
@@ -243,8 +228,7 @@
 
           <div class="form-group">
             <label class="form-label">Mensaje</label>
-            <textarea name="mensaje" class="form-input" rows="4" 
-                      placeholder="Describe tu consulta aquí..." required></textarea>
+            <textarea name="mensaje" class="form-input" rows="4" placeholder="Describe tu consulta aquí..." required></textarea>
           </div>
 
           <button type="submit" class="form-submit">
@@ -262,7 +246,7 @@
         <h2 class="section-title">Contáctanos</h2>
         <p class="section-subtitle">Estamos aquí para ayudarte</p>
       </div>
-      
+
       <div class="contacto-grid">
         <div class="contacto-item hidden" data-animate="fadeInUp">
           <div class="contacto-icon">
@@ -307,7 +291,7 @@
           <i class="fas fa-seedling"></i>
           <span>AGROSOLUCIONES</span>
         </div>
-        
+
         <div class="footer-links">
           <a href="#empresa" class="footer-link">Empresa</a>
           <a href="#productos" class="footer-link">Productos</a>
@@ -315,7 +299,7 @@
           <a href="#contacto" class="footer-link">Contacto</a>
           <a href="https://www.apia-bolivia.org" target="_blank" class="footer-link">APIA</a>
         </div>
-        
+
         <p class="footer-copyright">
           © 2024 AGROSOLUCIONES SRL. Todos los derechos reservados.
         </p>
@@ -334,7 +318,8 @@
   </div>
 
   <script src="/js/animations.js"></script>
-  <script src="/js/form-validation.js"></script>
+  <!--<script src="/js/form-validation.js"></script>-->
   <script src="/js/agrosoluciones.js"></script>
 </body>
+
 </html>

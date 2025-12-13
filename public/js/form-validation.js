@@ -111,7 +111,7 @@ function submitForm(form) {
     }, 5000);
     
     // Aquí iría el envío real:
-    // form.submit();
+     form.submit();
     
   }, 1500);
 }
