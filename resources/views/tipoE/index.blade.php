@@ -6,6 +6,10 @@
 <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+<script src="/js/rutas.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 
 <section class="content-header">
     <h1 class="text-center mb-4">Gestión de Tipos de Empleado</h1>
@@ -31,6 +35,27 @@
                     <div class="col-md-6">
                         <label class="form-label">Descripción del Tipo</label>
                         <input type="text" name="descripcionTip" class="form-control" placeholder="Ingrese la descripción del tipo de empleado" required>
+                    </div>
+                    <!--rutas-->
+                    <div class="mb-3">
+                        <label class="form-label">Selecciona Rutas:</label>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownRutas" data-bs-toggle="dropdown" aria-expanded="false">
+                                Elige rutas
+                            </button>
+                            <ul class="dropdown-menu p-3" aria-labelledby="dropdownRutas" style="max-height: 200px; overflow-y: auto;">
+                                @foreach($rutas as $ruta)
+                                <li>
+                                    <div class="form-check">
+                                        <input class="form-check-input ruta-checkbox" type="checkbox" value="{{ $ruta->id_ruta }}" name="rutas[]" id="ruta-{{ $ruta->id_ruta }}">
+                                        <label class="form-check-label" for="ruta-{{ $ruta->id_ruta }}">
+                                            {{ $ruta->nombreR }}
+                                        </label>
+                                    </div>
+                                </li>
+                                @endforeach
+                            </ul>
+                        </div>
                     </div>
 
                     <!-- Botones -->
@@ -62,7 +87,7 @@
             <div class="mb-3">
                 <small class="text-muted" id="resultCount">
                     Mostrando {{ count($tipos) }} tipos de empleado
-                </small> 
+                </small>
             </div>
 
             <div class="table-container-small">
@@ -101,4 +126,5 @@
         </div>
     </section>
 </div>
+
 @endsection

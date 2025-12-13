@@ -14,6 +14,7 @@ use App\Http\Controllers\TipoEmpleadoController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\VentaController;
 use App\Http\Controllers\CompraController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DetalleAlmacenController;
 use App\Http\Controllers\DetalleCompraController;
 use App\Http\Controllers\DetalleVentaController;
@@ -34,6 +35,9 @@ Route::get('/', function () {
 //pagina web
 Route::get('/pagina', [PaginaController::class, 'index'])->name('inicio');
 Route::post('/enviar', [EnviarController::class, 'enviar']);
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware('auth')
+    ->name('dashboard');
 
 Auth::routes();
 // Rutas protegidas por autenticación y roles

@@ -6,6 +6,8 @@
 <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+<script src="/js/producto.js"></script>
+
 
 <section class="content-header">
     <h1 class="text-center mb-4">Gestión de Productos</h1>
@@ -128,167 +130,101 @@
 
 <!-- Card Tabla -->
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <h4 class="mb-0">Lista de Productos 
+    <h4 class="mb-0">Lista de Productos
         <small id="resultCount" class="text-muted fs-6 ms-2">
             ({{ count($productos) }} productos)
         </small>
     </h4>
-        <div class="d-flex gap-2 align-items-center">
-            <!-- Barra de búsqueda -->
+    <div class="d-flex gap-2 align-items-center">
+        <!-- Barra de búsqueda -->
 
-    <div class="flex-grow-1" style="max-width: 300px;">
-        <input type="text" id="searchProductos" class="form-control" 
-           placeholder="Buscar por nombre, descripción, categoría...">
-            </div>
-
-            <!-- Botón simple de PDF -->
-            <a href="{{ url('/empleado/pdf') }}" class="btn btn-danger btn-sm">
-                PDF
-            </a>
+        <div class="flex-grow-1" style="max-width: 300px;">
+            <input type="text" id="searchProductos" class="form-control" placeholder="Buscar por nombre, descripción, categoría...">
         </div>
-    </div>
-    <div class="table-responsive">
-        <table class="table table-hover" id="productosTable">    
-            <thead class="table-light">
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Precio</th>
-                    <th>Nombre Técnico</th>
-                    <th>Descripción</th>
-                    <th>Composición Química</th>
-                    <th>Concentración Química</th>
-                    <th>Fecha fabricación</th>
-                    <th>Fecha Vencimiento</th>
-                    <th>Unidad medida</th>
-                    <th>Categoría</th>
-                    <th>Opciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($productos as $producto)
-                @php
-                $categoria = $categorias->firstWhere('id_categoria', $producto->id_categoria);
-                $hoy = now();
-                $vencimiento = \Carbon\Carbon::parse($producto->fechaVencimiento);
-                $diasParaVencer = $hoy->diffInDays($vencimiento, false);
-                @endphp
-                <tr class="producto-row">
-                    <td><strong>{{$producto->id_producto}}</strong></td>
-                    <td>{{$producto->nombrePr}}</td>
-                    <td>{{$producto->precioPr}}Bs.</td>
-                    <td>{{$producto->nombreTecnico}}</td>
-                    <td>
-                        <span class="texto-largo" title="{{$producto->descripcionPr}}">
-                            {{ Str::limit($producto->descripcionPr, 50) }}
-                        </span>
-                    </td>
-                    <td>{{$producto->compocicionQuimica}}</td>
-                    <td>{{$producto->consentracionQuimica}}</td>
-                    <td>{{$producto->fechaFabricacion}}</td>
-                    <td>
-                        @if($diasParaVencer < 0) <span class="badge bg-danger" title="Vencido">
-                            <i class="bi bi-exclamation-triangle"></i> {{$producto->fechaVencimiento}}
-                            </span>
-                            @elseif($diasParaVencer <= 30) <span class="badge bg-warning" title="Por vencer ({{$diasParaVencer}} días)">
-                                {{$producto->fechaVencimiento}}
-                                </span>
-                                @else
-                                <span class="badge bg-success">{{$producto->fechaVencimiento}}</span>
-                                @endif
-                    </td>
-                    <td>{{$producto->unidadMedida}}</td>
-                    <td>
-                        @if($categoria)
-                        <span class="badge bg-info">{{$categoria->nombreCat}}</span>
-                        @else
-                        <span class="badge bg-secondary">Sin categoría</span>
-                        @endif
-                    </td>
-                    <td class="d-flex gap-2">
-                        <a href="/producto/{{$producto->id_producto}}/editar" class="btn btn-primary btn-sm">
-                            <i class="bi bi-pencil"></i>
-                        </a>
 
-                        <form action="/producto/{{$producto->id_producto}}/eliminar" method="POST">
-                            @csrf
-                            @method('delete')
-                            <button type="submit" class="btn btn-danger btn-sm">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+        <!-- Botón simple de PDF -->
+        <a href="{{ url('/empleado/pdf') }}" class="btn btn-danger btn-sm">
+            PDF
+        </a>
     </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-hover" id="productosTable">
+        <thead class="table-light">
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Nombre Técnico</th>
+                <th>Descripción</th>
+                <th>Composición Química</th>
+                <th>Concentración Química</th>
+                <th>Fecha fabricación</th>
+                <th>Fecha Vencimiento</th>
+                <th>Unidad medida</th>
+                <th>Categoría</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($productos as $producto)
+            @php
+            $categoria = $categorias->firstWhere('id_categoria', $producto->id_categoria);
+            $hoy = now();
+            $vencimiento = \Carbon\Carbon::parse($producto->fechaVencimiento);
+            $diasParaVencer = $hoy->diffInDays($vencimiento, false);
+            @endphp
+            <tr class="producto-row">
+                <td><strong>{{$producto->id_producto}}</strong></td>
+                <td>{{$producto->nombrePr}}</td>
+                <td>{{$producto->precioPr}}Bs.</td>
+                <td>{{$producto->nombreTecnico}}</td>
+                <td>
+                    <span class="texto-largo" title="{{$producto->descripcionPr}}">
+                        {{ Str::limit($producto->descripcionPr, 50) }}
+                    </span>
+                </td>
+                <td>{{$producto->compocicionQuimica}}</td>
+                <td>{{$producto->consentracionQuimica}}</td>
+                <td>{{$producto->fechaFabricacion}}</td>
+                <td>
+                    @if($diasParaVencer < 0) <span class="badge bg-danger" title="Vencido">
+                        <i class="bi bi-exclamation-triangle"></i> {{$producto->fechaVencimiento}}
+                        </span>
+                        @elseif($diasParaVencer <= 30) <span class="badge bg-warning" title="Por vencer ({{$diasParaVencer}} días)">
+                            {{$producto->fechaVencimiento}}
+                            </span>
+                            @else
+                            <span class="badge bg-success">{{$producto->fechaVencimiento}}</span>
+                            @endif
+                </td>
+                <td>{{$producto->unidadMedida}}</td>
+                <td>
+                    @if($categoria)
+                    <span class="badge bg-info">{{$categoria->nombreCat}}</span>
+                    @else
+                    <span class="badge bg-secondary">Sin categoría</span>
+                    @endif
+                </td>
+                <td class="d-flex gap-2">
+                    <a href="/producto/{{$producto->id_producto}}/editar" class="btn btn-primary btn-sm">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+
+                    <form action="/producto/{{$producto->id_producto}}/eliminar" method="POST">
+                        @csrf
+                        @method('delete')
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
 </div>
 </section>
 </div>
 @endsection
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-
-        const inputURL = document.getElementById("imagen_url");
-        const previewDiv = document.getElementById("imagenPrevisualizacion");
-        const previewImg = previewDiv.querySelector("img");
-        const creditos = document.getElementById("creditosImagen");
-
-        /* =============================
-           BOTÓN: BUSQUEDA AUTOMÁTICA
-           ============================= */
-        document.getElementById("buscarImagenPixabay").addEventListener("click", function() {
-            if (!inputURL.value.trim()) {
-                alert("Debes ingresar primero un nombre de producto para buscar la imagen.");
-                return;
-            }
-
-            // Simulación de búsqueda automática
-            const query = encodeURIComponent(inputURL.value.trim());
-
-            // Abrir búsqueda en Pixabay
-            window.open(`https://pixabay.com/images/search/${query}`, "_blank");
-        });
-
-        /* =============================
-           BOTÓN: IR A PIXABAY
-           ============================= */
-        document.getElementById("buscarManualPixabay").addEventListener("click", function() {
-            window.open("https://pixabay.com/", "_blank");
-        });
-
-        /* =============================
-           BOTÓN: IR A UNSPLASH
-           ============================= */
-        document.getElementById("buscarManualUnsplash").addEventListener("click", function() {
-            window.open("https://unsplash.com/", "_blank");
-        });
-
-        /* =============================
-           BOTÓN: PREVISUALIZAR IMAGEN
-           ============================= */
-        document.getElementById("previsualizarImagen").addEventListener("click", function() {
-            const url = inputURL.value.trim();
-
-            if (!url) {
-                alert("Ingrese una URL de imagen primero.");
-                return;
-            }
-
-            // Mostrar previsualización
-            previewImg.src = url;
-            previewDiv.classList.remove("d-none");
-
-            // Créditos (automático si proviene de Pixabay)
-            if (url.includes("pixabay.com")) {
-                creditos.innerHTML = "Fuente: Pixabay · Licencia gratuita";
-            } else if (url.includes("unsplash.com")) {
-                creditos.innerHTML = "Fuente: Unsplash · Licencia gratuita";
-            } else {
-                creditos.innerHTML = "";
-            }
-        });
-
-    });
-</script>
