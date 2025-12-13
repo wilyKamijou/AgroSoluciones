@@ -30,7 +30,7 @@ class producto extends Model
 
     public function detalleAlmacenes()
     {
-        return $this->hasManyMany(detalleAlmacen::class, 'id_producto');
+        return $this->hasMany(detalleAlmacen::class, 'id_producto');
     }
     /*
     public function detalleCompras()
