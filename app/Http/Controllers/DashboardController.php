@@ -14,7 +14,6 @@ class DashboardController extends Controller
         $user = Auth::user();
         $tipoEmpleadoId = $user->empleado->id_tipoE;
 
-
         $menuRutas = DB::table('dt_rutas')
             ->join('rutas', 'dt_rutas.id_ruta', '=', 'rutas.id_ruta')
             ->where('dt_rutas.id_tipoE', $tipoEmpleadoId)
