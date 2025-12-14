@@ -58,47 +58,44 @@
                     </select>
                 </div>
                 <!-- Producto en Almacén -->
-                <div class="col-md-6">
-                    <label class="form-label">Producto en Almacén</label>
-                    <select name="idDal" id="productoAlmacenSelect" class="form-control" required>
-                        <option value="" disabled selected>Seleccione producto</option>
-                        @foreach($detalleAs as $detalleA)
-                        @if($detalleA->stock > 0) {{-- solo si hay stock --}}
-                        @foreach($productos as $producto)
-                        @foreach($almacenes as $almacen)
-                        @if($detalleA->id_almacen == $almacen->id_almacen && $detalleA->id_producto == $producto->id_producto)
-                        <option value="{{ $detalleA->id_producto }}|{{ $detalleA->id_almacen }}" data-precio="{{ $producto->precioPr }}">
-                            {{ $producto->nombrePr }} - {{ $producto->unidadMedida }} (Stock: {{ $detalleA->stock }})
-                        </option>
-                        @endif
-                        @endforeach
-                        @endforeach
-                        @endif
-                        @endforeach
-                    </select>
+                <div id="productos-container">
+                    <div class="row g-3 mb-3 producto-row">
+                        <div class="col-md-5">
+                            <label class="form-label">Producto en Almacén</label>
+                            <select name="productos[0][idDal]" class="form-control producto-select" required>
+                                <option value="" disabled selected>Seleccione producto</option>
+                                @foreach($detalleAs as $detalleA)
+                                @if($detalleA->stock > 0)
+                                @foreach($productos as $producto)
+                                @foreach($almacenes as $almacen)
+                                @if($detalleA->id_almacen == $almacen->id_almacen && $detalleA->id_producto == $producto->id_producto)
+                                <option value="{{ $detalleA->id_producto }}|{{ $detalleA->id_almacen }}" data-precio="{{ $producto->precioPr }}">
+                                    {{ $producto->nombrePr }} - {{ $producto->unidadMedida }} (Stock: {{ $detalleA->stock }})
+                                </option>
+                                @endif
+                                @endforeach
+                                @endforeach
+                                @endif
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Cantidad</label>
+                            <input type="text" name="productos[0][cantidadDv]" class="form-control" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Precio Unitario</label>
+                            <input type="text" name="productos[0][precioDv]" class="form-control precio-input" readonly>
+                        </div>
+                        <div class="col-md-1 d-flex align-items-end">
+                            <button type="button" class="btn btn-danger btn-sm remove-product">X</button>
+                        </div>
+                    </div>
                 </div>
 
+                <button type="button" id="add-product" class="btn btn-primary mb-3">Agregar otro producto</button>
 
             </div>
-
-            <!-- ======================= -->
-            <!-- DETALLE DE VENTA -->
-            <!-- ======================= -->
-
-            <div class="row g-3 mb-3">
-
-                <!-- Precio Unitario -->
-                <div class="col-md-4">
-                    <label class="form-label">Precio Unitario</label>
-                    <input type="text" name="precioDv" id="precioInput" class="form-control" placeholder="Precio se autocompletará">
-                </div>
-
-                <div class="col-md-3">
-                    <label class="form-label">Cantidad</label>
-                    <input type="number" id="cantidadDv" name="cantidadDv" class="form-control" required>
-                </div>
-            </div>
-
             <!-- ======================= -->
             <!-- BOTÓN GUARDAR -->
             <!-- ======================= -->
@@ -176,14 +173,61 @@
 
 
 
-        /* ================== AUTOCOMPLETAR PRECIO UNITARIO ================== */
-        const productoSelect = document.querySelector('select[name="idDal"]');
-        const precioInput = document.querySelector('input[name="precioDv"]');
+        let productIndex = 1;
 
-        productoSelect.addEventListener('change', function() {
-            const selectedOption = this.selectedOptions[0];
-            precioInput.value = selectedOption.dataset.precio || '';
+        const container = document.getElementById('productos-container');
+        const addButton = document.getElementById('add-product');
+
+        // Agregar nueva fila
+        addButton.addEventListener('click', function() {
+            const newRow = container.querySelector('.producto-row').cloneNode(true);
+
+            // Limpiar valores
+            newRow.querySelectorAll('input, select').forEach(input => {
+                input.value = '';
+            });
+
+            // Actualizar nombres de inputs
+            newRow.querySelectorAll('select, input').forEach(input => {
+                const name = input.getAttribute('name');
+                const newName = name.replace(/\d+/, productIndex);
+                input.setAttribute('name', newName);
+            });
+
+            container.appendChild(newRow);
+            productIndex++;
+
+            attachPrecioEvent(newRow); // Para autocompletar precio
+            attachRemoveEvent(newRow); // Para eliminar fila
         });
+
+        // Función para autocompletar precio
+        function attachPrecioEvent(row) {
+            const select = row.querySelector('.producto-select');
+            const precioInput = row.querySelector('.precio-input');
+
+            select.addEventListener('change', function() {
+                const selectedOption = this.selectedOptions[0];
+                precioInput.value = selectedOption.dataset.precio || '';
+            });
+        }
+
+        // Función para eliminar fila
+        function attachRemoveEvent(row) {
+            row.querySelector('.remove-product').addEventListener('click', function() {
+                if (container.querySelectorAll('.producto-row').length > 1) {
+                    row.remove();
+                }
+            });
+        }
+
+        // Inicial
+        container.querySelectorAll('.producto-row').forEach(row => {
+            attachPrecioEvent(row);
+            attachRemoveEvent(row);
+        });
+
+
 
 
     });

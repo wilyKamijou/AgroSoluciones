@@ -79,83 +79,98 @@ class ModuloVentaController extends Controller
     public function store(Request $request)
     {
 
-
-        // --- Detalle de Venta ---
-        list($id_producto, $id_almacen) = explode('|', $request->idDal);
-
-        $detalleAl = DetalleAlmacen::where('id_producto', $id_producto)
-            ->where('id_almacen', $id_almacen)
-            ->first();
-
-        if ($detalleAl->stock < $request->cantidadDv) {
-            return redirect()->back()->with('error', 'No hay suficiente stock del producto');
-        }
-
-        // --- Cliente ---
-        $cliente = Cliente::where('nombreCl', $request->nombreCl)
-            ->where('apellidosCl', $request->apellidosCl)
-            ->first();
-
-        if (!$cliente) {
-            $cliente = cliente::create([
-                'nombreCl' => $request->nombreCl,
-                'apellidosCl' => $request->apellidosCl,
-                'telefonoCl' => $request->telefonoCl,
-            ]);
-        } else {
-            $cliente->update([
-                'telefonoCl' => $request->telefonoCl
-            ]);
-        }
-
-        // --- Venta ---
-        $venta = venta::create([
-            'id_cliente' => $cliente->id_cliente,
-            'id_empleado' => $request->id_empleado,
-            'fechaVe' => now()->toDateString(),
-            'montoTotalVe' => 0, // temporal, se actualizará luego
+        $validated = $request->validate([
+            'nombreCl' => 'required|string|max:255',
+            'apellidosCl' => 'required|string|max:255',
+            'telefonoCl' => 'nullable|string|max:255',
+            'id_empleado' => 'required|integer',
+            'productos.*.idDal' => 'required|string',
+            'productos.*.cantidadDv' => 'required|integer|min:1',
         ]);
 
+        try {
+            DB::beginTransaction();
 
 
+            $cliente = Cliente::where('nombreCl', $validated['nombreCl'])
+                ->where('apellidosCl', $validated['apellidosCl'])
+                ->first();
 
-        // Actualizar stock
-        $detalleAl = DB::table('detalle_almacens')
-            ->where('id_producto', $id_producto)
-            ->where('id_almacen', $id_almacen)
-            ->select(
-                'stock'
-            )->first();
-        $ac = $detalleAl->stock - $request->cantidadDv;
+            if (!$cliente) {
+                $cliente = Cliente::create([
+                    'nombreCl' => $validated['nombreCl'],
+                    'apellidosCl' => $validated['apellidosCl'],
+                    'telefonoCl' => $validated['telefonoCl'] ?? null,
+                ]);
+            } else {
+                $cliente->update([
+                    'telefonoCl' => $validated['telefonoCl'] ?? $cliente->telefonoCl
+                ]);
+            }
 
-        DB::table('detalle_almacens')
-            ->where('id_producto', $id_producto)
-            ->where('id_almacen', $id_almacen)
-            ->update([
-                'stock' => $ac
+
+            $venta = venta::create([
+                'id_cliente' => $cliente->id_cliente,
+                'id_empleado' => $validated['id_empleado'],
+                'fechaVe' => now()->toDateString(),
+                'montoTotalVe' => 0,
             ]);
 
-        $producto = producto::find($id_producto); // asumir relación producto
-        $total = $producto->precioPr * $request->cantidadDv;
+            $montoTotal = 0;
 
-        DB::table('detalle_ventas')
-            ->insert([
-                'id_venta' => $venta->id_venta,
-                'id_producto' => $id_producto,
-                'id_almacen' => $id_almacen,
-                'cantidadDv' => $request->cantidadDv,
-                'precioDv' => $producto->precioPr,
-                'created_at' => now(),
-                'updated_at' => now()
-            ]);
+            // ===============================
+            // Productos: iterar cada producto agregado
+            // ===============================
+            foreach ($validated['productos'] as $p) {
+                list($id_producto, $id_almacen) = explode('|', $p['idDal']);
+                $cantidad = $p['cantidadDv'];
 
-        // Actualizar monto total de venta
-        $venta->montoTotalVe = $total;
-        $venta->save();
+                // Obtener stock actual
+                $detalleAl = DB::table('detalle_almacens')
+                    ->where('id_producto', $id_producto)
+                    ->where('id_almacen', $id_almacen)
+                    ->first();
 
+                if (!$detalleAl || $detalleAl->stock < $cantidad) {
+                    DB::rollBack();
+                    return redirect()->back()->with('error', "No hay suficiente stock del producto ID: $id_producto");
+                }
 
-        return redirect()->back()->with('success', 'Venta registrada correctamente.');
+                // Actualizar stock
+                DB::table('detalle_almacens')
+                    ->where('id_producto', $id_producto)
+                    ->where('id_almacen', $id_almacen)
+                    ->update(['stock' => $detalleAl->stock - $cantidad]);
+
+                // Obtener precio del producto
+                $producto = producto::find($id_producto);
+                $totalProducto = $producto->precioPr * $cantidad;
+                $montoTotal += $totalProducto;
+
+                // Insertar detalle de venta
+                DB::table('detalle_ventas')->insert([
+                    'id_venta' => $venta->id_venta,
+                    'id_producto' => $id_producto,
+                    'id_almacen' => $id_almacen,
+                    'cantidadDv' => $cantidad,
+                    'precioDv' => $producto->precioPr,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+
+            // Actualizar monto total de la venta
+            $venta->montoTotalVe = $montoTotal;
+            $venta->save();
+
+            DB::commit();
+            return redirect()->back()->with('success', 'Venta registrada correctamente.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Error al registrar la venta: ' . $e->getMessage());
+        }
     }
+
 
     /**
      * Display the specified resource.
