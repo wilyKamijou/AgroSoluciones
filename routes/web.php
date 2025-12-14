@@ -39,6 +39,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware('auth')
     ->name('dashboard');
 
+    
 Auth::routes();
 // Rutas protegidas por autenticación y roles
 Route::middleware('auth')->group(function () {
