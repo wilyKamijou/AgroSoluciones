@@ -18,7 +18,7 @@
         <form action="/mVenta/guardar" method="POST" id="ventaForm">
             @csrf
 
-            <!-- ======================= -->
+            <!-- ======================= -->s
             <!-- CLIENTE -->
             <!-- ======================= -->
 
