@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id('id_tipoE');
             $table->string('nombreE');
             $table->string('descripcionTip');
+            $table->string('rutas_acceso')->nullable();
             $table->timestamps();
         });
     }

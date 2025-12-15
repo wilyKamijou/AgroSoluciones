@@ -22,58 +22,48 @@ class TipoEmpleadoController extends Controller
         return view('tipoE.create');
     }
 
-    public function store(Request $request)
-    {
+public function store(Request $request)
+{
+    $request->validate([
+        'nombreE' => 'required|string|max:255',
+        'descripcionTip' => 'required|string|max:500',
+    ]);
 
-        // Crear tipo de empleado y obtener ID
-        $tipoEmpleadoId = DB::table('tipo_empleados')->insertGetId([
-            'nombreE' => $request->nombreE,
-            'descripcionTip' => $request->descripcionTip,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+    tipoEmpleado::create([
+        'nombreE' => $request->nombreE,
+        'descripcionTip' => $request->descripcionTip,
+        'rutas_acceso' => $request->rutas_iniciales,
+    ]);
 
-        // Preparar datos para dt_rutas
-        $insertData = [];
-        foreach ($request->rutas as $rutaId) {
-            $insertData[] = [
-                'id_tipoE' => $tipoEmpleadoId,
-                'id_ruta' => $rutaId,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ];
-        }
-
-        // Insertar relaciones en dt_rutas
-        DB::table('dt_rutas')->insert($insertData);
-
-        return back()->with('success', 'Tipo de empleado y rutas asignadas correctamente.');
-    }
-    /*
-    public function store(Request $request)
-    {
-        $ex = tipoEmpleado::where('nombreE', $request->descripcionTip)->exists();
-        if ($ex) {
-            return redirect()->back()->with('error', 'No se puede Guardar porque ya existe ese tipo de empleado.');
-        }
-        $tipoEmpleado = TipoEmpleado::create($request->all());
-        return redirect()->back()->with('success', 'Tipo de empleados se guardo correctamente.');
-    }*/
+    return back()->with('success', 'Tipo de empleado creado correctamente.');
+}
     public function edit($id)
     {
         $tipo = tipoEmpleado::find($id);
         return view('tipoE.edit')->with('tipo', $tipo);
     }
-    public function update(Request $request, $id)
-    {
-        $ex = TipoEmpleado::where('nombreE', $request->descripcionTip)->exists();
-        if ($ex) {
-            return redirect()->back()->with('error', 'No se puede Guardar porque ya existe ese tipo de empleado.');
-        }
-        $new = tipoEmpleado::find($id);
-        $new->update($request->all());
-        return redirect('/tipo')->with('success', 'Tipo de empleados se actualizado correctamente.');
-    }
+public function update(Request $request, $id)
+{
+    // Validación
+    $request->validate([
+        'nombreE' => 'required|string|max:255',
+        'descripcionTip' => 'required|string|max:500',
+        'rutas_iniciales' => 'nullable|string|max:100'
+    ]);
+
+
+    // Buscar y actualizar
+    $tipo = tipoEmpleado::findOrFail($id);
+    
+    // Actualizar solo los campos que necesitas
+    $tipo->nombreE = $request->nombreE;
+    $tipo->descripcionTip = $request->descripcionTip;
+    $tipo->rutas_acceso = $request->rutas_iniciales; // ¡IMPORTANTE!
+    
+    $tipo->save();
+
+    return redirect('/tipo')->with('success', 'Tipo de empleado actualizado correctamente.');
+}
 
     public function destroy($id)
     {

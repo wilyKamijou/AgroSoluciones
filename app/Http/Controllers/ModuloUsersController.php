@@ -32,114 +32,117 @@ class ModuloUsersController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'nombreEm'       => 'required|string|max:255',
-            'apellidosEm'    => 'required|string|max:255',
-            'sueldoEm'       => 'required|numeric',
-            'telefonoEm'     => 'required|string|max:20',
-            'direccion'      => 'required|string|max:255',
+   public function store(Request $request)
+{
+    $validated = $request->validate([
+        'nombreEm'       => 'required|string|max:255',
+        'apellidosEm'    => 'required|string|max:255',
+        'sueldoEm'       => 'required|numeric',
+        'telefonoEm'     => 'required|string|max:20',
+        'direccion'      => 'required|string|max:255',
 
-            'nombreE'        => 'required|string|max:255',
-            'descripcionTip' => 'required|string|max:255',
+        'nombreE'        => 'required|string|max:255',
+        'descripcionTip' => 'required|string|max:255',
+        'rutas_iniciales' => 'nullable|string|max:100', // Cambiado a rutas_iniciales
 
-            'rutas'          => 'required|array|min:1',
-            'rutas.*'        => 'integer|exists:rutas,id_ruta',
+        'name'           => 'required|string|max:255|unique:users,name',
+        'email'          => 'required|string|email|max:255|unique:users,email',
+        'password'       => 'required|string|min:8',
+    ]);
 
-            'name'           => 'required|string|max:255|unique:users,name',
-            'email'          => 'required|string|email|max:255|unique:users,email',
-            'password'       => 'required|string|min:8',
+    DB::beginTransaction();
+
+    try {
+        // =========================================
+        // OBTENER LAS RUTAS (INICIALES)
+        // =========================================
+        $rutasIniciales = $request->rutas_iniciales ?? '';
+        $rutasIniciales = trim($rutasIniciales);
+        
+        // DEBUG: Ver qué rutas llegan
+        \Log::info('Rutas iniciales recibidas:', [
+            'rutas_iniciales' => $rutasIniciales,
+            'rutas_array' => $request->rutas ?? []
         ]);
 
-        DB::beginTransaction();
+        // =========================================
+        // BUSCAR TIPO DE EMPLEADO EXISTENTE POR NOMBRE Y RUTAS
+        // =========================================
+        $tipo = TipoEmpleado::where('nombreE', $validated['nombreE'])
+            ->where('rutas_acceso', $rutasIniciales)
+            ->first();
 
-        try {
-            $rutasSeleccionadas = collect($request->rutas ?? [])
-                ->map(fn ($r) => (int)$r)
-                ->unique()
-                ->sort()
-                ->values();
-
-            // =========================================
-            // BUSCAR TIPO DE EMPLEADO EXISTENTE
-            // =========================================
-            $tipo = null;
-
-            $tiposMismoNombre = TipoEmpleado::where('nombreE', $validated['nombreE'])->get();
-
-            foreach ($tiposMismoNombre as $t) {
-                $rutasTipo = DB::table('dt_rutas')
-                    ->where('id_tipoE', $t->id_tipoE)
-                    ->pluck('id_ruta')
-                    ->map(fn ($r) => (int)$r)
-                    ->sort()
-                    ->values();
-
-                if ($rutasTipo->toArray() === $rutasSeleccionadas->toArray()) {
-                    $tipo = $t;
-                    break;
-                }
-            }
-
-            // =========================================
-            // SI NO EXISTE → CREAR TIPO Y ASIGNAR RUTAS
-            // =========================================
-            if (!$tipo) {
-                $tipo = TipoEmpleado::create([
-                    'nombreE'        => $validated['nombreE'],
-                    'descripcionTip' => $validated['descripcionTip'],
-                ]);
-
-                foreach ($rutasSeleccionadas as $idRuta) {
-                    DB::table('dt_rutas')->insert([
-                        'id_tipoE' => $tipo->id_tipoE,
-                        'id_ruta'  => $idRuta,
-                    ]);
-                }
-            }
-
-            // =========================================
-            // VALIDAR EMPLEADO DUPLICADO
-            // =========================================
-            $existeEmpleado = Empleado::where('nombreEm', $validated['nombreEm'])
-                ->where('apellidosEm', $validated['apellidosEm'])
-                ->first();
-
-            if ($existeEmpleado) {
-                DB::rollBack();
-                return redirect()->back()->with('error', 'Ya existe un empleado con el mismo nombre y apellido.');
-            }
-
-            // =========================================
-            // CREAR USUARIO
-            // =========================================
-            $usuario = User::create([
-                'name'     => $validated['name'],
-                'email'    => $validated['email'],
-                'password' => Hash::make($validated['password']),
+        // =========================================
+        // SI NO EXISTE → CREAR TIPO CON RUTAS DE ACCESO
+        // =========================================
+        if (!$tipo) {
+            $tipo = TipoEmpleado::create([
+                'nombreE'        => $validated['nombreE'],
+                'descripcionTip' => $validated['descripcionTip'],
+                'rutas_acceso'   => $rutasIniciales // Guardar las iniciales
             ]);
-
-            // =========================================
-            // CREAR EMPLEADO
-            // =========================================
-            Empleado::create([
-                'nombreEm'    => $validated['nombreEm'],
-                'apellidosEm' => $validated['apellidosEm'],
-                'sueldoEm'    => $validated['sueldoEm'],
-                'telefonoEm'  => $validated['telefonoEm'],
-                'direccion'   => $validated['direccion'],
-                'id_tipoE'    => $tipo->id_tipoE,
-                'user_id'     => $usuario->id,
+            
+            \Log::info('Nuevo tipo de empleado creado:', [
+                'id' => $tipo->id_tipoE,
+                'nombre' => $tipo->nombreE,
+                'rutas_acceso' => $tipo->rutas_acceso
             ]);
-
-            DB::commit();
-            return redirect()->back()->with('success', 'Registro completado correctamente.');
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return redirect()->back()->with('error', 'Ocurrió un error: ' . $e->getMessage());
+        } else {
+            \Log::info('Tipo de empleado existente encontrado:', [
+                'id' => $tipo->id_tipoE,
+                'nombre' => $tipo->nombreE,
+                'rutas_acceso' => $tipo->rutas_acceso
+            ]);
         }
+
+        // =========================================
+        // VALIDAR EMPLEADO DUPLICADO
+        // =========================================
+        $existeEmpleado = Empleado::where('nombreEm', $validated['nombreEm'])
+            ->where('apellidosEm', $validated['apellidosEm'])
+            ->first();
+
+        if ($existeEmpleado) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Ya existe un empleado con el mismo nombre y apellido.');
+        }
+
+        // =========================================
+        // CREAR USUARIO
+        // =========================================
+        $usuario = User::create([
+            'name'     => $validated['name'],
+            'email'    => $validated['email'],
+            'password' => Hash::make($validated['password']),
+        ]);
+
+        // =========================================
+        // CREAR EMPLEADO
+        // =========================================
+        Empleado::create([
+            'nombreEm'    => $validated['nombreEm'],
+            'apellidosEm' => $validated['apellidosEm'],
+            'sueldoEm'    => $validated['sueldoEm'],
+            'telefonoEm'  => $validated['telefonoEm'],
+            'direccion'   => $validated['direccion'],
+            'id_tipoE'    => $tipo->id_tipoE,
+            'user_id'     => $usuario->id,
+        ]);
+
+        DB::commit();
+        
+        return redirect()->back()->with('success', 'Registro completado correctamente. Rutas asignadas: ' . ($rutasIniciales ?: 'Ninguna'));
+
+    } catch (\Exception $e) {
+        DB::rollBack();
+        \Log::error('Error en store de ModuloUsersController: ' . $e->getMessage());
+        \Log::error('Trace: ' . $e->getTraceAsString());
+        
+        return redirect()->back()
+            ->with('error', 'Ocurrió un error: ' . $e->getMessage())
+            ->withInput();
     }
+}
 
 
 

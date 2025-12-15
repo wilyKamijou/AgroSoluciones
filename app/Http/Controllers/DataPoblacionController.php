@@ -40,7 +40,6 @@ class DataPoblacionController extends Controller
             'ventas' => Venta::count(),
             'detalleVentas' => DetalleVenta::count(),
         ];
-
         return view('poblacion.index', compact('counts'));
     }
     // Poblar TipoEmpleado (estático - no cambia)

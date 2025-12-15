@@ -117,7 +117,8 @@ class RegisterController extends Controller
         // Crear tipo de empleado "Owner"
         $tipoEmpleado = tipoEmpleado::create([
             'nombreE' => 'Owner',
-            'descripcionTip' => 'Dueño del servidor.'
+            'descripcionTip' => 'Dueño del servidor.',
+            'rutas_acceso' => 'R U C E V A P' // Acceso a todas las rutas
         ]);
 
         // Crear empleado "Admin" asociado al usuario
