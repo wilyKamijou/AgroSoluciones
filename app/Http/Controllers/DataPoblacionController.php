@@ -52,10 +52,10 @@ class DataPoblacionController extends Controller
         }
 
         $tiposEmpleado = [
-            ['nombreE' => 'Owner', 'descripcionTip' => 'Propietario del Sistema'],
-            ['nombreE' => 'Gerente', 'descripcionTip' => 'Gerente de Tienda'],
-            ['nombreE' => 'Encargado Ventas', 'descripcionTip' => 'Responsable de Ventas'],
-            ['nombreE' => 'Encargado Almacenes', 'descripcionTip' => 'Responsable de Almacenes'],
+            ['nombreE' => 'Owner', 'descripcionTip' => 'Propietario del Sistema', 'rutas_acceso' => 'R U C E V A P'],
+            ['nombreE' => 'Gerente', 'descripcionTip' => 'Gerente de Tienda', 'rutas_acceso' => ' U C E'],
+            ['nombreE' => 'Encargado Ventas', 'descripcionTip' => 'Responsable de Ventas', 'rutas_acceso' => 'V P'],
+            ['nombreE' => 'Encargado Almacenes', 'descripcionTip' => 'Responsable de Almacenes', 'rutas_acceso' => 'A P'],
         ];  
 
         TipoEmpleado::insert($tiposEmpleado);

@@ -38,17 +38,16 @@ class ModuloVentaController extends Controller
 
     public function buscarA(Request $request)
     {
-        $query = $request->get('q'); // lo que el usuario escribe en apellidos
+        $query = $request->get('q');
         $clientes = Cliente::where('apellidosCl', 'LIKE', "%{$query}%")
             ->limit(5)
             ->get(['id_cliente', 'nombreCl', 'apellidosCl', 'telefonoCl']);
-
         return response()->json($clientes);
     }
     // VentaController.php
     public function verificar(Request $request)
     {
-        $nombre = $request->get('nombreCl');
+       $nombre = $request->get('nombreCl');
         $apellido = $request->get('apellidosCl');
 
         $cliente = Cliente::where('nombreCl', $nombre)
@@ -78,20 +77,21 @@ class ModuloVentaController extends Controller
      */
     public function store(Request $request)
     {
-
         $validated = $request->validate([
             'nombreCl' => 'required|string|max:255',
             'apellidosCl' => 'required|string|max:255',
             'telefonoCl' => 'nullable|string|max:255',
             'id_empleado' => 'required|integer',
+            'productos' => 'required|array|min:1',
             'productos.*.idDal' => 'required|string',
             'productos.*.cantidadDv' => 'required|integer|min:1',
+            'productos.*.precioDv' => 'required|numeric|min:0',
         ]);
 
         try {
             DB::beginTransaction();
 
-
+            // Crear o actualizar cliente
             $cliente = Cliente::where('nombreCl', $validated['nombreCl'])
                 ->where('apellidosCl', $validated['apellidosCl'])
                 ->first();
@@ -108,7 +108,7 @@ class ModuloVentaController extends Controller
                 ]);
             }
 
-
+            // Crear venta principal
             $venta = venta::create([
                 'id_cliente' => $cliente->id_cliente,
                 'id_empleado' => $validated['id_empleado'],
@@ -117,23 +117,38 @@ class ModuloVentaController extends Controller
             ]);
 
             $montoTotal = 0;
+            $productosVendidos = [];
 
-            // ===============================
-            // Productos: iterar cada producto agregado
-            // ===============================
-            foreach ($validated['productos'] as $p) {
+            // Verificar que no haya productos duplicados
+            foreach ($validated['productos'] as $index => $p) {
                 list($id_producto, $id_almacen) = explode('|', $p['idDal']);
+                
+                // Verificar duplicados
+                $key = $id_producto . '|' . $id_almacen;
+                if (in_array($key, $productosVendidos)) {
+                    DB::rollBack();
+                    return redirect()->back()->with('error', "El producto en la posición " . ($index + 1) . " está duplicado.");
+                }
+                $productosVendidos[] = $key;
+                
                 $cantidad = $p['cantidadDv'];
+                $precioUnitario = $p['precioDv'];
 
-                // Obtener stock actual
+                // Verificar stock
                 $detalleAl = DB::table('detalle_almacens')
                     ->where('id_producto', $id_producto)
                     ->where('id_almacen', $id_almacen)
                     ->first();
 
-                if (!$detalleAl || $detalleAl->stock < $cantidad) {
+                if (!$detalleAl) {
                     DB::rollBack();
-                    return redirect()->back()->with('error', "No hay suficiente stock del producto ID: $id_producto");
+                    return redirect()->back()->with('error', "Producto no encontrado en almacén.");
+                }
+
+                if ($detalleAl->stock < $cantidad) {
+                    DB::rollBack();
+                    $producto = producto::find($id_producto);
+                    return redirect()->back()->with('error', "Stock insuficiente para: " . $producto->nombrePr . ". Stock disponible: " . $detalleAl->stock);
                 }
 
                 // Actualizar stock
@@ -142,10 +157,9 @@ class ModuloVentaController extends Controller
                     ->where('id_almacen', $id_almacen)
                     ->update(['stock' => $detalleAl->stock - $cantidad]);
 
-                // Obtener precio del producto
-                $producto = producto::find($id_producto);
-                $totalProducto = $producto->precioPr * $cantidad;
-                $montoTotal += $totalProducto;
+                // Calcular subtotal
+                $subtotal = $cantidad * $precioUnitario;
+                $montoTotal += $subtotal;
 
                 // Insertar detalle de venta
                 DB::table('detalle_ventas')->insert([
@@ -153,23 +167,25 @@ class ModuloVentaController extends Controller
                     'id_producto' => $id_producto,
                     'id_almacen' => $id_almacen,
                     'cantidadDv' => $cantidad,
-                    'precioDv' => $producto->precioPr,
+                    'precioDv' => $precioUnitario,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
             }
 
-            // Actualizar monto total de la venta
+            // Actualizar monto total
             $venta->montoTotalVe = $montoTotal;
             $venta->save();
 
             DB::commit();
-            return redirect()->back()->with('success', 'Venta registrada correctamente.');
+            return redirect()->back()->with('success', 'Venta registrada correctamente. Total: $' . number_format($montoTotal, 2));
+            
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Error al registrar la venta: ' . $e->getMessage());
         }
     }
+
 
 
     /**

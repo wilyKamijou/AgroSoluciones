@@ -37,41 +37,50 @@ Route::get('/pagina', [PaginaController::class, 'index'])->name('inicio');
 Route::post('/enviar', [EnviarController::class, 'enviar']);
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
 
-    
+    Route::get('/test-productos-vencimiento', [ReporteController::class, 'productosPorVencerVencidos']);
+
 
 Auth::routes();
 
 // Rutas protegidas por autenticación
 Route::middleware('auth')->group(function () {
-    
-    // ==================== RUTAS PÚBLICAS PARA TODOS LOS USUARIOS AUTENTICADOS ====================
-    
-    // Dashboard/Home
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    
-    // Rutas para gestión de cuenta personal (todos los usuarios)
-    Route::prefix('mi-cuenta')->group(function () {
-        Route::get('/perfil', [App\Http\Controllers\CuentaController::class, 'perfil'])->name('cuenta.perfil');
-        Route::get('/cambiar-password', [App\Http\Controllers\CuentaController::class, 'cambiarPassword'])->name('cuenta.password');
-        Route::post('/actualizar-password', [App\Http\Controllers\CuentaController::class, 'actualizarPassword'])->name('cuenta.actualizar-password');
-    });
-    
-    // ==================== RUTAS ESPECÍFICAS POR PERMISOS (RUVECAP) ====================
-    
-    // ===== R: REPORTES =====
-    Route::middleware('ruta.acceso:R')->group(function () {
-        // Ruta para la vista principal de reportes
-        Route::get('/reportes', [App\Http\Controllers\ReporteController::class, 'index'])->name('reportes.index');
         
-        // APIs de reportes
-        Route::prefix('api/reportes')->group(function () {
-            Route::get('/productos-mas-vendidos-cantidad', [App\Http\Controllers\ReporteController::class, 'productosMasVendidosPorCantidad']);
-            Route::get('/productos-mas-vendidos-monto', [App\Http\Controllers\ReporteController::class, 'productosMasVendidosPorMonto']);
-            Route::get('/distribucion-almacenes', [App\Http\Controllers\ReporteController::class, 'productosEnAlmacenes']);
-            Route::get('/empleados-top-ventas', [App\Http\Controllers\ReporteController::class, 'empleadoConMasVentas']);
-            Route::get('/completo', [App\Http\Controllers\ReporteController::class, 'reporteCompleto']);
+        // ==================== RUTAS PÚBLICAS PARA TODOS LOS USUARIOS AUTENTICADOS ====================
+        
+        // Dashboard/Home
+        Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+        
+        // Rutas para gestión de cuenta personal (todos los usuarios)
+        Route::prefix('mi-cuenta')->group(function () {
+            Route::get('/perfil', [App\Http\Controllers\CuentaController::class, 'perfil'])->name('cuenta.perfil');
+            Route::get('/cambiar-password', [App\Http\Controllers\CuentaController::class, 'cambiarPassword'])->name('cuenta.password');
+            Route::post('/actualizar-password', [App\Http\Controllers\CuentaController::class, 'actualizarPassword'])->name('cuenta.actualizar-password');
         });
+        
+        // ==================== RUTAS ESPECÍFICAS POR PERMISOS (RUVECAP) ====================
+// ===== R: REPORTES =====
+Route::middleware('ruta.acceso:R')->group(function () {
+    // Ruta para la vista principal de reportes
+    Route::get('/reportes', [App\Http\Controllers\ReporteController::class, 'index'])->name('reportes.index');
+    
+    // APIs de reportes
+    Route::prefix('api/reportes')->group(function () {
+        Route::get('/productos-mas-vendidos-cantidad', [App\Http\Controllers\ReporteController::class, 'productosMasVendidosPorCantidad']);
+        Route::get('/productos-mas-vendidos-monto', [App\Http\Controllers\ReporteController::class, 'productosMasVendidosPorMonto']);
+        Route::get('/distribucion-almacenes', [App\Http\Controllers\ReporteController::class, 'productosEnAlmacenes']);
+        Route::get('/empleados-top-ventas', [App\Http\Controllers\ReporteController::class, 'empleadoConMasVentas']);
+        Route::get('/completo', [App\Http\Controllers\ReporteController::class, 'reporteCompleto']);
+        // Nueva ruta simple para vencimientos (eliminado el método antiguo)
+        Route::get('/productos-vencimiento', [ReporteController::class, 'productosPorVencerSimple']);
     });
+    
+    // Exportaciones
+    Route::prefix('reportes/exportar')->group(function () {
+        Route::get('/pdf/{tipo}', [ReporteController::class, 'exportarPDF'])->name('reportes.exportar.pdf');
+        Route::get('/excel/{tipo}', [ReporteController::class, 'exportarExcel'])->name('reportes.exportar.excel');
+    });
+});
+        
     // ===== U: USUARIOS =====
 Route::middleware('ruta.acceso:U')->group(function () {
     // Módulo de usuarios (URL original: /mUser)

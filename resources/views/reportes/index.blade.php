@@ -34,6 +34,32 @@
     .tab-content {
         padding: 20px 0;
     }
+    /* Estilos para la versión simple */
+    .list-group-item {
+        border-radius: 8px;
+        margin-bottom: 5px;
+        transition: all 0.2s;
+    }
+    .list-group-item:hover {
+        background-color: rgba(0, 0, 0, 0.02);
+        transform: translateX(2px);
+    }
+    .badge {
+        padding: 5px 10px;
+        font-weight: 500;
+        border-radius: 20px;
+    }
+    .bg-danger { background-color: #dc3545 !important; }
+    .bg-warning { background-color: #ffc107 !important; color: #000 !important; }
+    .bg-success { background-color: #198754 !important; }
+    .bg-dark { background-color: #343a40 !important; }
+    .card {
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    .card-title {
+        font-weight: 600;
+    }
 </style>
 
 <section class="content-header">
@@ -99,6 +125,12 @@
                     <i class="bi bi-people"></i> Empleados
                 </button>
             </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="vencimientos-tab" data-bs-toggle="tab" 
+                        data-bs-target="#vencimientos" type="button" role="tab">
+                    <i class="bi bi-clock-history"></i> Vencimientos
+                </button>
+            </li>
         </ul>
 
         <!-- Contenido de las pestañas -->
@@ -108,9 +140,17 @@
                 <div class="card shadow-sm p-4 mt-3">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h4><i class="bi bi-trophy text-primary"></i> Productos Más Vendidos (Cantidad)</h4>
-                        <button type="button" onclick="cargarProductosCantidad()" class="btn btn-primary btn-sm">
-                            <i class="bi bi-arrow-clockwise"></i> Actualizar
-                        </button>
+                        <div class="btn-group">
+                            <button type="button" onclick="cargarProductosCantidad()" class="btn btn-primary btn-sm">
+                                <i class="bi bi-arrow-clockwise"></i> Actualizar
+                            </button>
+                            <button type="button" onclick="exportarPDF('productos-cantidad')" class="btn btn-outline-primary btn-sm">
+                                <i class="bi bi-file-earmark-pdf"></i> PDF
+                            </button>
+                            <button type="button" onclick="exportarExcel('productos-cantidad')" class="btn btn-outline-success btn-sm">
+                                <i class="bi bi-file-earmark-excel"></i> Excel
+                            </button>
+                        </div>
                     </div>
                     
                     <div class="chart-container">
@@ -131,9 +171,14 @@
                 <div class="card shadow-sm p-4 mt-3">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h4><i class="bi bi-currency-dollar text-warning"></i> Productos Más Vendidos (Monto)</h4>
-                        <button type="button" onclick="cargarProductosMonto()" class="btn btn-warning btn-sm">
-                            <i class="bi bi-arrow-clockwise"></i> Actualizar
-                        </button>
+                        <div class="btn-group">
+                            <button type="button" onclick="cargarProductosMonto()" class="btn btn-warning btn-sm">
+                                <i class="bi bi-arrow-clockwise"></i> Actualizar
+                            </button>
+                            <button type="button" onclick="exportarPDF('productos-monto')" class="btn btn-outline-warning btn-sm">
+                                <i class="bi bi-file-earmark-pdf"></i> PDF
+                            </button>
+                        </div>
                     </div>
                     
                     <div class="chart-container">
@@ -154,9 +199,14 @@
                 <div class="card shadow-sm p-4 mt-3">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h4><i class="bi bi-boxes text-secondary"></i> Distribución en Almacenes</h4>
-                        <button type="button" onclick="cargarDistribucionAlmacenes()" class="btn btn-secondary btn-sm">
-                            <i class="bi bi-arrow-clockwise"></i> Actualizar
-                        </button>
+                        <div class="btn-group">
+                            <button type="button" onclick="cargarDistribucionAlmacenes()" class="btn btn-secondary btn-sm">
+                                <i class="bi bi-arrow-clockwise"></i> Actualizar
+                            </button>
+                            <button type="button" onclick="exportarPDF('almacenes')" class="btn btn-outline-secondary btn-sm">
+                                <i class="bi bi-file-earmark-pdf"></i> PDF
+                            </button>
+                        </div>
                     </div>
                     
                     <div class="row">
@@ -182,9 +232,14 @@
                 <div class="card shadow-sm p-4 mt-3">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h4><i class="bi bi-people text-danger"></i> Empleados con Más Ventas</h4>
-                        <button type="button" onclick="cargarEmpleadosTop()" class="btn btn-danger btn-sm">
-                            <i class="bi bi-arrow-clockwise"></i> Actualizar
-                        </button>
+                        <div class="btn-group">
+                            <button type="button" onclick="cargarEmpleadosTop()" class="btn btn-danger btn-sm">
+                                <i class="bi bi-arrow-clockwise"></i> Actualizar
+                            </button>
+                            <button type="button" onclick="exportarPDF('empleados')" class="btn btn-outline-danger btn-sm">
+                                <i class="bi bi-file-earmark-pdf"></i> PDF
+                            </button>
+                        </div>
                     </div>
                     
                     <div class="chart-container">
@@ -196,6 +251,95 @@
                             <div class="spinner-border text-danger" role="status"></div>
                             <p class="mt-2">Cargando datos...</p>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pestaña 5: Vencimientos -->
+            <div class="tab-pane fade" id="vencimientos" role="tabpanel">
+                <div class="card shadow-sm p-4 mt-3">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div>
+                            <h4 class="mb-1"><i class="bi bi-clock-history text-info"></i> Productos por Vencer</h4>
+                            <p class="text-muted mb-0">Control de vencimientos de productos</p>
+                        </div>
+                        <div class="btn-group">
+                            <button type="button" onclick="cargarProductosVencimiento()" class="btn btn-info btn-sm">
+                                <i class="bi bi-arrow-clockwise"></i> Actualizar
+                            </button>
+                            <button type="button" onclick="exportarPDF('vencimientos')" class="btn btn-outline-info btn-sm">
+                                <i class="bi bi-file-earmark-pdf"></i> PDF
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Filtro simple -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-calendar"></i></span>
+                                <input type="number" id="diasLimite" class="form-control" value="30" min="1" max="365" 
+                                       placeholder="Días para alerta">
+                                <button class="btn btn-primary" type="button" onclick="cargarProductosVencimiento()">
+                                    <i class="bi bi-search"></i> Filtrar
+                                </button>
+                            </div>
+                            <small class="text-muted">Mostrar productos que vencen en los próximos X días</small>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="alert alert-light border d-flex align-items-center h-100">
+                                <i class="bi bi-info-circle me-2 text-info"></i>
+                                <small>Los productos vencidos se muestran automáticamente (últimos 90 días)</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Contador de estado -->
+                    <div class="row mb-4" id="contadorVencimientos">
+                        <div class="col-md-12 text-center">
+                            <div class="spinner-border text-info" role="status"></div>
+                            <p class="mt-2">Cargando estado...</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Lista simple de productos por vencer -->
+                    <div class="card border-0 bg-light mb-4">
+                        <div class="card-body p-3">
+                            <h5 class="mb-3">
+                                <i class="bi bi-clock text-warning"></i> 
+                                Próximos a Vencer
+                                <span class="badge bg-warning float-end" id="contadorProximos">0</span>
+                            </h5>
+                            <div id="listaProximos" class="list-group list-group-flush">
+                                <div class="text-center py-4">
+                                    <div class="spinner-border spinner-border-sm text-warning" role="status"></div>
+                                    <p class="mt-2 text-muted">Cargando productos próximos a vencer...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Lista simple de productos vencidos -->
+                    <div class="card border-0 bg-light">
+                        <div class="card-body p-3">
+                            <h5 class="mb-3">
+                                <i class="bi bi-exclamation-triangle text-danger"></i> 
+                                Productos Vencidos
+                                <span class="badge bg-danger float-end" id="contadorVencidos">0</span>
+                            </h5>
+                            <div id="listaVencidos" class="list-group list-group-flush">
+                                <div class="text-center py-4">
+                                    <div class="spinner-border spinner-border-sm text-danger" role="status"></div>
+                                    <p class="mt-2 text-muted">Cargando productos vencidos...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Mensaje de estado -->
+                    <div class="alert alert-success mt-4 d-none" id="mensajeTodoBien">
+                        <i class="bi bi-check-circle"></i>
+                        <strong>¡Excelente!</strong> No hay productos próximos a vencer ni vencidos.
                     </div>
                 </div>
             </div>
@@ -235,30 +379,48 @@
     let chartEmpleadosTop = null;
     let reporteCompletoModal = null;
 
-    // Inicializar modal cuando el DOM esté listo
     document.addEventListener('DOMContentLoaded', function() {
         reporteCompletoModal = new bootstrap.Modal(document.getElementById('reporteCompletoModal'));
         
-        // Cargar el primer reporte (Productos por cantidad)
+        // Función para manejar cambios de pestaña
+        function handleTabChange(targetId) {
+            switch(targetId) {
+                case '#productos-cantidad':
+                    if (!chartProductosCantidad) cargarProductosCantidad();
+                    break;
+                case '#productos-monto':
+                    if (!chartProductosMonto) cargarProductosMonto();
+                    break;
+                case '#almacenes':
+                    if (!chartDistribucionAlmacenes) cargarDistribucionAlmacenes();
+                    break;
+                case '#empleados':
+                    if (!chartEmpleadosTop) cargarEmpleadosTop();
+                    break;
+                case '#vencimientos':
+                    cargarProductosVencimiento();
+                    break;
+            }
+        }
+        
+        // Cargar el primer reporte
         cargarProductosCantidad();
         
         // Configurar eventos para las pestañas
         const tabs = document.querySelectorAll('#reportTabs button[data-bs-toggle="tab"]');
         tabs.forEach(tab => {
             tab.addEventListener('shown.bs.tab', function(event) {
-                // Cuando se muestra una pestaña, cargar su contenido si es necesario
                 const targetId = event.target.getAttribute('data-bs-target');
-                if (targetId === '#productos-cantidad' && !chartProductosCantidad) {
-                    cargarProductosCantidad();
-                } else if (targetId === '#productos-monto' && !chartProductosMonto) {
-                    cargarProductosMonto();
-                } else if (targetId === '#almacenes' && !chartDistribucionAlmacenes) {
-                    cargarDistribucionAlmacenes();
-                } else if (targetId === '#empleados' && !chartEmpleadosTop) {
-                    cargarEmpleadosTop();
-                }
+                handleTabChange(targetId);
             });
         });
+        
+        // Verificar si la pestaña de vencimientos está activa al cargar
+        const activeTab = document.querySelector('#reportTabs .nav-link.active');
+        if (activeTab) {
+            const targetId = activeTab.getAttribute('data-bs-target');
+            handleTabChange(targetId);
+        }
     });
 
     function getFiltros() {
@@ -281,6 +443,8 @@
             cargarDistribucionAlmacenes();
         } else if (targetId === '#empleados') {
             cargarEmpleadosTop();
+        } else if (targetId === '#vencimientos') {
+            cargarProductosVencimiento();
         }
     }
 
@@ -291,20 +455,34 @@
         container.innerHTML = '<div class="text-center py-2"><div class="spinner-border text-primary" role="status"></div><p class="mt-2">Cargando...</p></div>';
         
         fetch(`/api/reportes/productos-mas-vendidos-cantidad?fecha_inicio=${filtros.fecha_inicio}&fecha_fin=${filtros.fecha_fin}`)
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error en la respuesta del servidor');
+                }
+                return response.json();
+            })
             .then(data => {
                 if (data.success) {
-                    mostrarTablaProductosCantidad(data.productos);
+                    mostrarTablaProductosCantidad(data.productos, data);
                     crearGraficoProductosCantidad(data.productos);
+                } else {
+                    throw new Error(data.message || 'Error en los datos');
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                container.innerHTML = '<div class="alert alert-danger">Error al cargar los datos</div>';
+                container.innerHTML = `
+                    <div class="alert alert-danger">
+                        <i class="bi bi-exclamation-triangle"></i>
+                        Error al cargar los datos: ${error.message}
+                        <button onclick="cargarProductosCantidad()" class="btn btn-sm btn-outline-danger ms-2">
+                            Reintentar
+                        </button>
+                    </div>`;
             });
     }
 
-    function mostrarTablaProductosCantidad(productos) {
+    function mostrarTablaProductosCantidad(productos, data) {
         let html = `
             <h6 class="text-muted mb-3">Período: ${document.getElementById('fecha_inicio').value} al ${document.getElementById('fecha_fin').value}</h6>
             <div class="table-responsive">
@@ -319,27 +497,26 @@
                     </thead>
                     <tbody>`;
         
-        // Mostrar solo los primeros 15 para no saturar
-        const productosMostrar = productos.slice(0, 15);
-        
-        productosMostrar.forEach((producto, index) => {
-            html += `
-                <tr>
-                    <td><span class="badge bg-primary">${index + 1}</span></td>
-                    <td>${producto.nombrePr}</td>
-                    <td><strong>${producto.total_cantidad}</strong> unidades</td>
-                    <td class="text-success">$${parseFloat(producto.total_monto).toFixed(2)}</td>
-                </tr>`;
-        });
-        
-        html += `</tbody></table>`;
-        
-        if (productosMostrar.length === 0) {
+        if (!productos || productos.length === 0) {
             html = '<div class="alert alert-info">No hay datos para el período seleccionado</div>';
-        } else if (productos.length > 15) {
-            html += `<div class="text-muted text-center mt-2">
-                        Mostrando 15 de ${productos.length} productos
-                     </div>`;
+        } else {
+            productos.forEach((producto, index) => {
+                html += `
+                    <tr>
+                        <td><span class="badge bg-primary">${index + 1}</span></td>
+                        <td>${producto.nombrePr}</td>
+                        <td><strong>${producto.total_cantidad}</strong> unidades</td>
+                        <td class="text-success">$${parseFloat(producto.total_monto).toFixed(2)}</td>
+                    </tr>`;
+            });
+            
+            html += `</tbody></table>`;
+            
+            if (data.pagination) {
+                html += `<div class="text-muted text-center mt-2">
+                            Mostrando ${productos.length} de ${data.pagination.total} productos
+                         </div>`;
+            }
         }
         
         document.getElementById('tablaProductosCantidadContainer').innerHTML = html;
@@ -354,7 +531,7 @@
         
         const top10 = productos.slice(0, 10);
         
-        if (top10.length === 0) {
+        if (!top10 || top10.length === 0) {
             ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
             ctx.font = '16px Arial';
             ctx.fillStyle = '#999';
@@ -432,26 +609,20 @@
                     </thead>
                     <tbody>`;
         
-        const productosMostrar = productos.slice(0, 15);
-        
-        productosMostrar.forEach((producto, index) => {
-            html += `
-                <tr>
-                    <td><span class="badge bg-warning text-dark">${index + 1}</span></td>
-                    <td>${producto.nombrePr}</td>
-                    <td class="text-success"><strong>$${parseFloat(producto.total_monto).toFixed(2)}</strong></td>
-                    <td>${producto.total_cantidad} unidades</td>
-                </tr>`;
-        });
-        
-        html += `</tbody></table>`;
-        
-        if (productosMostrar.length === 0) {
+        if (!productos || productos.length === 0) {
             html = '<div class="alert alert-info">No hay datos para el período seleccionado</div>';
-        } else if (productos.length > 15) {
-            html += `<div class="text-muted text-center mt-2">
-                        Mostrando 15 de ${productos.length} productos
-                     </div>`;
+        } else {
+            productos.forEach((producto, index) => {
+                html += `
+                    <tr>
+                        <td><span class="badge bg-warning text-dark">${index + 1}</span></td>
+                        <td>${producto.nombrePr}</td>
+                        <td class="text-success"><strong>$${parseFloat(producto.total_monto).toFixed(2)}</strong></td>
+                        <td>${producto.total_cantidad} unidades</td>
+                    </tr>`;
+            });
+            
+            html += `</tbody></table>`;
         }
         
         document.getElementById('tablaProductosMontoContainer').innerHTML = html;
@@ -466,7 +637,7 @@
         
         const top10 = productos.slice(0, 10);
         
-        if (top10.length === 0) {
+        if (!top10 || top10.length === 0) {
             ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
             ctx.font = '16px Arial';
             ctx.fillStyle = '#999';
@@ -542,28 +713,28 @@
                     </thead>
                     <tbody>`;
         
-        distribucion.forEach(item => {
-            html += `
-                <tr>
-                    <td>${item.nombreAl}</td>
-                    <td><span class="badge bg-secondary">${item.total_stock}</span></td>
-                    <td>
-                        <div class="d-flex align-items-center">
-                            <div class="progress flex-grow-1 me-2" style="height: 10px;">
-                                <div class="progress-bar" role="progressbar" 
-                                     style="width: ${item.porcentaje}%;">
-                                </div>
-                            </div>
-                            <small>${item.porcentaje}%</small>
-                        </div>
-                    </td>
-                </tr>`;
-        });
-        
-        html += `</tbody></table>`;
-        
-        if (distribucion.length === 0) {
+        if (!distribucion || distribucion.length === 0) {
             html = '<div class="alert alert-info">No hay datos de almacenes</div>';
+        } else {
+            distribucion.forEach(item => {
+                html += `
+                    <tr>
+                        <td>${item.nombreAl}</td>
+                        <td><span class="badge bg-secondary">${item.total_stock}</span></td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div class="progress flex-grow-1 me-2" style="height: 10px;">
+                                    <div class="progress-bar" role="progressbar" 
+                                         style="width: ${item.porcentaje}%;">
+                                    </div>
+                                </div>
+                                <small>${item.porcentaje}%</small>
+                            </div>
+                        </td>
+                    </tr>`;
+            });
+            
+            html += `</tbody></table>`;
         }
         
         document.getElementById('tablaDistribucionAlmacenesContainer').innerHTML = html;
@@ -576,7 +747,7 @@
             chartDistribucionAlmacenes.destroy();
         }
         
-        if (distribucion.length === 0) {
+        if (!distribucion || distribucion.length === 0) {
             ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
             ctx.font = '16px Arial';
             ctx.fillStyle = '#999';
@@ -652,26 +823,20 @@
                     </thead>
                     <tbody>`;
         
-        const empleadosMostrar = empleados.slice(0, 10);
-        
-        empleadosMostrar.forEach((empleado, index) => {
-            html += `
-                <tr>
-                    <td><span class="badge bg-danger">${index + 1}</span></td>
-                    <td>${empleado.nombreEm} ${empleado.apellidosEm}</td>
-                    <td><strong>${empleado.total_ventas}</strong> ventas</td>
-                    <td class="text-success">$${parseFloat(empleado.total_monto_ventas).toFixed(2)}</td>
-                </tr>`;
-        });
-        
-        html += `</tbody></table>`;
-        
-        if (empleadosMostrar.length === 0) {
+        if (!empleados || empleados.length === 0) {
             html = '<div class="alert alert-info">No hay datos para el período seleccionado</div>';
-        } else if (empleados.length > 10) {
-            html += `<div class="text-muted text-center mt-2">
-                        Mostrando 10 de ${empleados.length} empleados
-                     </div>`;
+        } else {
+            empleados.forEach((empleado, index) => {
+                html += `
+                    <tr>
+                        <td><span class="badge bg-danger">${index + 1}</span></td>
+                        <td>${empleado.nombreEm} ${empleado.apellidosEm}</td>
+                        <td><strong>${empleado.total_ventas}</strong> ventas</td>
+                        <td class="text-success">$${parseFloat(empleado.total_monto_ventas).toFixed(2)}</td>
+                    </tr>`;
+            });
+            
+            html += `</tbody></table>`;
         }
         
         document.getElementById('tablaEmpleadosTopContainer').innerHTML = html;
@@ -686,7 +851,7 @@
         
         const top5 = empleados.slice(0, 5);
         
-        if (top5.length === 0) {
+        if (!top5 || top5.length === 0) {
             ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
             ctx.font = '16px Arial';
             ctx.fillStyle = '#999';
@@ -754,7 +919,207 @@
         });
     }
 
-    // 5. Reporte completo en modal
+    // 5. Productos por vencer
+    function cargarProductosVencimiento() {
+        const diasLimite = document.getElementById('diasLimite').value;
+        
+        // Mostrar loading
+        document.getElementById('listaProximos').innerHTML = `
+            <div class="text-center py-4">
+                <div class="spinner-border spinner-border-sm text-warning" role="status"></div>
+                <p class="mt-2 text-muted">Cargando productos próximos a vencer...</p>
+            </div>`;
+        document.getElementById('listaVencidos').innerHTML = `
+            <div class="text-center py-4">
+                <div class="spinner-border spinner-border-sm text-danger" role="status"></div>
+                <p class="mt-2 text-muted">Cargando productos vencidos...</p>
+            </div>`;
+        document.getElementById('contadorVencimientos').innerHTML = `
+            <div class="text-center">
+                <div class="spinner-border spinner-border-sm text-info" role="status"></div>
+                <p class="mt-2 text-muted">Cargando estado...</p>
+            </div>`;
+        
+        // Ocultar mensaje de todo bien
+        document.getElementById('mensajeTodoBien').classList.add('d-none');
+        
+        fetch(`/api/reportes/productos-vencimiento?dias_limite=${diasLimite}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Error HTTP: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    mostrarContadorVencimientos(data);
+                    mostrarListaProximos(data.productos_proximos, data);
+                    mostrarListaVencidos(data.productos_vencidos, data);
+                    
+                    // Mostrar mensaje si no hay productos
+                    if (data.total_proximos === 0 && data.total_vencidos === 0) {
+                        document.getElementById('mensajeTodoBien').classList.remove('d-none');
+                    }
+                } else {
+                    throw new Error(data.message || 'Error en los datos');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('listaProximos').innerHTML = `
+                    <div class="alert alert-danger">
+                        <i class="bi bi-exclamation-triangle"></i>
+                        Error al cargar los datos: ${error.message}
+                        <button onclick="cargarProductosVencimiento()" class="btn btn-sm btn-outline-danger ms-2">
+                            Reintentar
+                        </button>
+                    </div>`;
+                document.getElementById('listaVencidos').innerHTML = '';
+            });
+    }
+
+    function mostrarContadorVencimientos(data) {
+        const html = `
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card border-warning border-2">
+                        <div class="card-body text-center">
+                            <h6 class="card-title text-warning">
+                                <i class="bi bi-clock"></i> Próximos a Vencer
+                            </h6>
+                            <h2 class="mb-0 ${data.total_proximos > 0 ? 'text-warning' : 'text-success'}">
+                                ${data.total_proximos}
+                            </h2>
+                            <small class="text-muted">en ${data.dias_limite} días</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card ${data.total_vencidos > 0 ? 'border-danger border-2' : 'border-success border-2'}">
+                        <div class="card-body text-center">
+                            <h6 class="card-title ${data.total_vencidos > 0 ? 'text-danger' : 'text-success'}">
+                                <i class="bi ${data.total_vencidos > 0 ? 'bi-exclamation-triangle' : 'bi-check-circle'}"></i> 
+                                Vencidos
+                            </h6>
+                            <h2 class="mb-0 ${data.total_vencidos > 0 ? 'text-danger' : 'text-success'}">
+                                ${data.total_vencidos}
+                            </h2>
+                            <small class="text-muted">últimos 90 días</small>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+        
+        document.getElementById('contadorVencimientos').innerHTML = html;
+        document.getElementById('contadorProximos').textContent = data.total_proximos;
+        document.getElementById('contadorVencidos').textContent = data.total_vencidos;
+    }
+
+    function mostrarListaProximos(productos, data) {
+        let html = '';
+        
+        if (!productos || productos.length === 0) {
+            html = `
+                <div class="alert alert-success border-0">
+                    <i class="bi bi-check-circle"></i>
+                    <strong>¡Buen trabajo!</strong> No hay productos próximos a vencer.
+                    <small class="d-block mt-1">Período analizado: próximos ${data.dias_limite} días</small>
+                </div>`;
+        } else {
+            productos.forEach((producto, index) => {
+                // Determinar color según días restantes
+                let colorBadge = 'bg-success';
+                let icono = 'bi-clock';
+                
+                if (producto.dias_restantes <= 7) {
+                    colorBadge = 'bg-danger';
+                    icono = 'bi-exclamation-triangle';
+                } else if (producto.dias_restantes <= 15) {
+                    colorBadge = 'bg-warning';
+                    icono = 'bi-exclamation-circle';
+                }
+                
+                html += `
+                    <div class="list-group-item border-0 px-0 ${index > 0 ? 'pt-3' : ''}">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="flex-grow-1">
+                                <h6 class="mb-1">${producto.nombrePr}</h6>
+                                <small class="text-muted">
+                                    <i class="bi bi-tag"></i> ${producto.categoria?.nombreCa || 'Sin categoría'}
+                                </small>
+                            </div>
+                            <div class="text-end">
+                                <span class="badge ${colorBadge}">
+                                    <i class="bi ${icono}"></i> ${producto.dias_restantes} días
+                                </span>
+                                <div class="text-muted small mt-1">
+                                    ${new Date(producto.fechaVencimiento).toLocaleDateString()}
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+            });
+            
+            // Agregar footer informativo
+            html += `
+                <div class="list-group-item border-0 px-0 pt-3">
+                    <small class="text-muted">
+                        <i class="bi bi-info-circle"></i> 
+                        Mostrando ${productos.length} producto(s) que vence(n) en los próximos ${data.dias_limite} días
+                    </small>
+                </div>`;
+        }
+        
+        document.getElementById('listaProximos').innerHTML = html;
+    }
+
+    function mostrarListaVencidos(productos, data) {
+        let html = '';
+        
+        if (!productos || productos.length === 0) {
+            html = `
+                <div class="alert alert-success border-0">
+                    <i class="bi bi-check-circle"></i>
+                    <strong>¡Perfecto!</strong> No hay productos vencidos.
+                    <small class="d-block mt-1">Período analizado: últimos 90 días</small>
+                </div>`;
+        } else {
+            productos.forEach((producto, index) => {
+                html += `
+                    <div class="list-group-item border-0 px-0 ${index > 0 ? 'pt-3' : ''}">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="flex-grow-1">
+                                <h6 class="mb-1">${producto.nombrePr}</h6>
+                                <small class="text-muted">
+                                    <i class="bi bi-tag"></i> ${producto.categoria?.nombreCa || 'Sin categoría'}
+                                </small>
+                            </div>
+                            <div class="text-end">
+                                <span class="badge bg-dark">
+                                    <i class="bi bi-clock-history"></i> ${producto.dias_vencido} días
+                                </span>
+                                <div class="text-danger small mt-1">
+                                    ${new Date(producto.fechaVencimiento).toLocaleDateString()}
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+            });
+            
+            // Agregar footer informativo
+            html += `
+                <div class="list-group-item border-0 px-0 pt-3">
+                    <div class="alert alert-danger border-0 py-2">
+                        <i class="bi bi-exclamation-triangle"></i>
+                        <strong>Atención:</strong> ${productos.length} producto(s) requieren revisión inmediata
+                    </div>
+                </div>`;
+        }
+        
+        document.getElementById('listaVencidos').innerHTML = html;
+    }
+
+    // 6. Reporte completo en modal
     function generarReporteCompleto() {
         const filtros = getFiltros();
         const content = document.getElementById('reporteCompletoContent');
@@ -786,7 +1151,7 @@
                             <h6 class="mb-0"><i class="bi bi-trophy"></i> Producto Top en Cantidad</h6>
                         </div>
                         <div class="card-body">
-                            ${data.productos_mas_vendidos_cantidad.length > 0 ? `
+                            ${data.productos_mas_vendidos_cantidad && data.productos_mas_vendidos_cantidad.length > 0 ? `
                                 <h5 class="text-primary">${data.productos_mas_vendidos_cantidad[0].nombrePr}</h5>
                                 <p><strong>Cantidad:</strong> ${data.productos_mas_vendidos_cantidad[0].total_cantidad} unidades</p>
                                 <p><strong>Monto:</strong> $${parseFloat(data.productos_mas_vendidos_cantidad[0].total_monto).toFixed(2)}</p>
@@ -800,7 +1165,7 @@
                             <h6 class="mb-0"><i class="bi bi-currency-dollar"></i> Producto Top en Monto</h6>
                         </div>
                         <div class="card-body">
-                            ${data.productos_mas_vendidos_monto.length > 0 ? `
+                            ${data.productos_mas_vendidos_monto && data.productos_mas_vendidos_monto.length > 0 ? `
                                 <h5 class="text-warning">${data.productos_mas_vendidos_monto[0].nombrePr}</h5>
                                 <p><strong>Monto:</strong> $${parseFloat(data.productos_mas_vendidos_monto[0].total_monto).toFixed(2)}</p>
                                 <p><strong>Cantidad:</strong> ${data.productos_mas_vendidos_monto[0].total_cantidad} unidades</p>
@@ -817,7 +1182,7 @@
                             <h6 class="mb-0"><i class="bi bi-person-badge"></i> Empleado Top en Ventas</h6>
                         </div>
                         <div class="card-body">
-                            ${data.empleados_top.length > 0 ? `
+                            ${data.empleados_top && data.empleados_top.length > 0 ? `
                                 <h5 class="text-danger">${data.empleados_top[0].nombreEm} ${data.empleados_top[0].apellidosEm}</h5>
                                 <p><strong>Ventas:</strong> ${data.empleados_top[0].total_ventas} transacciones</p>
                                 <p><strong>Monto Generado:</strong> $${parseFloat(data.empleados_top[0].total_monto_ventas).toFixed(2)}</p>
@@ -831,7 +1196,7 @@
                             <h6 class="mb-0"><i class="bi bi-building"></i> Almacén Principal</h6>
                         </div>
                         <div class="card-body">
-                            ${data.distribucion_almacenes.length > 0 ? `
+                            ${data.distribucion_almacenes && data.distribucion_almacenes.length > 0 ? `
                                 <h5 class="text-secondary">${data.distribucion_almacenes[0].nombreAl}</h5>
                                 <p><strong>Stock:</strong> ${data.distribucion_almacenes[0].total_stock} unidades</p>
                                 <p><strong>Porcentaje:</strong> ${data.distribucion_almacenes[0].porcentaje}% del total</p>
@@ -851,7 +1216,7 @@
                         </div>
                         <div class="col-md-6">
                             <p><strong>Generado:</strong> ${new Date().toLocaleString()}</p>
-                            <p><strong>Total de Datos:</strong> ${data.productos_mas_vendidos_cantidad.length + data.productos_mas_vendidos_monto.length + data.distribucion_almacenes.length + data.empleados_top.length} registros</p>
+                            <p><strong>Total de Datos:</strong> ${(data.productos_mas_vendidos_cantidad ? data.productos_mas_vendidos_cantidad.length : 0) + (data.productos_mas_vendidos_monto ? data.productos_mas_vendidos_monto.length : 0) + (data.distribucion_almacenes ? data.distribucion_almacenes.length : 0) + (data.empleados_top ? data.empleados_top.length : 0)} registros</p>
                         </div>
                     </div>
                 </div>
@@ -859,9 +1224,29 @@
         
         document.getElementById('reporteCompletoContent').innerHTML = html;
     }
-
+    
     function imprimirReporte() {
         window.print();
+    }
+
+    // 7. Funciones de exportación
+    function exportarPDF(tipo) {
+        const filtros = getFiltros();
+        let url = `/reportes/exportar/pdf/${tipo}?fecha_inicio=${filtros.fecha_inicio}&fecha_fin=${filtros.fecha_fin}`;
+        
+        // Para vencimientos, añadir parámetros adicionales
+        if (tipo === 'vencimientos') {
+            const diasLimite = document.getElementById('diasLimite').value;
+            url += `&dias_limite=${diasLimite}`;
+        }
+        
+        window.open(url, '_blank');
+    }
+
+    function exportarExcel(tipo) {
+        const filtros = getFiltros();
+        const url = `/reportes/exportar/excel/${tipo}?fecha_inicio=${filtros.fecha_inicio}&fecha_fin=${filtros.fecha_fin}`;
+        window.open(url, '_blank');
     }
 </script>
 @endsection

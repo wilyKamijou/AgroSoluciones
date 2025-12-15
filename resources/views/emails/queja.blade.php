@@ -14,6 +14,4 @@
     <p><strong>Mensaje:</strong></p>
     <p>{{ $datos['mensaje'] }}</p>
 
-
-
 </html>
