@@ -23,13 +23,15 @@
                 <!-- Nombre -->
                 <div class="col-md-4">
                     <label class="form-label">Nombre</label>
-                    <input type="text" name="nombreCl" class="form-control" placeholder="Ingrese el nombre del cliente" required>
+                    <input id="nombreCl" type="text" name="nombreCl" class="form-control" placeholder="Ingrese el nombre del cliente" required>
+                    <div id="suggestions" class="list-group position-absolute w-100" style="z-index:1000;"></div>
                 </div>
 
                 <!-- Apellidos -->
                 <div class="col-md-4">
                     <label class="form-label">Apellidos</label>
-                    <input type="text" name="apellidosCl" class="form-control" placeholder="Ingrese los apellidos del cliente" required>
+                    <input id="apellidosCl" type="text" name="apellidosCl" class="form-control" placeholder="Ingrese los apellidos del cliente" required>
+                    <div id="suggestionsApellidos" class="list-group position-absolute w-100" style="z-index:1000;"></div>
                 </div>
 
                 <!-- Teléfono -->
@@ -103,4 +105,70 @@
         </div>
     </section>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+        const nombreInput = document.getElementById('nombreCl');
+        const apellidosInput = document.getElementById('apellidosCl');
+        const telefonoInput = document.getElementById('telefonoCl');
+
+        const suggestionsBox = document.getElementById('suggestions');
+        const suggestionsBoxApellidos = document.getElementById('suggestionsApellidos');
+
+        // Función para autocompletar nombre
+        nombreInput.addEventListener('input', function() {
+            const query = this.value.trim();
+            if (query.length < 1) {
+                suggestionsBox.innerHTML = '';
+                return;
+            }
+
+            fetch(`/mVenta/buscar?q=${encodeURIComponent(query)}`)
+                .then(res => res.json())
+                .then(data => {
+                    suggestionsBox.innerHTML = '';
+                    data.forEach(cliente => {
+                        const item = document.createElement('a');
+                        item.classList.add('list-group-item', 'list-group-item-action');
+                        item.href = '#';
+                        item.textContent = cliente.nombreCl;
+                        item.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            nombreInput.value = cliente.nombreCl;
+                            suggestionsBox.innerHTML = '';
+                        });
+                        suggestionsBox.appendChild(item);
+                    });
+                });
+        });
+
+        // Función para autocompletar apellidos
+        apellidosInput.addEventListener('input', function() {
+            const query = this.value.trim();
+            if (query.length < 1) {
+                suggestionsBoxApellidos.innerHTML = '';
+                return;
+            }
+
+            fetch(`/mVenta/buscarA?q=${encodeURIComponent(query)}`)
+                .then(res => res.json())
+                .then(data => {
+                    suggestionsBoxApellidos.innerHTML = '';
+                    data.forEach(cliente => {
+                        const item = document.createElement('a');
+                        item.classList.add('list-group-item', 'list-group-item-action');
+                        item.href = '#';
+                        item.textContent = cliente.apellidosCl;
+                        item.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            apellidosInput.value = cliente.apellidosCl;
+                            suggestionsBoxApellidos.innerHTML = '';
+                        });
+                        suggestionsBoxApellidos.appendChild(item);
+                    });
+                });
+        });
+
+    });
+</script>
 @endsection

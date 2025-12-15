@@ -37,7 +37,7 @@ class enviarController extends Controller
         return back()->with('success', 'Tu mensaje ha sido enviado con éxito.');
     }
 
-    /**
+    /**..........................................................................................................................
      * Show the form for creating a new resource.
      */
     public function create()

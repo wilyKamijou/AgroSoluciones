@@ -13,6 +13,7 @@
     <p><strong>Asunto:</strong> {{ $datos['asunto'] }}</p>
     <p><strong>Mensaje:</strong></p>
     <p>{{ $datos['mensaje'] }}</p>
-</body>git 
+
+
 
 </html>
