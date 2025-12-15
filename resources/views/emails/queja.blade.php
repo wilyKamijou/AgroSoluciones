@@ -8,11 +8,11 @@
 
 <body>
     <h2>Nueva Queja / Consulta Recibida</h2>
-    <p><strong>Nombre:</strong> {{ $data['nombre'] }}</p>
-    <p><strong>Email:</strong> {{ $data['email'] }}</p>
-    <p><strong>Asunto:</strong> {{ $data['asunto'] }}</p>
+    <p><strong>Nombre:</strong> {{ $datos['nombre'] }}</p>
+    <p><strong>Email:</strong> {{ $datos['email'] }}</p>
+    <p><strong>Asunto:</strong> {{ $datos['asunto'] }}</p>
     <p><strong>Mensaje:</strong></p>
-    <p>{{ $data['mensaje'] }}</p>
-</body>
+    <p>{{ $datos['mensaje'] }}</p>
+</body>git 
 
 </html>
