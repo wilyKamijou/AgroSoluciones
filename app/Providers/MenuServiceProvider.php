@@ -23,7 +23,7 @@ class MenuServiceProvider extends ServiceProvider
         // Inyectar menú dinámico después de la autenticación
         view()->composer('*', function ($view) {
             if (Auth::check()) {
-                $menu = $this->generarMenuSegunRol();
+                $menu = $this->generarMenuSegunRutas();
                 $view->with('menuDinamico', $menu);
                 
                 // También sobrescribir menú de AdminLTE
@@ -32,15 +32,28 @@ class MenuServiceProvider extends ServiceProvider
         });
     }
 
-    private function generarMenuSegunRol()
+   private function generarMenuSegunRutas()
     {
         $user = Auth::user();
         
-        // Si no hay usuario autenticado, menú vacío
+            // Si no hay usuario autenticado, menú vacío
         if (!$user || !$user->empleado || !$user->empleado->tipoEmpleado) {
             return [];
         }
 
+
+            // Obtener las rutas de acceso del tipo de empleado
+        $rutasAcceso = $user->empleado->tipoEmpleado->rutas_acceso ?? '';
+            
+            // Convertir a array de iniciales
+        $rutasAcceso = trim($rutasAcceso);
+        $iniciales = !empty($rutasAcceso) ? explode(' ', $rutasAcceso) : [];
+
+        $iniciales = array_filter($iniciales);
+    
+
+        
+        // También puedes obtener el rol si necesitas
         $rol = $user->empleado->tipoEmpleado->nombreE;
         
         $menuBase = [
@@ -62,10 +75,18 @@ class MenuServiceProvider extends ServiceProvider
             ],
         ];
 
-        // ===== AGREGAR ITEMS SEGÚN ROL =====
+        // ===== AGREGAR ITEMS SEGÚN INICIALES DE RUTAS =====
 
-        // Dashboard
-        if (in_array($rol, ['Owner', 'Gerente'])) {
+        // Dashboard/Home siempre visible
+        $menuBase[] = [
+            'text' => 'Dashboard',
+            'url' => '/home',
+            'icon' => 'fas fa-tachometer-alt',
+            'label_color' => 'success',
+        ];
+
+        // Reportes - Si tiene 'R'
+        if (in_array('R', $iniciales)) {
             $menuBase[] = [
                 'text' => 'Reportes',
                 'url' => '/reportes',
@@ -74,8 +95,8 @@ class MenuServiceProvider extends ServiceProvider
             ];
         }
 
-        // Usuarios - Solo Owner y Gerente
-        if (in_array($rol, ['Owner', 'Gerente'])) {
+        // Usuarios - Si tiene 'U'
+        if (in_array('U', $iniciales)) {
             $menuBase[] = [
                 'text' => 'Usuarios',
                 'icon' => 'far fa-fw fa-user',
@@ -93,8 +114,8 @@ class MenuServiceProvider extends ServiceProvider
             ];
         }
 
-        // Clientes - Owner, Gerente, Encargado Ventas
-        if (in_array($rol, ['Owner', 'Gerente', 'Encargado Ventas'])) {
+        // Clientes - Si tiene 'C'
+        if (in_array('C', $iniciales)) {
             $menuBase[] = [
                 'text' => 'Clientes',
                 'url' => '/cliente',
@@ -103,8 +124,8 @@ class MenuServiceProvider extends ServiceProvider
             ];
         }
 
-        // Empleados - Solo Owner y Gerente
-        if (in_array($rol, ['Owner', 'Gerente'])) {
+        // Empleados - Si tiene 'E'
+        if (in_array('E', $iniciales)) {
             $menuBase[] = [
                 'text' => 'Empleados',
                 'icon' => 'far fa-address-book',
@@ -122,8 +143,8 @@ class MenuServiceProvider extends ServiceProvider
             ];
         }
 
-        // Ventas - Owner, Gerente, Encargado Ventas
-        if (in_array($rol, ['Owner', 'Gerente', 'Encargado Ventas'])) {
+        // Ventas - Si tiene 'V'
+        if (in_array('V', $iniciales)) {
             $menuBase[] = [
                 'text' => 'Ventas',
                 'icon' => 'far fa-money-bill-alt',
@@ -145,8 +166,8 @@ class MenuServiceProvider extends ServiceProvider
             ];
         }
 
-        // Almacenes - Owner, Gerente, Encargado Almacenes
-        if (in_array($rol, ['Owner', 'Gerente', 'Encargado Almacenes'])) {
+        // Almacenes - Si tiene 'A'
+        if (in_array('A', $iniciales)) {
             $menuBase[] = [
                 'text' => 'Almacenes',
                 'icon' => 'far fa-building',
@@ -168,8 +189,8 @@ class MenuServiceProvider extends ServiceProvider
             ];
         }
 
-        // Productos - Todos excepto ?
-        if (in_array($rol, ['Owner', 'Gerente', 'Encargado Ventas', 'Encargado Almacenes'])) {
+        // Productos - Si tiene 'P'
+        if (in_array('P', $iniciales)) {
             $menuBase[] = [
                 'text' => 'Productos',
                 'icon' => 'fas fa-flask',
@@ -187,8 +208,9 @@ class MenuServiceProvider extends ServiceProvider
             ];
         }
 
-        // Poblacion de datos - Solo Owner y Gerente
-        if (in_array($rol, ['Owner', 'Gerente'])) {
+        // Poblacion de datos - Solo si tiene todas las rutas o rol específico
+        // Puedes personalizar esta condición según tus necesidades
+        if ($rol == 'Owner' || $rol == 'Gerente') {
             $menuBase[] = [
                 'text' => 'Poblacion de datos',
                 'url'  => '/poblacion',

@@ -11,7 +11,8 @@ class tipoEmpleado extends Model
     protected $primaryKey = 'id_tipoE';
     protected $fillable = [
         'nombreE',
-        'descripcionTip'
+        'descripcionTip',
+        'rutas_acceso'
     ];
 
     public function empleados()

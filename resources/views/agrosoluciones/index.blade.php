@@ -26,8 +26,8 @@
       <a href="#productos" class="nav-link">Productos</a>
       <a href="#cultivos" class="nav-link">Cultivos</a>
       <a href="#contacto" class="nav-link">Contacto</a>
-      <a href="/reportes" class="nav-btn">
-        <i class="fas fa-chart-line"></i> Reportes
+      <a href="/pagina" class="nav-btn">
+        <i class="fas fa-chart-line"></i> AgroSoluciones
       </a>
     </div>
   </nav>

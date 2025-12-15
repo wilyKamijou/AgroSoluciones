@@ -15,6 +15,9 @@ return Application::configure(basePath: dirname(__DIR__))
         //
          $middleware->alias([
             'role' => \App\Http\Middleware\CheckRole::class,
+            'verificar.ruta' => \App\Http\Middleware\VerificarRutaAcceso::class,
+            'ruta.acceso' => \App\Http\Middleware\CheckRutaAcceso::class,
+
         ]); 
 
     })
