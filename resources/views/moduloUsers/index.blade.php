@@ -11,10 +11,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-<section class="content-header">
-    <h1 class="text-center mb-4">Modulo de Usuarios</h1>
-</section>
-
+<h1 class="text-center mb-4">Modulo de Usuarios</h1>
 <section class="content">
     <div class="center-wrapper">
         <section class="content">

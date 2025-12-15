@@ -8,9 +8,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 
-<section class="content-header">
-    <h1 class="text-center mb-4">Gestión de Empleados</h1>
-</section>
+<h2 class="text-center mb-4">Gestión de Empleados</h2>
 
 <div class="center-wrapper">
     <section class="content">
@@ -113,7 +111,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Nombre</th>
-                            <th>Apellidos</th>
+                            <!--<th>Apellidos</th>-->
                             <th>Sueldo</th>
                             <th>Teléfono</th>
                             <th>Dirección</th>
@@ -126,9 +124,9 @@
                         @foreach($empleados as $empleado)
                         <tr class="empleado-row">
                             <td><strong>{{$empleado->id_empleado}}</strong></td>
-                            <td>{{$empleado->nombreEm}}</td>
-                            <td>{{$empleado->apellidosEm}}</td>
-                            <td>${{ number_format($empleado->sueldoEm, 2) }}</td>
+                            <td>{{$empleado->nombreEm}} {{$empleado->apellidosEm}}</td>
+
+                            <td>{{ number_format($empleado->sueldoEm, 2) }} Bs.</td>
                             <td>{{$empleado->telefonoEm}}</td>
                             <td>
                                 <span class="texto-largo" title="{{$empleado->direccion}}">
@@ -140,7 +138,7 @@
                                 $tipoEmpleado = $tipos->firstWhere('id_tipoE', $empleado->id_tipoE);
                                 @endphp
                                 @if($tipoEmpleado)
-                                <span class="badge bg-info">{{ $tipoEmpleado->descripcionTip }}</span>
+                                <span class="badge bg-info">{{ $tipoEmpleado->nombreE }}</span>
                                 @else
                                 <span class="badge bg-secondary">Sin tipo</span>
                                 @endif
