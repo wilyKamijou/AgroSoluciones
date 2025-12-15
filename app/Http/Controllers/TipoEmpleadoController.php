@@ -62,17 +62,97 @@ class TipoEmpleadoController extends Controller
     public function edit($id)
     {
         $tipo = tipoEmpleado::find($id);
-        return view('tipoE.edit')->with('tipo', $tipo);
+        $rutas = rutas::all();
+        $rutasAsignadas = DB::table('dt_rutas')
+            ->where('id_tipoE', $id)
+            ->pluck('id_ruta')
+            ->toArray();
+
+        return view('tipoE.edit', compact('tipo', 'rutas', 'rutasAsignadas'));
     }
     public function update(Request $request, $id)
     {
-        $ex = TipoEmpleado::where('nombreE', $request->descripcionTip)->exists();
-        if ($ex) {
-            return redirect()->back()->with('error', 'No se puede Guardar porque ya existe ese tipo de empleado.');
+        $validated = $request->validate([
+            'nombreE'        => 'required|string|max:255',
+            'descripcionTip' => 'required|string|max:255',
+            'rutas'          => 'required|array|min:1',
+            'rutas.*'        => 'integer'
+        ]);
+
+        // Normalizar rutas
+        $rutasNuevas = collect($validated['rutas'])
+            ->map(fn ($r) => (int)$r)
+            ->unique()
+            ->sort()
+            ->values();
+
+        DB::beginTransaction();
+
+        try {
+
+            //  Tipo actual
+            $tipoActual = TipoEmpleado::find($id);
+            if (!$tipoActual) {
+                return redirect()->back()->with('error', 'Tipo no encontrado.');
+            }
+
+            //  Buscar duplicado (nombre + rutas)
+            $otrosTipos = DB::table('tipo_empleados')
+                ->where('nombreE', $validated['nombreE'])
+                ->where('id_tipoE', '!=', $id)
+                ->get();
+
+            foreach ($otrosTipos as $otro) {
+
+                $rutasOtro = DB::table('dt_rutas')
+                    ->where('id_tipoE', $otro->id_tipoE)
+                    ->pluck('id_ruta')
+                    ->map(fn ($r) => (int)$r)
+                    ->sort()
+                    ->values();
+
+                if ($rutasOtro->toArray() === $rutasNuevas->toArray()) {
+                    DB::rollBack();
+                    return redirect()->back()->with(
+                        'error',
+                        'Ya existe un tipo de empleado con el mismo nombre y las mismas rutas.'
+                    );
+                }
+            }
+
+            //  Actualizar tipo_empleados
+            $tipoActual->update([
+                'nombreE'        => $validated['nombreE'],
+                'descripcionTip' => $validated['descripcionTip'],
+            ]);
+
+            //  Reemplazar rutas
+            DB::table('dt_rutas')
+                ->where('id_tipoE', $id)
+                ->delete();
+
+            foreach ($rutasNuevas as $rutaId) {
+                DB::table('dt_rutas')->insert([
+                    'id_tipoE' => $id,
+                    'id_ruta'  => $rutaId,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+
+            DB::commit();
+
+            return redirect('/tipo')->with(
+                'success',
+                'Tipo de empleado actualizado correctamente.'
+            );
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with(
+                'error',
+                'Error al actualizar: ' . $e->getMessage()
+            );
         }
-        $new = tipoEmpleado::find($id);
-        $new->update($request->all());
-        return redirect('/tipo')->with('success', 'Tipo de empleados se actualizado correctamente.');
     }
 
     public function destroy($id)
