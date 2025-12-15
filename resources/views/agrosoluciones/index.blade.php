@@ -17,20 +17,25 @@
 
   <!-- NAVBAR -->
   <nav class="navbar" id="navbar">
-    <div class="nav-logo">
-      <i class="fas fa-seedling"></i>
-      <span>AGROSOLUCIONES</span>
-    </div>
-    <div class="nav-menu">
-      <a href="#empresa" class="nav-link">Empresa</a>
-      <a href="#productos" class="nav-link">Productos</a>
-      <a href="#cultivos" class="nav-link">Cultivos</a>
-      <a href="#contacto" class="nav-link">Contacto</a>
-      <a href="/pagina" class="nav-btn">
+  <div class="nav-logo">
+    <i class="fas fa-seedling"></i>
+    <span>AGROSOLUCIONES</span>
+  </div>
+  <div class="nav-menu">
+    <a href="#empresa" class="nav-link">Empresa</a>
+    <a href="#productos" class="nav-link">Productos</a>
+    <a href="#cultivos" class="nav-link">Cultivos</a>
+    <a href="#contacto" class="nav-link">Contacto</a>
+    
+    <!-- Elemento que será modificado por JavaScript -->
+    <div id="boton-navbar">
+      <a href="/home" class="nav-btn">
         <i class="fas fa-chart-line"></i> AgroSoluciones
       </a>
     </div>
-  </nav>
+  </div>
+</nav>
+
 
   <!-- HERO -->
   <section class="hero section">
@@ -323,3 +328,38 @@
 </body>
 
 </html>
+<script>
+async function actualizarNavbar() {
+  try {
+    const response = await fetch('/api/sesion');
+    const data = await response.json();
+    
+    const navMenu = document.querySelector('.nav-menu');
+    const botonExistente = document.querySelector('.nav-btn');
+    
+    if (botonExistente) {
+      botonExistente.remove();
+    }
+    
+    let nuevoBoton;
+    if (data.logeado) {
+      nuevoBoton = document.createElement('a');
+      nuevoBoton.href = '/mi-cuenta/perfil';
+      nuevoBoton.className = 'nav-btn nav-btn-empleado';
+      nuevoBoton.innerHTML = '<i class="fas fa-user"></i> Mi Cuenta';
+    } else {
+      nuevoBoton = document.createElement('a');
+      nuevoBoton.href = '/home';
+      nuevoBoton.className = 'nav-btn';
+      nuevoBoton.innerHTML = '<i class="fas fa-chart-line"></i> AgroSoluciones';
+    }
+    
+    navMenu.appendChild(nuevoBoton);
+  } catch (error) {
+    console.error('Error al verificar sesión:', error);
+  }
+}
+
+// Llamar al cargar la página
+document.addEventListener('DOMContentLoaded', actualizarNavbar);
+</script>

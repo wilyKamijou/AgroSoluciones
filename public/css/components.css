@@ -133,6 +133,54 @@
   overflow: hidden;
 }
 
+/* Botón normal */
+.nav-btn {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  font-weight: 600;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 15px rgba(0, 168, 89, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Botón para empleados logeados (amarillo) */
+.nav-btn-empleado {
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+  color: #333;
+}
+
+.nav-btn-empleado:hover {
+  background: linear-gradient(135deg, #FFC107, #FF9800);
+  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Opcional: Añadir un indicador visual */
+.nav-btn-empleado::after {
+  content: '';
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 8px;
+  height: 8px;
+  background-color: #4CAF50;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.95); }
+  70% { transform: scale(1.1); }
+  100% { transform: scale(0.95); }
+}
 .nav-btn::after {
   content: '';
   position: absolute;
