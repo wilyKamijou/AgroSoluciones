@@ -6,9 +6,9 @@
 <link rel="stylesheet" href="{{ asset('css/ventas.css') }}">
 <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
 <link rel="stylesheet" href="/css/custom.css">
-<section class="content-header">
-    <h1 class="text-center mb-4">Gestión de Ventas</h1>
-</section>
+
+<h2 class="text-center mb-4">Gestión de Ventas</h2>
+
 <div class="center-wrapper">
 
 

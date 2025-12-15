@@ -1,29 +1,28 @@
 <aside class="sidebar bg-dark text-white">
-
     <div class="sidebar-header p-3 text-center">
-        <h4 class="mb-0">AgroSoluciones</h4>
-        <small>{{ Auth::user()->name }}</small>
+        <!-- Logo y Título -->
+        <a href="/" class="brand-link">
+            <img src="https://i.ibb.co/6cc0HDTt/Copilot-20251128-140723.png" alt="Admin Logo" class="brand-image img-circle elevation-3">
+            <span class="brand-text">
+                <b>Agro</b>Soluciones
+            </span>
+        </a>
+
+        <!-- Nombre de usuario -->
+        <div class="user-info mt-2">
+            {{ Auth::user()->name }}
+        </div>
     </div>
 
     <ul class="nav flex-column mt-3">
 
 
-        <li class="nav-item">
-            <a href="/dashboard" class="nav-link text-white">
-                <i class="bi bi-speedometer2 me-2"></i> Dashboard
-            </a>
-        </li>
-
-
         @foreach($menuRutas as $ruta)
         <li class="nav-item">
             <a href="{{ url($ruta->url) }}" class="nav-link text-white">
-                <i class="bi bi-chevron-right me-2"></i>
                 {{ $ruta->nombreR }}
             </a>
         </li>
         @endforeach
-
     </ul>
-
 </aside>

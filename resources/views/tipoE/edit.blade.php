@@ -7,10 +7,12 @@
 <link rel="stylesheet" href="{{ asset('css/rutas.css') }}">
 <script src="/js/rutas.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/js/rutas.js"></script>
+
 
 <section class="content-header">
     <h1 class="text-center mb-4">Editar Tipo de Empleado</h1>
@@ -22,6 +24,7 @@
         <div class="card shadow-sm p-4 mb-4 card-compact">
             <h4 class="mb-3">Editar Tipo: {{ $tipo->nombreE }}</h4>
 
+<<<<<<< HEAD
             <form action="/tipo/{{ $tipo->id_tipoE }}/actualizar" method="POST" class="compact-form">
                 @csrf
                 @method('PUT')
@@ -205,6 +208,7 @@
             </form>
         </div>
     </section>
+
 </div>
 
 @endsection

@@ -9,10 +9,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 
-<section class="content-header">
-    <h1 class="text-center mb-4">Modulo de Usuarios</h1>
-</section>
-
+<h1 class="text-center mb-4">Modulo de Usuarios</h1>
 <section class="content">
     <div class="center-wrapper">
         <section class="content">

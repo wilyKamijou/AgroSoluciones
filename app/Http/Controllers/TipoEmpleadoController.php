@@ -40,8 +40,15 @@ public function store(Request $request)
     public function edit($id)
     {
         $tipo = tipoEmpleado::find($id);
-        return view('tipoE.edit')->with('tipo', $tipo);
+        $rutas = rutas::all();
+        $rutasAsignadas = DB::table('dt_rutas')
+            ->where('id_tipoE', $id)
+            ->pluck('id_ruta')
+            ->toArray();
+
+        return view('tipoE.edit', compact('tipo', 'rutas', 'rutasAsignadas'));
     }
+
 public function update(Request $request, $id)
 {
     // Validación
@@ -64,6 +71,7 @@ public function update(Request $request, $id)
 
     return redirect('/tipo')->with('success', 'Tipo de empleado actualizado correctamente.');
 }
+
 
     public function destroy($id)
     {
