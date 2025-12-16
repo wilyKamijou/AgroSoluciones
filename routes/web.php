@@ -39,6 +39,64 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('aut
 
     Route::get('/test-productos-vencimiento', [ReporteController::class, 'productosPorVencerVencidos']);
 
+// Agrega esta ruta de prueba
+
+Route::get('/test-pdf-minimo', function() {
+    $html = '<html><body><h1>Test PDF Simple</h1><p>Fecha: ' . date('Y-m-d') . '</p></body></html>';
+    
+    try {
+        $pdf = PDF::loadHTML($html);
+        return $pdf->download('test-minimo.pdf');
+    } catch (\Exception $e) {
+        return response()->json([
+            'error' => $e->getMessage(),
+            'trace' => $e->getTraceAsString()
+        ], 500);
+    }
+});
+Route::get('/test-simple-pdf', function() {
+    return response()->json([
+        'status' => 'ok',
+        'carbon_version' => \Carbon\Carbon::now(),
+        'can_parse' => \Carbon\Carbon::parse('2025-12-15')->format('Y-m-d')
+    ]);
+});
+Route::get('/test-fechas-productos', function() {
+    $productos = \App\Models\Producto::whereNotNull('fechaVencimiento')->get();
+    
+    $resultados = [];
+    
+    foreach ($productos as $producto) {
+        try {
+            $fecha = \Carbon\Carbon::parse($producto->fechaVencimiento);
+            $resultados[] = [
+                'id' => $producto->id_producto,
+                'nombre' => $producto->nombrePr,
+                'fecha_original' => $producto->fechaVencimiento,
+                'fecha_tipo' => gettype($producto->fechaVencimiento),
+                'fecha_parseada' => $fecha->format('Y-m-d'),
+                'es_valida' => true
+            ];
+        } catch (\Exception $e) {
+            $resultados[] = [
+                'id' => $producto->id_producto,
+                'nombre' => $producto->nombrePr,
+                'fecha_original' => $producto->fechaVencimiento,
+                'fecha_tipo' => gettype($producto->fechaVencimiento),
+                'error' => $e->getMessage(),
+                'es_valida' => false
+            ];
+        }
+    }
+    
+    return response()->json([
+        'total_productos' => $productos->count(),
+        'fechas_validas' => count(array_filter($resultados, fn($r) => $r['es_valida'])),
+        'fechas_invalidas' => count(array_filter($resultados, fn($r) => !$r['es_valida'])),
+        'productos_con_fecha_invalida' => array_filter($resultados, fn($r) => !$r['es_valida']),
+        'todos' => $resultados
+    ]);
+});
 
 Auth::routes();
 
@@ -56,7 +114,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/cambiar-password', [App\Http\Controllers\CuentaController::class, 'cambiarPassword'])->name('cuenta.password');
             Route::post('/actualizar-password', [App\Http\Controllers\CuentaController::class, 'actualizarPassword'])->name('cuenta.actualizar-password');
         });
-        
+
         // ==================== RUTAS ESPECÍFICAS POR PERMISOS (RUVECAP) ====================
 // ===== R: REPORTES =====
 Route::middleware('ruta.acceso:R')->group(function () {
@@ -96,6 +154,23 @@ Route::middleware('ruta.acceso:U')->group(function () {
         Route::put('/{id}/actualizar', [App\Http\Controllers\UsersController::class, 'update'])->name('user.update');
         Route::delete('/{id}/eliminar', [App\Http\Controllers\UsersController::class, 'destroy'])->name('user.destroy');
     });
+    // Rutas para autocompletado de usuarios
+    Route::get('/mUser/buscar-empleados', [ModuloUsersController::class, 'buscarEmpleados'])
+        ->name('users.buscar.empleados');
+        
+    Route::get('/mUser/buscar-tipos', [ModuloUsersController::class, 'buscarTiposEmpleado'])
+        ->name('users.buscar.tipos');
+        
+    Route::get('/mUser/buscar-usuarios', [ModuloUsersController::class, 'buscarUsuarios'])
+        ->name('users.buscar.usuarios');
+
+    // Ruta para guardar usuario
+    Route::post('/mUser/guardar', [ModuloUsersController::class, 'store'])
+        ->name('mUser.guardar');
+
+    // Ruta principal (si no existe)
+    Route::get('/mUser', [ModuloUsersController::class, 'index'])
+        ->name('mUser.index');
 });
 
 // ===== V: VENTAS =====
@@ -199,7 +274,24 @@ Route::middleware('ruta.acceso:A')->group(function () {
         Route::delete('/{id}/eliminar', [App\Http\Controllers\AlmacenController::class, 'destroy']);
         Route::get('/pdf', [App\Http\Controllers\AlmacenController::class, 'downloadPDF'])->name('almacen.pdf');
     });
-    
+   // Rutas para autocompletado de almacén - DEBEN ser iguales a las de ventas
+    Route::get('/mAlmacen/buscar-productos', [ModuloAlmacenController::class, 'buscarProductos'])
+        ->name('almacen.buscar.productos');
+        
+    Route::get('/mAlmacen/buscar-categorias', [ModuloAlmacenController::class, 'buscarCategorias'])
+        ->name('almacen.buscar.categorias');
+        
+    Route::get('/mAlmacen/buscar-almacenes', [ModuloAlmacenController::class, 'buscarAlmacenes'])
+        ->name('almacen.buscar.almacenes');
+
+    // Ruta para guardar
+    Route::post('/mAlmacen/guardar', [ModuloAlmacenController::class, 'store'])
+        ->name('mAlmacen.guardar');
+
+    // Ruta principal (si no existe)
+    Route::get('/mAlmacen', [ModuloAlmacenController::class, 'index'])
+        ->name('mAlmacen.index');
+            
     // Productos (URL original: /producto)
     Route::prefix('producto')->group(function () {
         Route::get('/', [App\Http\Controllers\ProductoController::class, 'index']);

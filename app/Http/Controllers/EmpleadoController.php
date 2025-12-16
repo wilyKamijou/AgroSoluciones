@@ -8,12 +8,12 @@ use App\Models\tipoEmpleado;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Barryvdh\DomPDF\Facade\PDF; // Agregar esta línea
+use Barryvdh\DomPDF\Facade\PDF;
 use Illuminate\Support\Facades\DB;
 
 class EmpleadoController extends Controller
 {
-    // ✅ NUEVO MÉTODO PARA GENERAR PDF
+    
     public function downloadPDF()
     {
         $empleados = Empleado::all();
@@ -32,11 +32,7 @@ class EmpleadoController extends Controller
         $cuentas = User::all();
         return view('empleado.index', compact('empleados', 'tipos', 'cuentas'));
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function create()
     {
         $tipos = TipoEmpleado::all();
@@ -44,12 +40,6 @@ class EmpleadoController extends Controller
         return view('empleado.create', compact('tipos', 'cuentas'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $ex = DB::table('empleados')
@@ -117,50 +107,7 @@ class EmpleadoController extends Controller
                 }
             }
         }
-        /*FALTA SI SE CAMBUA DE NOMBRE O APELLDIO Y ESA COMBINACION NO EXISTE
-        if ($ex == null) {
-            $ve = Empleado::where('user_id', $request->user_id)->exists();
-            if ($ve) {
-                $ve = Empleado::findorfail($id); //aqui continuar
-                if ($ve->user_id == $request->user_id) {
-
-                    $empleado = Empleado::find($id);
-                    $empleado->update($request->all());
-                    return redirect('/empleado')->with('success', 'Empleado actulizado correctamente.');
-                } else {
-                    return redirect()->back()->with('error', 'No se puede actulizar la cuenta ya se esta usando.');
-                }
-            } else {
-                $empleado = Empleado::find($id);
-                $empleado->update($request->all());
-                return redirect('/empleado')->with('success', 'Empleado actulizado correctamente.');
-            }
-        } else {
-            if (($ex->id_empleado == $id) && ($ex->user_id == $request->user_id)) {
-                $empleado = Empleado::find($id);
-                $empleado->update($request->all());
-                return redirect('/empleado')->with('success', 'Empleado actulizado correctamente.');
-            } else {
-                if (($ex->id_empleado == $id) and ($ex->user_id != $request->user_id)) {
-                    $ex = DB::table('empleados')
-                        ->where('user_id', $request->user_id)
-                        ->exists();
-                    if ($ex) {
-                        return redirect()->back()->with('error', 'No se puede actulizar la cuenta ya se esta usando.');
-                    } else {
-                        $empleado = Empleado::find($id);
-                        $empleado->update($request->all());
-                        return redirect('/empleado')->with('success', 'Empleado actulizado correctamente.');
-                    }
-                } else {
-                    if (($ex->id_empleado != $id) and ($ex->user_id == $request->user_id)) {
-                        return redirect()->back()->with('error', 'No se puede actulizar la cuenta ya se esta usando.');
-                    } else {
-                        return redirect()->back()->with('error', 'No se puede actulizar la cuenta y nombre ya se esta usando.');
-                    }
-                }
-            }
-        }*/
+    
     }
 
     public function destroy($id)

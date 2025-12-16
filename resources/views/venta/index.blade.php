@@ -10,9 +10,6 @@
 <h2 class="text-center mb-4">Gestión de Ventas</h2>
 
 <div class="center-wrapper">
-
-
-
     <section class="content">
 
         <!-- Card de Registrar Venta -->

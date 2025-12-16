@@ -22,7 +22,7 @@ class DataPoblacionController extends Controller
 
     public function __construct()
     {
-        $this->faker = Faker::create('es_ES'); // Español
+        $this->faker = Faker::create('es_ES'); 
     }
 
     // Vista principal con botones
@@ -306,6 +306,173 @@ class DataPoblacionController extends Controller
                 'precioPr' => 350.00,
                 'imagen_url' => 'https://www.biogram.cl/wp-content/uploads/2019/04/RIZOFIX_JQG9912_1800px_72dpi.jpg'
             ],
+            //--------------------------------------------------nuevos
+                        [
+                'nombrePr' => '2,4-D Amina', 'nombreTecnico' => '2,4-D 720 SL',
+                'descripcionPr' => 'Herbicida hormonal selectivo', 'compocicionQuimica' => '2,4-D 720 g/L',
+                'consentracionQuimica' => '72%', 'fechaFabricacion' => '2023-03-15',
+                'fechaVencimiento' => '2024-09-15',
+                'unidadMedida' => 'Litro', 'id_categoria' => 1,
+                'precioPr' => 280.00,
+                'imagen_url' => 'http://www.agronorte.com.py/userfiles/images/productos/4/24d-amina-2_1.jpg'
+            ],
+            [
+                'nombrePr' => 'Clorpirifós', 'nombreTecnico' => 'Clorpirifós 480 EC',
+                'descripcionPr' => 'Insecticida organofosforado', 'compocicionQuimica' => 'Clorpirifós 480 g/L',
+                'consentracionQuimica' => '48%', 'fechaFabricacion' => '2024-01-20',
+                'fechaVencimiento' => '2025-07-20', 'unidadMedida' => 'Litro', 'id_categoria' => 2,
+                'precioPr' => 380.00,
+                'imagen_url' => 'https://proquimur.com.uy/wp-content/uploads/2017/05/clorpirifos.jpg'
+            ],
+            [
+                'nombrePr' => 'Tebuconazole', 'nombreTecnico' => 'Tebuconazole 250 EC',
+                'descripcionPr' => 'Fungicida triazol sistémico', 'compocicionQuimica' => 'Tebuconazole 250 g/L',
+                'consentracionQuimica' => '25%', 'fechaFabricacion' => '2023-11-10',
+                'fechaVencimiento' => '2024-11-10',
+                'unidadMedida' => 'Litro', 'id_categoria' => 3,
+                'precioPr' => 420.00,
+                'imagen_url' => 'https://www.albaugh.com/images/colombialibraries/product/tebucoz-25-ec.png?sfvrsn=55afa27b_2'
+            ],
+            [
+                'nombrePr' => 'Sulfato de Amonio', 'nombreTecnico' => '21-0-0-24S',
+                'descripcionPr' => 'Fertilizante nitrogenado y azufrado', 'compocicionQuimica' => 'N 21%, S 24%',
+                'consentracionQuimica' => '45%', 'fechaFabricacion' => '2024-02-28',
+                'fechaVencimiento' => '2026-02-28', 'unidadMedida' => 'Kilogramo', 'id_categoria' => 4,
+                'precioPr' => 190.00,
+                'imagen_url' => 'https://www.molinosycia.com/wp-content/uploads/2020/11/SULFATO-DE-AMONIO-2021-OK-web.png'
+            ],
+            [
+                'nombrePr' => 'Ácido Giberélico', 'nombreTecnico' => 'GA3 20%',
+                'descripcionPr' => 'Regulador de crecimiento vegetal', 'compocicionQuimica' => 'Ácido Giberélico 20%',
+                'consentracionQuimica' => '20%', 'fechaFabricacion' => '2024-04-15',
+                'fechaVencimiento' => '2025-10-15', 'unidadMedida' => 'Gramo', 'id_categoria' => 5,
+                'precioPr' => 850.00,
+                'imagen_url' => 'https://acdn-us.mitiendanube.com/stores/003/979/184/products/generica-8281da65dae4c0f03617144161886031-1024-1024.webp'
+            ],
+            [
+                'nombrePr' => 'Hexitiazox', 'nombreTecnico' => 'Hexitiazox 10% SC',
+                'descripcionPr' => 'Acaricida específico para ácaros', 'compocicionQuimica' => 'Hexitiazox 100 g/L',
+                'consentracionQuimica' => '10%', 'fechaFabricacion' => '2024-03-01',
+                'fechaVencimiento' => '2025-09-01', 'unidadMedida' => 'Litro', 'id_categoria' => 6,
+                'precioPr' => 680.00,
+                'imagen_url' => 'https://www.buscador.portaltecnoagricola.com/app/imagenes_aplicacion/portaltecnoagricola-globe-chemicals-HEXYGLOB-45-SC.jpg'
+            ],
+            [
+                'nombrePr' => 'Cadusafós', 'nombreTecnico' => 'Cadusafós 100 G',
+                'descripcionPr' => 'Nematicida granular', 'compocicionQuimica' => 'Cadusafós 100 g/Kg',
+                'consentracionQuimica' => '10%', 'fechaFabricacion' => '2022-12-15',
+                'fechaVencimiento' => '2023-12-15',
+                'unidadMedida' => 'Kilogramo', 'id_categoria' => 7,
+                'precioPr' => 920.00,
+                'imagen_url' => 'https://agrimportec.com/wp-content/uploads/2022/05/DSAFASFDSAFDSADASD.png'
+            ],
+            [
+                'nombrePr' => 'Bromadiolona', 'nombreTecnico' => 'Bromadiolona 0.005%',
+                'descripcionPr' => 'Rodenticida de segunda generación', 'compocicionQuimica' => 'Bromadiolona 0.005%',
+                'consentracionQuimica' => '0.005%', 'fechaFabricacion' => '2024-01-30',
+                'fechaVencimiento' => '2025-07-30', 'unidadMedida' => 'Kilogramo', 'id_categoria' => 8,
+                'precioPr' => 1250.00,
+                'imagen_url' => 'https://www.agrobesser.com/10590-large_default/rugby-20l-cadusafos-nematicida-sistemico-accion-contacto-ingestion-fmc.jpg'
+            ],
+            [
+                'nombrePr' => 'Extracto de Yucca', 'nombreTecnico' => 'Yucca schidigera',
+                'descripcionPr' => 'Coadyuvante antievaporante', 'compocicionQuimica' => 'Saponinas 10%',
+                'consentracionQuimica' => '10%', 'fechaFabricacion' => '2024-05-10',
+                'fechaVencimiento' => '2025-11-10', 'unidadMedida' => 'Litro', 'id_categoria' => 9,
+                'precioPr' => 180.00,
+                'imagen_url' => 'https://mountainsideorganicos.com/cdn/shop/files/extracto-yucca-bioestimulante-saponinas-surfactante-1L-A-2048_2048x.png?v=1754600976'
+            ],
+            [
+                'nombrePr' => 'Aminoácidos Líquidos', 'nombreTecnico' => 'Aminoácidos 12%',
+                'descripcionPr' => 'Bioestimulante de rápida absorción', 'compocicionQuimica' => 'Aminoácidos 120 g/L',
+                'consentracionQuimica' => '12%', 'fechaFabricacion' => '2023-08-20',
+                'fechaVencimiento' => '2024-08-20', 
+                'unidadMedida' => 'Litro', 'id_categoria' => 10,
+                'precioPr' => 320.00,
+                'imagen_url' => 'https://biosaludcr.com/file/2020/04/FM67BI354_SVCBLA16_IMD_900x.png-600x450.webp'
+            ],
+            [
+                'nombrePr' => 'Bacillus thuringiensis', 'nombreTecnico' => 'Bt var. kurstaki',
+                'descripcionPr' => 'Bioinsecticida bacteriano', 'compocicionQuimica' => 'Bacillus thuringiensis',
+                'consentracionQuimica' => '32.000 UI/mg', 'fechaFabricacion' => '2024-04-05',
+                'fechaVencimiento' => '2025-10-05', 'unidadMedida' => 'Kilogramo', 'id_categoria' => 11,
+                'precioPr' => 410.00,
+                'imagen_url' => 'https://www.cropprotection.net/uploads/202028235/bacillus-thuringiensis13452871019.jpg'
+            ],
+            [
+                'nombrePr' => 'Paraquat', 'nombreTecnico' => 'Paraquat 200 SL',
+                'descripcionPr' => 'Herbicida de contacto no selectivo', 'compocicionQuimica' => 'Paraquat 200 g/L',
+                'consentracionQuimica' => '20%', 'fechaFabricacion' => '2024-06-01',
+                'fechaVencimiento' => '2025-12-01', 'unidadMedida' => 'Litro', 'id_categoria' => 1,
+                'precioPr' => 310.00,
+                'imagen_url' => 'https://www.pomais.com/wp-content/uploads/2024/12/paraquat20SL-1-e1742434854435.jpg'
+            ],
+            [
+                'nombrePr' => 'Deltametrina', 'nombreTecnico' => 'Deltametrina 25 EC',
+                'descripcionPr' => 'Insecticida piretroide', 'compocicionQuimica' => 'Deltametrina 25 g/L',
+                'consentracionQuimica' => '2.5%', 'fechaFabricacion' => '2024-02-15',
+                'fechaVencimiento' => '2025-08-15', 'unidadMedida' => 'Litro', 'id_categoria' => 2,
+                'precioPr' => 290.00,
+                'imagen_url' => 'https://rimacsa.co.cr/wp-content/uploads/2021/05/Rimac-Deltametrina-2.5-EC-1.png'
+            ],
+            [
+                'nombrePr' => 'Cobre Oxicloruro', 'nombreTecnico' => 'Oxicloruro de Cobre 50%',
+                'descripcionPr' => 'Fungicida preventivo de cobre', 'compocicionQuimica' => 'Cobre 50%',
+                'consentracionQuimica' => '50%', 'fechaFabricacion' => '2023-10-25',
+                'fechaVencimiento' => '2024-10-25', 
+                'unidadMedida' => 'Kilogramo', 'id_categoria' => 3,
+                'precioPr' => 270.00,
+                'imagen_url' => 'https://www.agrobesser.com/10328-large_default/cupravit-1kg-oxicloruro-de-cobre-fungicida-accion-contacto-preventivo-bayer.jpg'
+            ],
+            [
+                'nombrePr' => 'Fosfato Diamónico', 'nombreTecnico' => 'DAP 18-46-0',
+                'descripcionPr' => 'Fertilizante fosfatado', 'compocicionQuimica' => 'N 18%, P 46%',
+                'consentracionQuimica' => '64%', 'fechaFabricacion' => '2024-03-10',
+                'fechaVencimiento' => '2026-03-10', 'unidadMedida' => 'Kilogramo', 'id_categoria' => 4,
+                'precioPr' => 340.00,
+                'imagen_url' => 'https://www.molinosycia.com/wp-content/uploads/2020/11/molinos-y-cia-productos-fertilizantes-fosfatados-fosfato-diamonico-1.png'
+            ],
+            [
+                'nombrePr' => 'Ethephon + Cyclanilide', 'nombreTecnico' => 'Regulador de Floración',
+                'descripcionPr' => 'Combinación para regulación de floración', 'compocicionQuimica' => 'Ethephon 480 g/L + Cyclanilide 50 g/L',
+                'consentracionQuimica' => '53%', 'fechaFabricacion' => '2024-05-20',
+                'fechaVencimiento' => '2025-11-20', 'unidadMedida' => 'Litro', 'id_categoria' => 5,
+                'precioPr' => 720.00,
+                'imagen_url' => 'https://www.plantgrowthhormones.com/uploads/15034/ethephon-cyclanilidedeef2.jpg'
+            ],
+            [
+                'nombrePr' => 'Spirodiclofen', 'nombreTecnico' => 'Spirodiclofen 240 SC',
+                'descripcionPr' => 'Acaricida inhibidor de lípidos', 'compocicionQuimica' => 'Spirodiclofen 240 g/L',
+                'consentracionQuimica' => '24%', 'fechaFabricacion' => '2024-01-15',
+                'fechaVencimiento' => '2025-07-15', 'unidadMedida' => 'Litro', 'id_categoria' => 6,
+                'precioPr' => 750.00,
+                'imagen_url' => 'https://cropbusiness.com/wp-content/uploads/2020/08/80-crop-business.jpg'
+            ],
+            [
+                'nombrePr' => 'Fluensulfone', 'nombreTecnico' => 'Fluensulfone 480 SL',
+                'descripcionPr' => 'Nematicida de nueva generación', 'compocicionQuimica' => 'Fluensulfone 480 g/L',
+                'consentracionQuimica' => '48%', 'fechaFabricacion' => '2024-06-05',
+                'fechaVencimiento' => '2025-12-05', 'unidadMedida' => 'Litro', 'id_categoria' => 7,
+                'precioPr' => 980.00,
+                'imagen_url' => 'https://www.agrobesser.com/8356-large_default/nimitz-1l-fluensulfone-nematicida-selectivo-de-contacto-agroklinge.jpg'
+            ],
+            [
+                'nombrePr' => 'Difetialona', 'nombreTecnico' => 'Difetialona 0.0025%',
+                'descripcionPr' => 'Rodenticida de dosis única', 'compocicionQuimica' => 'Difetialona 0.0025%',
+                'consentracionQuimica' => '0.0025%', 'fechaFabricacion' => '2023-09-15',
+                'fechaVencimiento' => '2024-09-15', 
+                'unidadMedida' => 'Kilogramo', 'id_categoria' => 8,
+                'precioPr' => 1100.00,
+                'imagen_url' => 'https://www.plagasonline.es/2283-thickbox_default/raticida-difetialona-en-grano-5kg.jpg'
+            ],
+            [
+                'nombrePr' => 'Vinagre de Madera', 'nombreTecnico' => 'Ácido Acético 20%',
+                'descripcionPr' => 'Coadyuvante acidificante natural', 'compocicionQuimica' => 'Ácido Acético 200 g/L',
+                'consentracionQuimica' => '20%', 'fechaFabricacion' => '2024-04-30',
+                'fechaVencimiento' => '2025-10-30', 'unidadMedida' => 'Litro', 'id_categoria' => 9,
+                'precioPr' => 150.00,
+                'imagen_url' => 'https://i.etsystatic.com/22808520/r/il/fb77a8/4164007448/il_1588xN.4164007448_5sui.jpg'
+            ]
         ];
 
         Producto::insert($productos);
@@ -376,37 +543,37 @@ class DataPoblacionController extends Controller
         // Mapeo de categorías a almacenes específicos
         $categoriaAlmacenMap = [
             // Herbicidas e Insecticidas van al almacén central
-            1 => 1, // Herbicidas -> Almacén Central
-            2 => 1, // Insecticidas -> Almacén Central
+            1 => 1, 
+            2 => 1, 
             
             // Fungicidas y Fertilizantes van a bodega norte
-            3 => 2, // Fungicidas -> Bodega Norte
-            4 => 2, // Fertilizantes -> Bodega Norte
+            3 => 2, 
+            4 => 2, 
             
             // Reguladores y Bioestimulantes van al centro distribución sur
-            5 => 3, // Reguladores -> Centro Distribución Sur
-            10 => 3, // Bioestimulantes -> Centro Distribución Sur
+            5 => 3, 
+            10 => 3,
             
             // Productos tóxicos van a bodega segura
-            6 => 4, // Acaricidas -> Bodega Segura
-            7 => 4, // Nematicidas -> Bodega Segura
-            8 => 4, // Rodenticidas -> Bodega Segura
-            14 => 4, // Raticidas -> Bodega Segura
+            6 => 4, 
+            7 => 4, 
+            8 => 4, 
+            14 => 4,
             
             // Coadyuvantes e inoculantes van a almacén express
-            9 => 5, // Coadyuvantes -> Almacén Express
-            11 => 5, // Inoculantes -> Almacén Express
+            9 => 5, 
+            11 => 5,
         ];
 
         foreach ($productos as $producto) {
             // Determinar el almacén basado en la categoría
-            $almacenId = $categoriaAlmacenMap[$producto->id_categoria] ?? 1; // Default al almacén central
+            $almacenId = $categoriaAlmacenMap[$producto->id_categoria] ?? 1;
             
             // Stock basado en el tipo de producto
             $stock = match($producto->id_categoria) {
-                4 => rand(1000, 5000), // Fertilizantes - alto stock
-                1, 2, 3 => rand(100, 500), // Herbicidas, Insecticidas, Fungicidas - stock medio
-                default => rand(50, 200) // Otros - stock bajo
+                4 => rand(1000, 5000), 
+                1, 2, 3 => rand(100, 500),
+                default => rand(50, 200) 
             };
 
             $detallesAlmacen[] = [
@@ -418,7 +585,7 @@ class DataPoblacionController extends Controller
             // Algunos productos pueden estar en múltiples almacenes (30% de probabilidad)
             if (rand(1, 100) <= 30) {
                 $almacenAlternativo = $almacenes->where('id_almacen', '!=', $almacenId)->random()->id_almacen;
-                $stockAlternativo = max(10, $stock * 0.3); // 30% del stock principal
+                $stockAlternativo = max(10, $stock * 0.3); 
                 
                 $detallesAlmacen[] = [
                     'id_producto' => $producto->id_producto,
@@ -452,8 +619,8 @@ class DataPoblacionController extends Controller
         
         // Crear 50 ventas
         for ($i = 0; $i < 50; $i++) {
-            $fecha = now()->subDays(rand(1, 365)); // Ventas en el último año
-            $monto = rand(500, 10000); // Montos entre 500 y 10,000
+            $fecha = now()->subDays(rand(1, 365));
+            $monto = rand(500, 10000); 
             
             $ventas[] = [
                 'fechaVe' => $fecha,
@@ -488,13 +655,13 @@ class DataPoblacionController extends Controller
             $productosVendidos = $detallesAlmacen->random(min($numProductos, $detallesAlmacen->count()));
             
             foreach ($productosVendidos as $detalleAlmacen) {
-                $cantidad = rand(1, min(50, $detalleAlmacen->stock)); // No vender más del stock disponible
+                $cantidad = rand(1, min(50, $detalleAlmacen->stock));
                 
                 // Precio basado en el tipo de producto con algún margen
                 $precioBase = match($detalleAlmacen->producto->id_categoria) {
-                    4 => rand(50, 200), // Fertilizantes
-                    1, 2, 3 => rand(100, 500), // Herbicidas, Insecticidas, Fungicidas
-                    default => rand(200, 1000) // Otros productos especializados
+                    4 => rand(50, 200), 
+                    1, 2, 3 => rand(100, 500), 
+                    default => rand(200, 1000) 
                 };
                 
                 $detallesVenta[] = [

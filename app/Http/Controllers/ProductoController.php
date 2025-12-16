@@ -5,14 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\producto;
 use App\Models\categoria;
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade\PDF; // Agregar esta línea
+use Barryvdh\DomPDF\Facade\PDF; 
 use Illuminate\Support\Facades\DB;
 
 use function PHPUnit\Framework\returnSelf;
 
 class ProductoController extends Controller
 {
-    // ✅ NUEVO MÉTODO PARA GENERAR PDF
+    
     public function downloadPDF()
     {
         $productos = Producto::all();

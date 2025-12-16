@@ -26,12 +26,8 @@ class enviarController extends Controller
             'asunto'  => 'required',
             'mensaje' => 'required',
         ]);
-        /*
-        $adminEmail = DB::table('tipo_empleado')
-            ->where('nombreE', 'Owner')->first();
-*/
-        // Enviar correo usando la clase QuejaMail
-        Mail::to('wilianxd474@gmail.com')->send(new QuejaMail($request->all()));
+        
+        Mail::to('dennispolonioapazaChavez@gmail.com')->send(new QuejaMail($request->all()));
 
         // Retornar con mensaje de éxito
         return back()->with('success', 'Tu mensaje ha sido enviado con éxito.');

@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\almacen;
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade\PDF; // Agregar esta línea
+use Barryvdh\DomPDF\Facade\PDF; 
 use Illuminate\Support\Facades\DB;
 
 class AlmacenController extends Controller
 {
-    // ✅ NUEVO MÉTODO PARA GENERAR PDF
     public function downloadPDF(Request $request)
     {
         $almacens = Almacen::all();

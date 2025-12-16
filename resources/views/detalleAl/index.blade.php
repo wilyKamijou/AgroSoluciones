@@ -98,8 +98,9 @@
                             $almacen = $almacens->firstWhere('id_almacen', $detalle->id_almacen);
                         @endphp
                         <tr class="detalle-row">
-                            <td>
-                                <small class="text-muted">{{$detalle->id_producto}}-{{$detalle->id_almacen}}</small>
+                            <td>                                
+                                <small class="text-muted">Producto: {{$detalle->id_producto}}</small><br>
+                                <small class="text-muted">Almacen: {{$detalle->id_almacen}}</small><br>
                             </td>
                             <td>
                                 @if($producto)

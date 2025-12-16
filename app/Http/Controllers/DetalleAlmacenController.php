@@ -6,12 +6,12 @@ use App\Models\detalleAlmacen;
 use App\Models\almacen;
 use App\Models\producto;
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade\PDF; // Agregar esta línea
+use Barryvdh\DomPDF\Facade\PDF;
 use Illuminate\Support\Facades\DB;
 
 class DetalleAlmacenController extends Controller
 {
-    // ✅ NUEVO MÉTODO PARA GENERAR PDF
+   
     public function downloadPDF(Request $request)
     {
         $detalles = DetalleAlmacen::all();
@@ -20,12 +20,10 @@ class DetalleAlmacenController extends Controller
 
         $pdf = PDF::loadView('detalleAl.pdf', compact('detalles', 'almacens', 'productos'));
 
-        // Si se solicita ver en el navegador
         if ($request->has('action') && $request->action == 'view') {
             return $pdf->stream('reporte-detalles-almacen-' . date('Y-m-d') . '.pdf');
         }
 
-        // Por defecto descarga
         return $pdf->download('reporte-detalles-almacen-' . date('Y-m-d') . '.pdf');
     }
     public function index()

@@ -17,9 +17,6 @@
         <form action="/mVenta/guardar" method="POST" id="ventaForm">
             @csrf
 
-            <!-- ======================= -->s
-            <!-- CLIENTE -->
-            <!-- ======================= -->
             <div class="row g-3 mb-3">
                 <div class="col-md-6 position-relative">
                     <label class="form-label">Nombre del Cliente</label>

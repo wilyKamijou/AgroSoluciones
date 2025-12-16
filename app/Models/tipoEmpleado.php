@@ -19,8 +19,4 @@ class tipoEmpleado extends Model
     {
         return $this->hasMany(Empleado::class, 'id_tipoE');
     }
-    public function dtrutas()
-    {
-        return $this->hasMany(dtRuta::class, 'id_tipoE');
-    }
 }

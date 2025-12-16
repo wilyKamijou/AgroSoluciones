@@ -75,15 +75,7 @@ class MenuServiceProvider extends ServiceProvider
             ],
         ];
 
-        // ===== AGREGAR ITEMS SEGÚN INICIALES DE RUTAS =====
-
-        // Dashboard/Home siempre visible
-        $menuBase[] = [
-            'text' => 'Dashboard',
-            'url' => '/home',
-            'icon' => 'fas fa-tachometer-alt',
-            'label_color' => 'success',
-        ];
+        // ===== AGREGAR ITEMS SEGÚN INICIALES DE RUTAS ====
 
         // Reportes - Si tiene 'R'
         if (in_array('R', $iniciales)) {

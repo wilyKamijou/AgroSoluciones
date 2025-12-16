@@ -322,7 +322,6 @@ return [
             'text' => 'Dashboard',
             'url' => '/reportes',
             'icon' => 'fas fa-tachometer-alt',
-            'can' => 'ver-dashboard',
         ],
 
         // Usuarios - Solo Owner y Gerente

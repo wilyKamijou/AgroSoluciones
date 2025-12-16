@@ -13,8 +13,8 @@ class TipoEmpleadoController extends Controller
     public function index()
     {
         $tipos = TipoEmpleado::all();
-        $rutas = rutas::all();
-        return view('tipoE.index', compact('tipos', 'rutas'));
+        
+        return view('tipoE.index', compact('tipos'));
     }
 
     public function create()

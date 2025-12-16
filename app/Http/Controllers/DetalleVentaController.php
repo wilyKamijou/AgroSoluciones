@@ -16,7 +16,6 @@ use Barryvdh\DomPDF\Facade\Pdf; // Agregar esta línea
 class DetalleVentaController extends Controller
 {
 
-    // ✅ NUEVO MÉTODO PARA GENERAR PDF
     public function downloadPDF(Request $request)
     {
         $detalleVs = detalleVenta::all();
@@ -26,8 +25,6 @@ class DetalleVentaController extends Controller
         $clientes = cliente::all();
 
         $pdf = Pdf::loadView('detalleVenta.pdf', compact('detalleVs', 'ventas', 'productos', 'almacenes', 'clientes'));
-
-        // Si se solicita ver en el navegador
         if ($request->has('action') && $request->action == 'view') {
             return $pdf->stream('reporte-detalles-venta-' . date('Y-m-d') . '.pdf');
         }
