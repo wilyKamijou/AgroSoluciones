@@ -504,18 +504,23 @@ private function getProductosPorVencerPDF($diasLimite = null) // <-- Hacemos opc
         }
 
         // Crear array de datos para la vista
-        $viewData = [
-            'data' => $data,
-            'titulo' => $titulo,
-            'fecha_inicio' => $fechaInicio,
-            'fecha_fin' => $fechaFin,
-            'fecha_actual' => $data['fecha_actual'],
-            'dias_limite' => $data['dias_limite'],
-            'fecha_limite' => $data['fecha_limite'],
-
-            'fecha_generacion' => Carbon::now()->format('Y-m-d H:i:s'),
-            
-        ];
+$viewData = [
+    'data' => $data,
+    'titulo' => $titulo,
+    'fecha_inicio' => $fechaInicio,
+    'fecha_fin' => $fechaFin,
+    'fecha_generacion' => Carbon::now()->format('Y-m-d H:i:s'),
+];
+if ($tipo === 'vencimientos') {
+    $viewData = array_merge($viewData, [
+        'productos_proximos' => $data['productos_proximos'],
+        'productos_vencidos' => $data['productos_vencidos'],
+        'fecha_actual' => $data['fecha_actual'],
+        'dias_limite' => $data['dias_limite'],
+        'fecha_limite' => $data['fecha_limite'],
+        'titulo' => 'Control de Productos por Vencer'
+    ]);
+}
 
         // Si es vencimientos, necesitamos datos específicos
         if ($tipo === 'vencimientos') {
