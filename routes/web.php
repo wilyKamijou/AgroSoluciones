@@ -28,6 +28,7 @@ use App\Http\Controllers\ModuloUsersController;
 use App\Http\Controllers\ModuloVentaController;
 use App\Http\Controllers\PaginaController;
 use App\Http\Controllers\ReporteController;
+use App\Http\Controllers\ContactoController;
 
 Route::get('/', function () {
     return redirect()->route('inicio');
@@ -37,66 +38,8 @@ Route::get('/pagina', [PaginaController::class, 'index'])->name('inicio');
 Route::post('/enviar', [EnviarController::class, 'enviar']);
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
 
-    Route::get('/test-productos-vencimiento', [ReporteController::class, 'productosPorVencerVencidos']);
-
-// Agrega esta ruta de prueba
-
-Route::get('/test-pdf-minimo', function() {
-    $html = '<html><body><h1>Test PDF Simple</h1><p>Fecha: ' . date('Y-m-d') . '</p></body></html>';
-    
-    try {
-        $pdf = PDF::loadHTML($html);
-        return $pdf->download('test-minimo.pdf');
-    } catch (\Exception $e) {
-        return response()->json([
-            'error' => $e->getMessage(),
-            'trace' => $e->getTraceAsString()
-        ], 500);
-    }
-});
-Route::get('/test-simple-pdf', function() {
-    return response()->json([
-        'status' => 'ok',
-        'carbon_version' => \Carbon\Carbon::now(),
-        'can_parse' => \Carbon\Carbon::parse('2025-12-15')->format('Y-m-d')
-    ]);
-});
-Route::get('/test-fechas-productos', function() {
-    $productos = \App\Models\Producto::whereNotNull('fechaVencimiento')->get();
-    
-    $resultados = [];
-    
-    foreach ($productos as $producto) {
-        try {
-            $fecha = \Carbon\Carbon::parse($producto->fechaVencimiento);
-            $resultados[] = [
-                'id' => $producto->id_producto,
-                'nombre' => $producto->nombrePr,
-                'fecha_original' => $producto->fechaVencimiento,
-                'fecha_tipo' => gettype($producto->fechaVencimiento),
-                'fecha_parseada' => $fecha->format('Y-m-d'),
-                'es_valida' => true
-            ];
-        } catch (\Exception $e) {
-            $resultados[] = [
-                'id' => $producto->id_producto,
-                'nombre' => $producto->nombrePr,
-                'fecha_original' => $producto->fechaVencimiento,
-                'fecha_tipo' => gettype($producto->fechaVencimiento),
-                'error' => $e->getMessage(),
-                'es_valida' => false
-            ];
-        }
-    }
-    
-    return response()->json([
-        'total_productos' => $productos->count(),
-        'fechas_validas' => count(array_filter($resultados, fn($r) => $r['es_valida'])),
-        'fechas_invalidas' => count(array_filter($resultados, fn($r) => !$r['es_valida'])),
-        'productos_con_fecha_invalida' => array_filter($resultados, fn($r) => !$r['es_valida']),
-        'todos' => $resultados
-    ]);
-});
+Route::get('/contacto', [ContactoController::class, 'mostrarFormulario'])->name('contacto');
+Route::post('/contacto', [ContactoController::class, 'enviarMensaje'])->name('contacto.enviar');
 
 Auth::routes();
 

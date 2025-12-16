@@ -207,7 +207,7 @@
         </div>
         @endif
 
-        <form action="/enviar" method="POST" id="contactForm">
+        <form action="{{ route('contacto.enviar') }}" method="POST" id="contactForm">
           @csrf
 
           <div class="form-group">
@@ -245,48 +245,131 @@
   </section>
 
   <!-- CONTACTO -->
-  <section id="contacto" class="section contacto-section">
+<section id="contacto" class="section contacto-section">
     <div class="container">
-      <div class="section-header">
-        <h2 class="section-title">Contáctanos</h2>
-        <p class="section-subtitle">Estamos aquí para ayudarte</p>
-      </div>
-
-      <div class="contacto-grid">
-        <div class="contacto-item hidden" data-animate="fadeInUp">
-          <div class="contacto-icon">
-            <i class="fas fa-map-marker-alt"></i>
-          </div>
-          <h3 class="contacto-title">Dirección</h3>
-          <p>Av. Final Beni #7800<br>Santa Cruz - Bolivia</p>
+        <div class="section-header">
+            <h2 class="section-title">Contáctanos</h2>
+            <p class="section-subtitle">Estamos aquí para ayudarte</p>
         </div>
 
-        <div class="contacto-item hidden" data-animate="fadeInUp" data-delay="0.1">
-          <div class="contacto-icon">
-            <i class="fas fa-phone"></i>
-          </div>
-          <h3 class="contacto-title">Teléfono</h3>
-          <p>+591 70899084<br>+591 70059647</p>
-        </div>
+        <!-- Mostrar mensajes de éxito/error -->
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+        
+        @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
 
-        <div class="contacto-item hidden" data-animate="fadeInUp" data-delay="0.2">
-          <div class="contacto-icon">
-            <i class="fas fa-envelope"></i>
-          </div>
-          <h3 class="contacto-title">Email</h3>
-          <p>info@agrosoluciones-bo.com</p>
-        </div>
+        <div class="row">
+            <!-- Información de contacto -->
+            <div class="col-md-6">
+                <div class="contacto-grid">
+                    <div class="contacto-item" data-animate="fadeInUp">
+                        <div class="contacto-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h3 class="contacto-title">Dirección</h3>
+                        <p>Av. Final Beni #7800<br>Santa Cruz - Bolivia</p>
+                    </div>
 
-        <div class="contacto-item hidden" data-animate="fadeInUp" data-delay="0.3">
-          <div class="contacto-icon">
-            <i class="fas fa-clock"></i>
-          </div>
-          <h3 class="contacto-title">Horario</h3>
-          <p>Lun-Vie: 8:30-16:30<br>Sáb: 8:30-12:00</p>
+                    <div class="contacto-item" data-animate="fadeInUp" data-delay="0.1">
+                        <div class="contacto-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <h3 class="contacto-title">Teléfono</h3>
+                        <p>+591 70899084<br>+591 70059647</p>
+                    </div>
+
+                    <div class="contacto-item" data-animate="fadeInUp" data-delay="0.2">
+                        <div class="contacto-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <h3 class="contacto-title">Email</h3>
+                        <p>info@agrosoluciones-bo.com</p>
+                    </div>
+
+                    <div class="contacto-item" data-animate="fadeInUp" data-delay="0.3">
+                        <div class="contacto-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3 class="contacto-title">Horario</h3>
+                        <p>Lun-Vie: 8:30-16:30<br>Sáb: 8:30-12:00</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formulario de contacto -->
+            <div class="col-md-6">
+                <div class="contacto-form" data-animate="fadeInUp">
+                    <h3 class="form-title">Envíanos un mensaje</h3>
+                    
+                    <form method="POST" action="{{ route('contacto.enviar') }}">
+                        @csrf
+                        
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre completo *</label>
+                            <input type="text" class="form-control @error('nombre') is-invalid @enderror" 
+                                   id="nombre" name="nombre" value="{{ old('nombre') }}" required>
+                            @error('nombre')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="email" class="form-label">Email *</label>
+                                <input type="email" class="form-control @error('email') is-invalid @enderror" 
+                                       id="email" name="email" value="{{ old('email') }}" required>
+                                @error('email')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-md-6">
+                                <label for="telefono" class="form-label">Teléfono</label>
+                                <input type="tel" class="form-control @error('telefono') is-invalid @enderror" 
+                                       id="telefono" name="telefono" value="{{ old('telefono') }}">
+                                @error('telefono')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="asunto" class="form-label">Asunto *</label>
+                            <input type="text" class="form-control @error('asunto') is-invalid @enderror" 
+                                   id="asunto" name="asunto" value="{{ old('asunto') }}" required>
+                            @error('asunto')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="mensaje" class="form-label">Mensaje *</label>
+                            <textarea class="form-control @error('mensaje') is-invalid @enderror" 
+                                      id="mensaje" name="mensaje" rows="5" required>{{ old('mensaje') }}</textarea>
+                            @error('mensaje')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-paper-plane me-2"></i> Enviar mensaje
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </section>
+</section>
 
   <!-- FOOTER -->
   <footer class="footer">
